@@ -27,6 +27,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/composition-api',
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
@@ -71,5 +72,15 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, ctx) {
+      config.node = {
+        fs: 'empty'
+      }
+    }
+  }
+  // generate: {
+  //   // choose to suit your project
+  //   interval: 3000,
+  // }
 }
