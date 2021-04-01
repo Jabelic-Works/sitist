@@ -9,12 +9,9 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
-import { defineComponent, ref} from '@nuxtjs/composition-api'
+import { defineComponent} from '@nuxtjs/composition-api'
 export default defineComponent({
-  setup(){
+  setup(_, {}){
     return {}
   }
 })

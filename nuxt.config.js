@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config();
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -32,6 +33,7 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -41,6 +43,15 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
   ],
+  privateRuntimeConfig: {
+    env_api_key: process.env.FB_API_KEY,
+    env_auth_domain: process.env.FB_AUTHDOMAIN,
+    env_project_id: process.env.FB_PROJECT_ID,
+    env_storage_bucket: process.env.FB_STORAGE_BUCKET,
+    env_messaging_sender_id: process.env.FB_MESSAGEING_SENDER_ID,
+    env_app_id: process.env.FB_APP_ID,
+    env_measurement_id: process.env.FB_MEASUREMENT_ID
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -73,7 +84,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extend(config, ctx) {
+    extend(config) {
       config.node = {
         fs: 'empty'
       }
