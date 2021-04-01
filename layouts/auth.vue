@@ -8,11 +8,11 @@
         </nuxt-link>
       </div>
     </v-app-bar>
-    <v-content style="background:#F5F5F5;height: auto;" class="pa-0 fill-height">
+    <v-main style="background:#F5F5F5;height: auto;" class="pa-0 fill-height">
       <v-container :class="{ 'pa-0': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs }">
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
     <footer style="background: #F5F5F5">
       <div class="pa-8 d-flex flex-warp justify-center fill-wdith">
         <nuxt-link to="privacy" class="link-caption mr-8">プライバシーポリシー</nuxt-link>
