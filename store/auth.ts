@@ -1,9 +1,10 @@
 import firebase from '~/plugins/firebase'
-import { reactive } from '@nuxtjs/composition-api'
-export const state = () => reactive({
-  userUid: '',
-  userName: '',
-})
+import { reactive, useRoute } from '@nuxtjs/composition-api'
+export const state = () =>
+  reactive({
+    userUid: '',
+    userName: '',
+  })
 
 // TODO: 型修正
 export const mutations = {
@@ -22,22 +23,26 @@ export const mutations = {
 }
 
 export const actions = {
-  login({ commit }: any) {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(function (result) {
-        const user = result.user
-        console.log('success : ' + user)
-        console.log('success : ' + user?.uid + ' : ' + user?.displayName)
-        commit('setUserUid', user?.uid)
-        commit('setUserName', user?.displayName)
-      })
-      .catch(function (error) {
-        var errorCode = error.code
-        console.log('error : ' + errorCode)
-      })
+  login({ commit }: any, user: any) {
+    // console.debug(user)
+    commit('setUserName', user.displayName)
+    commit('setUserUid', user.uid)
+    // const provider = new firebase.auth.GoogleAuthProvider()
+    // firebase
+    //   .auth()
+    //   .signInWithPopup(provider)
+    //   .then(function (result) {
+    //     const user = result.user
+    //     console.log('success : ' + user)
+    //     console.log('success : ' + user?.uid + ' : ' + user?.displayName)
+    //     commit('setUserUid', user?.uid)
+    //     commit('setUserName', user?.displayName)
+
+    //   })
+    //   .catch(function (error) {
+    //     var errorCode = error.code
+    //     console.log('error : ' + errorCode)
+    //   })
   },
 }
 
