@@ -2,6 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <div class="text-center">ほげ！</div>
+      <div> hello, {{ guest }}</div>
     </v-col>
   </v-row>
 </template>
@@ -10,7 +11,8 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   setup(_, {}) {
-    return {}
+    const guest = '{{ Guest }}'
+    return { guest }
   },
 })
 </script>

@@ -40,61 +40,8 @@
               />
               Sign in with Google
             </v-btn>
-            <!-- <v-btn
-              class="fill-width mt-5 text-capitalize caption"
-              color="#385184"
-              dark
-              depressed
-              height="48px"
-              tile
-            >
-              <img
-                class="button-logo-img mr-4"
-                src="http://placehold.it/350x150"
-                style="height: 24px"
-              />
-              Facebookで登録
-            </v-btn> -->
           </div>
-          <!-- <div class="separator separator_login_page">
-            <div class="middle_separator">または</div>
-          </div> -->
           <div class="pt-6">
-            <!-- <div>
-              <v-text-field
-                v-model="email"
-                :rules="[emailRules.required, emailRules.regex]"
-                autofocus
-                dense
-                height="48px"
-                outlined
-                placeholder="メールアドレス"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="password"
-                :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[passwordRules.required, passwordRules.regex]"
-                :type="passwordShow ? 'text' : 'password'"
-                dense
-                height="48px"
-                name="input-password"
-                outlined
-                placeholder="パスワード"
-                @click:append="passwordShow = !passwordShow"
-              ></v-text-field>
-            </div> -->
-            <!-- <div class="login-btn pb-8">
-              <v-btn
-                class="fill-width caption"
-                color="#FFCB00"
-                depressed
-                height="48px"
-                tile
-              >
-                会員登録
-              </v-btn>
-            </div> -->
             <v-divider></v-divider>
             <div class="pt-8 pb-4">
               <span>すでにアカウントをお持ちですか？</span>
