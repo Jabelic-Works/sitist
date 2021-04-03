@@ -1,4 +1,3 @@
-import firebase from '~/plugins/firebase'
 import { reactive, useRoute } from '@nuxtjs/composition-api'
 export const state = () =>
   reactive({
@@ -24,25 +23,8 @@ export const mutations = {
 
 export const actions = {
   login({ commit }: any, user: any) {
-    // console.debug(user)
     commit('setUserName', user.displayName)
     commit('setUserUid', user.uid)
-    // const provider = new firebase.auth.GoogleAuthProvider()
-    // firebase
-    //   .auth()
-    //   .signInWithPopup(provider)
-    //   .then(function (result) {
-    //     const user = result.user
-    //     console.log('success : ' + user)
-    //     console.log('success : ' + user?.uid + ' : ' + user?.displayName)
-    //     commit('setUserUid', user?.uid)
-    //     commit('setUserName', user?.displayName)
-
-    //   })
-    //   .catch(function (error) {
-    //     var errorCode = error.code
-    //     console.log('error : ' + errorCode)
-    //   })
   },
 }
 
@@ -54,9 +36,10 @@ export const getters = {
     return state.userName
   },
 }
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions,
-}
+// export default {
+//   namespaced: true,
+//   state,
+//   mutations,
+//   actions,
+//   getters
+// }

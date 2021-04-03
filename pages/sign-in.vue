@@ -79,11 +79,9 @@ export default defineComponent({
             console.log('error : ' + errorCode)
           }).then(()=>{
             root.$store.dispatch('auth/login', user.value)
-          })
-        .then(()=>{
-          userName.value = root.$store.getters.getUserName
-        }
-        ).then(()=>{root.$router.push('/')})
+          }).then(()=>{
+            userName.value = root.$store.getters.getUserName
+          }).then(()=>{root.$router.push('/')})
     }
     return {
       login,
