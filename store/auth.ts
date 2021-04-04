@@ -1,4 +1,4 @@
-import { reactive, useRoute } from '@nuxtjs/composition-api'
+import { reactive } from '@nuxtjs/composition-api'
 export const state = () =>
   reactive({
     userUid: '',
@@ -36,10 +36,3 @@ export const getters = {
     return state.userName
   },
 }
-// export default {
-//   namespaced: true,
-//   state,
-//   mutations,
-//   actions,
-//   getters
-// }

@@ -89,9 +89,12 @@ export default {
         fs: 'empty'
       }
     }
-  }
+  },
   // generate: {
   //   // choose to suit your project
   //   interval: 3000,
   // }
+  router: {
+    middleware: 'authenticated'
+  }
 }

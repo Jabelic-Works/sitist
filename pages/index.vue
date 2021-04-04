@@ -8,21 +8,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 export default defineComponent({
   setup(_, { root }) {
-    const guest = '{{ Guest }}'
+    const guest = 'Guest'
     const userName = ref('')
 
-    // watch(()=>root.$store.getters['auth/getUserName'], ()=>{
-    //   console.debug('mounted!!')
-    //   userName.value = root.$store.getters['auth/getUserName']
-    //   console.debug(userName.value)
-    // })
     onMounted(()=>{
       console.debug('mounted!!')
       userName.value = root.$store.getters['auth/getUserName']
-      console.debug(userName.value)
+      console.debug('user name: ', userName.value)
+    })
+    watch(()=>root.$store.getters['auth/getUserName'], ()=>{
+      userName.value = root.$store.getters['auth/getUserName']
     })
     return { guest, userName }
   },
