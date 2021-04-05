@@ -41,7 +41,7 @@
             </v-col> -->
           </v-row>
         </v-form>
-        <v-btn>submit</v-btn>
+        <v-btn @click="submitData">submit</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -53,19 +53,32 @@ export default defineComponent({
   setup(_, { root }) {
     const guest = 'Guest'
     const userName = ref('')
+    const userUid = ref('')
     const submitUrl = ref('')
     onMounted(() => {
       console.debug('mounted!!')
       userName.value = root.$store.getters['auth/getUserName']
+      userUid.value = root.$store.getters['auth/getUserUid']
       console.debug('user name: ', userName.value)
     })
     watch(
       () => root.$store.getters['auth/getUserName'],
       () => {
         userName.value = root.$store.getters['auth/getUserName']
+        userUid.value = root.$store.getters['auth/getUserUid']
       }
     )
-    return { guest, userName, submitUrl }
+    const submitData = () => {
+      const data = {
+        userName, 
+        data: {
+          URL: submitUrl,
+          title: ''
+        }
+      }
+      /** ここでfirestoreにdataを登録 */
+    }
+    return { guest, userName, submitUrl, submitData }
   },
 })
 </script>
