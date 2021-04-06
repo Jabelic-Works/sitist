@@ -26,7 +26,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="submitUrl"
-                :counter="10"
+                :counter="100"
                 label="url"
                 required
               ></v-text-field>
@@ -49,6 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import {db} from '~/plugins/firebase'
 export default defineComponent({
   setup(_, { root }) {
     const guest = 'Guest'
@@ -70,13 +71,14 @@ export default defineComponent({
     )
     const submitData = () => {
       const data = {
-        userName, 
+        userName: userName.value, 
         data: {
-          URL: submitUrl,
-          title: ''
+          URL: submitUrl.value,
+          // title: ''
         }
       }
       /** ここでfirestoreにdataを登録 */
+      db.collection('userdata').doc(userUid.value).set(data)
     }
     return { guest, userName, submitUrl, submitData }
   },
