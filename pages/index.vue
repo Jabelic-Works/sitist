@@ -71,7 +71,7 @@ export default defineComponent({
     )
     const submitData = () => {
       const data = {
-        userName: userName.value, 
+        // userName: userName.value, 
         data: {
           URL: submitUrl.value,
           // title: ''
