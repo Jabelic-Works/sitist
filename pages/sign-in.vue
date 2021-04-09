@@ -24,26 +24,24 @@
       <v-divider> </v-divider>
       <div class="px-6 py-8">
         <div style="max-width: 344px" class="mx-auto">
-          <div　justify="center">
-            <v-btn
-              class="h6 fill-width text-capitalize caption"
-              height="48px"
-              outlined
-              style="border-color: #979797"
-              tile
-              @click="login"
-            >
-              <img
-                class="button-logo-img mr-4"
-                src="https://madeby.google.com/static/images/google_g_logo.svg"
-                style="height: 24px"
-              />
-              Sign in with Google
-            </v-btn>
-          </div>
+          <v-btn
+            class="h6 fill-width text-capitalize caption"
+            height="48px"
+            outlined
+            style="border-color: #979797"
+            tile
+            @click="login"
+          >
+            <img
+              class="button-logo-img mr-4"
+              src="https://madeby.google.com/static/images/google_g_logo.svg"
+              style="height: 24px"
+            />
+            Sign in with Google
+          </v-btn>
           <div class="pt-6">
             <v-divider></v-divider>
-            username: {{userName}}
+            username: {{ userName }}
             <div class="pt-8 pb-4">
               <span>すでにアカウントをお持ちですか？</span>
               <nuxt-link to="/login">ログインに移動</nuxt-link>
@@ -63,29 +61,36 @@ export default defineComponent({
   setup(_, { root }) {
     const userName = ref('')
     const login = () => {
-        console.debug('login!')
-        const user = ref<any>()
-        const provider = new firebase.auth.GoogleAuthProvider()
-        firebase
-          .auth()
-          .signInWithPopup(provider)
-          .then(function (result) {
-            user.value = result.user
-            console.log('success : ' + user.value)
-            console.log('success : ' + user.value.uid + ' : ' + user.value.displayName)
-          })
-          .catch(function (error) {
-            var errorCode = error.code
-            console.log('error : ' + errorCode)
-          }).then(()=>{
-            root.$store.dispatch('auth/login', user.value)
-          }).then(()=>{
-            userName.value = root.$store.getters.getUserName
-          }).then(()=>{root.$router.push('/')})
+      console.debug('login!')
+      const user = ref<any>()
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function (result) {
+          user.value = result.user
+          console.log('success : ' + user.value)
+          console.log(
+            'success : ' + user.value.uid + ' : ' + user.value.displayName
+          )
+        })
+        .catch(function (error) {
+          var errorCode = error.code
+          console.log('error : ' + errorCode)
+        })
+        .then(() => {
+          root.$store.dispatch('auth/login', user.value)
+        })
+        .then(() => {
+          userName.value = root.$store.getters.getUserName
+        })
+        .then(() => {
+          root.$router.push('/')
+        })
     }
     return {
       login,
-      userName
+      userName,
     }
   },
 })

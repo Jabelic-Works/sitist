@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import { defineComponent, ref} from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 export default defineComponent({
-  setup(){
+  setup() {
     return {}
-  }
+  },
 })
 </script>
 

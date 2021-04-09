@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
-import {db} from '~/plugins/firebase'
+import { db } from '~/plugins/firebase'
 export default defineComponent({
   setup(_, { root }) {
     const guest = 'Guest'
@@ -71,11 +71,11 @@ export default defineComponent({
     )
     const submitData = () => {
       const data = {
-        // userName: userName.value, 
+        // userName: userName.value,
         data: {
           URL: submitUrl.value,
           // title: ''
-        }
+        },
       }
       /** ここでfirestoreにdataを登録 */
       db.collection('userdata').doc(userUid.value).set(data)

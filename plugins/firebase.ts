@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from 'firebase'
 
 // ** Firebaseプロジェクトの設定を記す
 if (!firebase.apps.length) {
@@ -9,11 +9,11 @@ if (!firebase.apps.length) {
     storageBucket: process.env.FB_STORAGE_BUCKET,
     messagingSenderId: process.env.FB_MESSAGEING_SENDER_ID,
     appId: process.env.FB_APP_ID,
-    measurementId: process.env.FB_MEASUREMENT_ID
+    measurementId: process.env.FB_MEASUREMENT_ID,
   })
 }
 
-export const db = firebase.firestore();
-export const storage = firebase.storage();
-export const auth = firebase.auth();
+export const db = firebase.firestore()
+export const storage = firebase.storage()
+export const auth = firebase.auth()
 export default firebase
