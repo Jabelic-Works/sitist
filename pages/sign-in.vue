@@ -75,7 +75,7 @@ export default defineComponent({
           )
         })
         .catch(function (error) {
-          var errorCode = error.code
+          const errorCode = error.code
           console.log('error : ' + errorCode)
         })
         .then(() => {
