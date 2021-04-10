@@ -75,11 +75,14 @@ export default defineComponent({
           URL: refSubmitUrl.value,
           title: '',
           OGP: '',
-          description: ''
-        }
+          description: '',
+        },
       }
       /** ここでfirestoreにdataを登録 */
-      db.collection('userdata').doc(refUserUid.value).collection('data').add(data)
+      db.collection('userdata')
+        .doc(refUserUid.value)
+        .collection('data')
+        .add(data)
     }
     return { guest, refUserName, refSubmitUrl, submitData }
   },
