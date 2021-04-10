@@ -71,13 +71,12 @@ export default defineComponent({
     )
     const submitData = () => {
       const data = {
-        // userName: userName.value,
         data: {
           URL: refSubmitUrl.value,
           title: '',
           OGP: '',
           description: ''
-        },
+        }
       }
       /** ここでfirestoreにdataを登録 */
       db.collection('userdata').doc(refUserUid.value).collection('data').add(data)
