@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <div class="text-center">ほげ！</div>
-        <h3>hello, {{ userName ? userName : guest }}</h3>
+        <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
       </v-col>
     </v-row>
     <v-row>
@@ -25,7 +25,7 @@
 
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="submitUrl"
+                v-model="refSubmitUrl"
                 :counter="100"
                 label="url"
                 required
@@ -53,34 +53,36 @@ import { db } from '~/plugins/firebase'
 export default defineComponent({
   setup(_, { root }) {
     const guest = 'Guest'
-    const userName = ref('')
-    const userUid = ref('')
-    const submitUrl = ref('')
+    const refUserName = ref('')
+    const refUserUid = ref('')
+    const refSubmitUrl = ref('')
     onMounted(() => {
       console.debug('mounted!!')
-      userName.value = root.$store.getters['auth/getUserName']
-      userUid.value = root.$store.getters['auth/getUserUid']
-      console.debug('user name: ', userName.value)
+      refUserName.value = root.$store.getters['auth/getUserName']
+      refUserUid.value = root.$store.getters['auth/getUserUid']
+      console.debug('user name: ', refUserName.value)
     })
     watch(
       () => root.$store.getters['auth/getUserName'],
       () => {
-        userName.value = root.$store.getters['auth/getUserName']
-        userUid.value = root.$store.getters['auth/getUserUid']
+        refUserName.value = root.$store.getters['auth/getUserName']
+        refUserUid.value = root.$store.getters['auth/getUserUid']
       }
     )
     const submitData = () => {
       const data = {
         // userName: userName.value,
         data: {
-          URL: submitUrl.value,
-          // title: ''
+          URL: refSubmitUrl.value,
+          title: '',
+          OGP: '',
+          description: ''
         },
       }
       /** ここでfirestoreにdataを登録 */
-      db.collection('userdata').doc(userUid.value).set(data)
+      db.collection('userdata').doc(refUserUid.value).collection('data').add(data)
     }
-    return { guest, userName, submitUrl, submitData }
+    return { guest, refUserName, refSubmitUrl, submitData }
   },
 })
 </script>
