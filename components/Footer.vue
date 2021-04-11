@@ -24,17 +24,17 @@ import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   setup() {
-      const linksInFooter =  [
-        'Home',
-        'About Us',
-        'Team',
-        'Services',
-        'Blog',
-        'Contact Us',
-      ]
-      return {
-          linksInFooter
-      }
+    const linksInFooter = [
+      'Home',
+      'About Us',
+      'Team',
+      'Services',
+      'Blog',
+      'Contact Us',
+    ]
+    return {
+      linksInFooter,
+    }
   },
 })
 </script>
