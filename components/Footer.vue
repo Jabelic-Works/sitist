@@ -4,17 +4,15 @@
       <v-row justify="center" no-gutters>
         <v-btn
           v-for="link in linksInFooter"
-          :key="link"
+          :key="link.title"
+          :to="link.link"
           color="white"
           text
           rounded
-          class="my-2"
+          class="my-1"
         >
-          {{ link }}
+          {{ link.title }}
         </v-btn>
-        <v-col class="primary lighten-2 py-2 text-center white--text" cols="12">
-          {{ new Date().getFullYear() }} — <strong>Sitist</strong>
-        </v-col>
       </v-row>
     </v-footer>
   </div>
@@ -25,12 +23,9 @@ import { defineComponent } from '@vue/composition-api'
 export default defineComponent({
   setup() {
     const linksInFooter = [
-      'Home',
-      'About Us',
-      'Team',
-      'Services',
-      'Blog',
-      'Contact Us',
+      { title: 'プライバシーポリシー', link: '/policy' },
+      { title: '利用規約', link: '/regulation' },
+      { title: `${new Date().getFullYear()} — Sitist`, link: '/' },
     ]
     return {
       linksInFooter,
