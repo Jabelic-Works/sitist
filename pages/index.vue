@@ -48,10 +48,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, SetupContext, watch } from '@nuxtjs/composition-api'
 import { db } from '~/plugins/firebase'
 export default defineComponent({
-  setup(_, { root }) {
+  setup(_, { root }: SetupContext) {
     const guest = 'Guest'
     const refUserName = ref('')
     const refUserUid = ref('')
