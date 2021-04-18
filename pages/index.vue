@@ -1,18 +1,18 @@
 <template>
-<div>
-  <Header />
-  <div class="" justify="center">
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="6">
-        <div class="text-center"></div>
-        <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <v-form>
-          <v-row>
-            <!-- <v-col
+  <div>
+    <Header />
+    <div class="" justify="center">
+      <v-row justify="center" align="center">
+        <v-col cols="12" sm="8" md="6">
+          <div class="text-center"></div>
+          <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-form>
+            <v-row>
+              <!-- <v-col
           cols="12"
           md="4"
         >
@@ -25,29 +25,29 @@
           ></v-text-field>
         </v-col> -->
 
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="refSubmitUrl"
-                :counter="100"
-                label="url"
-                required
-              ></v-text-field>
-            </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="refSubmitUrl"
+                  :counter="100"
+                  label="url"
+                  required
+                ></v-text-field>
+              </v-col>
 
-            <!-- <v-col cols="12" md="4">
+              <!-- <v-col cols="12" md="4">
               <v-text-field
                 v-model="email"
                 label="title"
                 required
               ></v-text-field>
             </v-col> -->
-          </v-row>
-        </v-form>
-        <v-btn @click="submitData" class="text-non-trans">submit</v-btn>
-      </v-col>
-    </v-row>
+            </v-row>
+          </v-form>
+          <v-btn @click="submitData" class="text-non-trans">submit</v-btn>
+        </v-col>
+      </v-row>
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">

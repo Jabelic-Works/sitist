@@ -1,9 +1,7 @@
 <template>
-  <v-toolbar>
-    <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-
+  <v-toolbar color="primary lighten-1">
     <v-toolbar-title>
-      <nuxt-link to="/" style="text-decoration: none; color: inherit;">
+      <nuxt-link to="/" style="text-decoration: none; color: inherit">
         <v-btn text exact class="text-non-trans">
           <span style="font-size: 1.5rem"> Sitist</span></v-btn
         >
