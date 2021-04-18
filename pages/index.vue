@@ -43,7 +43,7 @@
             </v-col> -->
           </v-row>
         </v-form>
-        <v-btn @click="submitData">submit</v-btn>
+        <v-btn @click="submitData" class="text-non-trans">submit</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -99,3 +99,8 @@ export default defineComponent({
   },
 })
 </script>
+<style scoped>
+.text-non-trans {
+  text-transform: none;
+}
+</style>

@@ -9,6 +9,7 @@
           color="white"
           text
           rounded
+          exact
           class="my-1"
         >
           {{ link.title }}
