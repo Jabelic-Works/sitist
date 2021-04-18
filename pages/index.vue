@@ -1,8 +1,10 @@
 <template>
+<div>
+  <Header />
   <div class="" justify="center">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
-        <div class="text-center">ほげ！</div>
+        <div class="text-center"></div>
         <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
       </v-col>
     </v-row>
@@ -45,6 +47,7 @@
       </v-col>
     </v-row>
   </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -55,8 +58,10 @@ import {
   SetupContext,
   watch,
 } from '@nuxtjs/composition-api'
+import Header from '~/components/Header.vue'
 import { db } from '~/plugins/firebase'
 export default defineComponent({
+  components: { Header },
   setup(_, { root }: SetupContext) {
     const guest = 'Guest'
     const refUserName = ref('')
