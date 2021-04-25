@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="dialog" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           color=""
@@ -15,8 +15,8 @@
         </v-btn>
       </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
+        <v-card-title class="text-center">
+          <span class="headline">Add Page</span>
         </v-card-title>
         <v-card-text>
           <v-container>
