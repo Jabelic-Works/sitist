@@ -15,17 +15,14 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-text-field label="URL" required></v-text-field>
+                <v-text-field label="URL" required v-model="url"></v-text-field>
               </v-row>
             </v-container>
             <!-- <small>*indicates required field</small> -->
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <!-- <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn> -->
-            <v-btn color="blue darken-1" text @click="dialog = false"
-              >Save</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="closeDialog">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -39,7 +36,14 @@ import { defineComponent, ref } from '@vue/composition-api'
 export default defineComponent({
   setup() {
     const dialog = ref(false)
-    return { dialog }
+    const url = ref('')
+    const closeDialog = () => {
+        // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
+        // TODO: moduleから{title, OGP}を取得, firestoreに格納
+        // TODO: firestoreにaddする処理をmodule切り出し
+      dialog.value = false
+    }
+    return { dialog, url,closeDialog }
   },
 })
 </script>
