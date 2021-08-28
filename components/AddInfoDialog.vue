@@ -31,19 +31,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-
+import { defineComponent, ref, onMounted, watch } from '@vue/composition-api'
+import { db } from '~/plugins/firebase'
 export default defineComponent({
-  setup() {
+  setup(_, { root }) {
     const dialog = ref(false)
     const url = ref('')
     const closeDialog = () => {
-        // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
-        // TODO: moduleから{title, OGP}を取得, firestoreに格納
-        // TODO: firestoreにaddする処理をmodule切り出し
+      // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
+      // TODO: moduleから{title, OGP}を取得, firestoreに格納
+      // TODO: firestoreにaddする処理をmodule切り出し
+      if (url.value) submitData(url.value)
       dialog.value = false
     }
-    return { dialog, url,closeDialog }
+
+    // firestoreにデータを格納
+    const refUserName = ref('')
+    const refUserUid = ref('')
+    onMounted(() => {
+      console.debug('mounted!!')
+      refUserName.value = root.$store.getters['auth/getUserName']
+      refUserUid.value = root.$store.getters['auth/getUserUid']
+      console.debug('user name: ', refUserName.value)
+    })
+    watch(
+      () => root.$store.getters['auth/getUserName'],
+      () => {
+        refUserName.value = root.$store.getters['auth/getUserName']
+        refUserUid.value = root.$store.getters['auth/getUserUid']
+      }
+    )
+    const submitData = (url: string) => {
+      const data = {
+        data: {
+          URL: url,
+          title: '',
+          OGP: '',
+          description: '',
+        },
+      }
+      /** ここでfirestoreにdataを登録 */
+      db.collection('userdata')
+        .doc(refUserUid.value)
+        .collection('data')
+        .add(data)
+    }
+
+    return { dialog, url, closeDialog }
   },
 })
 </script>
