@@ -59,10 +59,9 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import Header from '~/components/Header.vue'
-import { db } from '~/plugins/firebase'
 export default defineComponent({
   components: { Header },
-  setup(_, { root }: SetupContext) {
+  setup(_, {}: SetupContext) {
     const guest = 'Guest'
     const refUserName = ref('')
     //これはいずれgettersへのアクセスをmoduleからしてそこからとってくれば良いので.
