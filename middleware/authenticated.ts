@@ -5,12 +5,9 @@ export default ({ store, route, redirect }: any) => {
     if (user) {
       store.dispatch('auth/login', user)
       console.debug(store.getters['auth/getUserName'])
-    } else {
-      if (route.name !== 'login') {
-        // redirect('/sign-in')
-        console.debug('sign-inに遷移させたい！')
-        // XXX: Redirected when going from "/" to "/sign-in" via a navigation guard.
-      }
+    } else if (route.name != 'sign-in') {
+      console.debug(route.name)
+      redirect('/sign-in')
     }
   })
 }
