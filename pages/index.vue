@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import Header from '~/components/Header.vue'
 export default defineComponent({
   components: { Header },
@@ -65,6 +65,9 @@ export default defineComponent({
         refUserName.value = root.$store.getters['auth/getUserName']
       }
     )
+    onMounted(() => {
+      refUserName.value = root.$store.getters['auth/getUserName']
+    })
     return { guest, refUserName }
   },
 })
