@@ -30,7 +30,7 @@
             outlined
             style="border-color: #979797"
             tile
-            @click="signUp"
+            @click="signIn"
           >
             <img
               class="button-logo-img mr-4"
@@ -60,7 +60,7 @@ export default defineComponent({
   layout: 'auth',
   setup(_, { root }) {
     const userName = ref('')
-    const signUp = () => {
+    const signIn = () => {
       console.debug('login!')
       const user = ref<any>()
       const provider = new firebase.auth.GoogleAuthProvider()
@@ -91,7 +91,7 @@ export default defineComponent({
         })
     }
     return {
-      signUp,
+      signIn,
       userName,
     }
   },

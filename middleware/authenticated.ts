@@ -6,7 +6,6 @@ export default ({ store, route, redirect }: any) => {
       store.dispatch('auth/login', user)
       console.debug(store.getters['auth/getUserName'])
     } else if (route.name != 'sign-in') {
-      console.debug(route.name)
       redirect('/sign-in')
     }
   })

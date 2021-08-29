@@ -64,7 +64,7 @@ export default defineComponent({
   setup(_, {}: SetupContext) {
     const guest = 'Guest'
     const refUserName = ref('')
-    //これはいずれgettersへのアクセスをmoduleからしてそこからとってくれば良いので.
+    // これはいずれgettersへのアクセスをmoduleからしてそこからとってくれば良いので.
     // わざわざここからgetters叩いちゃだめ
     return { guest, refUserName }
   },
