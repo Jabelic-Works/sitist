@@ -51,13 +51,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  SetupContext,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, SetupContext } from '@nuxtjs/composition-api'
 import Header from '~/components/Header.vue'
 export default defineComponent({
   components: { Header },
