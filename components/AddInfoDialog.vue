@@ -31,16 +31,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watch } from '@vue/composition-api'
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  watch,
+  PropType,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { db } from '~/plugins/firebase'
 export default defineComponent({
   props: {
     refUserName: String,
     refUserUid: String,
+    update: {
+      type: Function as PropType<() => void>,
+      required: true,
+    },
   },
   setup(props, { root }) {
     const dialog = ref(false)
     const url = ref('')
+    const { store } = useContext()
     const closeDialog = () => {
       // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
       // TODO: moduleから{title, OGP}を取得, firestoreに格納
@@ -48,14 +60,6 @@ export default defineComponent({
       if (url.value) submitData(url.value)
       dialog.value = false
     }
-    onMounted(() => {
-      console.debug('mounted!!')
-      // if (props.refUserName)
-      //   props.refUserName.value = root.$store.getters['auth/getUserName']
-      // if (props.refUserUid)
-      //   props.refUserUid.value = root.$store.getters['auth/getUserUid']
-      // console.debug('user name: ', props.refUserName.value)
-    })
     // watch(
     //   () => root.$store.getters['auth/getUserName'],
     //   () => {
@@ -73,7 +77,8 @@ export default defineComponent({
         },
       }
       const uid = props.refUserUid
-      if (props.refUserUid) root.$store.dispatch('data/setData', { data, uid })
+      if (uid)
+        store.dispatch('data/setData', { data, uid }).then(() => props.update())
     }
 
     return { dialog, url, closeDialog }

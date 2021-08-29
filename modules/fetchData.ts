@@ -25,7 +25,7 @@ export const firestoreFetchData = (refUserUid: any, store: any) => {
           documentLocalData.value[doc.id] = doc.data()
         })
         console.debug(documentLocalData.value)
-        store.dispatch('data/setAllData', documentLocalData.value)
+        // store.dispatch('data/setAllData', documentLocalData.value)
         console.debug(store.getters['data/setAllData'])
       })
       .catch((error: string) => {

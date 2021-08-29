@@ -1,20 +1,23 @@
 import { reactive, ref } from '@nuxtjs/composition-api'
 import { db } from '~/plugins/firebase'
 const docRef = ref<firebase.default.firestore.DocumentData>()
-const documentLocalData = ref<any>({})
+const documents = ref<any>({})
 
 export const state = () => ({
-  data: reactive({}),
+  data: {},
   timestamp: 0,
 })
 
 // TODO: 型修正
 export const mutations = {
-  setData(state: any, data: any, refUserUid: string) {
-    const thisId = data.id
-    state.data[thisId] = data
+  setData(state: any, val: any) {
+    const { data, uid } = val
     /** ここでfirestoreにdataを登録 */
-    db.collection('userdata').doc(refUserUid).collection('data').add(data)
+    const addDb = db
+      .collection('userdata')
+      .doc(uid)
+      .collection('data')
+      .add(data)
   },
   setAllData(state: any, refUserUid: string) {
     if (refUserUid) {
@@ -26,24 +29,26 @@ export const mutations = {
         .collection('data')
         .get()
         .then((querySnapshot: any) => {
-          console.debug('Data:', querySnapshot.data)
+          console.debug('Data:', querySnapshot)
           querySnapshot.forEach((doc: any) => {
             console.log(doc.id, ' => ', doc.data())
-            documentLocalData.value[doc.id] = doc.data()
+            documents.value[doc.id] = doc.data()
           })
-          console.debug(documentLocalData.value)
+          console.debug('setAllData', documents.value)
         })
         .catch((error: string) => {
           console.log('Error getting cached document:', error)
         })
-      state.data = documentLocalData.value
+      state.data = documents.value
     }
   },
 }
 
 export const actions = {
-  setData({ commit }: any, data: any, refUserUid: string) {
-    commit('setData', data, refUserUid)
+  setData({ commit }: any, val: any) {
+    const { data, uid } = val
+    console.debug(uid)
+    commit('setData', { data, uid })
   },
   setAllData({ commit }: any, refUserUid: string) {
     commit('setAllData', refUserUid)

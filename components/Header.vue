@@ -9,7 +9,11 @@
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" />
+    <AddInfoDialog
+      :refUserName="refUserName"
+      :refUserUid="refUserUid"
+      :update="update"
+    />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -18,15 +22,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
     refUserName: String,
     refUserUid: String,
+    // updateData: {
+    //   type: Function as PropType<() => void>,
+    //   required: true,
+    // },
   },
-  setup() {
-    return {}
+  setup(_, { emit }) {
+    const update = () => {
+      emit('updateData')
+    }
+    return { update }
   },
 })
 </script>
