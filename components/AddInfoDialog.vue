@@ -72,7 +72,8 @@ export default defineComponent({
           description: '',
         },
       }
-      root.$store.dispatch('data/setData', data, props.refUserUid)
+      const uid = props.refUserUid
+      if (props.refUserUid) root.$store.dispatch('data/setData', { data, uid })
     }
 
     return { dialog, url, closeDialog }

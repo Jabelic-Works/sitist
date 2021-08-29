@@ -2,9 +2,11 @@ import { reactive, ref } from '@nuxtjs/composition-api'
 import { db } from '~/plugins/firebase'
 const docRef = ref<firebase.default.firestore.DocumentData>()
 const documentLocalData = ref<any>({})
-export const state = () => {
-  data: reactive({})
-}
+
+export const state = () => ({
+  data: reactive({}),
+  timestamp: 0,
+})
 
 // TODO: 型修正
 export const mutations = {
@@ -51,5 +53,8 @@ export const actions = {
 export const getters = {
   getData(state: any) {
     return state.data
+  },
+  getTimestamp(state: any) {
+    return state.timestamp
   },
 }

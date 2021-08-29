@@ -7,13 +7,12 @@
           <div class="text-center"></div>
           <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
         </v-col>
-        <v-btn @click="checkLocalData"> hoge </v-btn>
       </v-row>
       <v-row>
         <v-col v-for="doc in documentLocalData" :key="doc.id" cols="12">
-          hoge
           <v-card>
             <v-card-title> data: {{ doc.data }} </v-card-title>
+            <v-card-subtitle> data: {{ doc }} </v-card-subtitle>
           </v-card>
         </v-col>
       </v-row>
@@ -30,6 +29,7 @@ import {
   useContext,
   useFetch,
   onBeforeMount,
+  onActivated,
 } from '@nuxtjs/composition-api'
 import { firestoreFetchData } from '@/modules/fetchData'
 
@@ -59,13 +59,17 @@ export default defineComponent({
         refUserUid.value = store.getters['auth/getUserUid']
         store.dispatch('data/setAllData', refUserUid.value).then(() => {
           documentLocalData.value = store.getters['data/getData']
-          console.debug(documentLocalData.value)
+          console.debug('data:', documentLocalData.value)
         })
       }
     )
     onBeforeMount(() => {
       refUserName.value = store.getters['auth/getUserName']
       refUserUid.value = store.getters['auth/getUserUid']
+    })
+    onActivated(() => {
+      documentLocalData.value = store.getters['data/getData']
+      console.debug('activate', documentLocalData.value)
     })
     onMounted(() => {
       // refUserName.value = root.$store.getters['auth/getUserName']
