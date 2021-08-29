@@ -55,7 +55,8 @@ import { defineComponent, ref, SetupContext } from '@nuxtjs/composition-api'
 import Header from '~/components/Header.vue'
 export default defineComponent({
   components: { Header },
-  setup(_, {}: SetupContext) {
+  //  {}: SetupContext
+  setup(_) {
     const guest = 'Guest'
     const refUserName = ref('')
     // これはいずれgettersへのアクセスをmoduleからしてそこからとってくれば良いので.
