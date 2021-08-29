@@ -51,16 +51,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import Header from '~/components/Header.vue'
 export default defineComponent({
   components: { Header },
   //  {}: SetupContext
-  setup(_) {
+  setup(_, { root }) {
     const guest = 'Guest'
     const refUserName = ref('')
-    // これはいずれgettersへのアクセスをmoduleからしてそこからとってくれば良いので.
-    // わざわざここからgetters叩いちゃだめ
+    watch(
+      () => root.$store.getters['auth/getUserName'],
+      () => {
+        refUserName.value = root.$store.getters['auth/getUserName']
+      }
+    )
     return { guest, refUserName }
   },
 })
