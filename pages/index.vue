@@ -25,14 +25,14 @@
           ></v-text-field>
         </v-col> -->
 
-              <v-col cols="12" md="4">
+              <!-- <v-col cols="12" md="4">
                 <v-text-field
                   v-model="refSubmitUrl"
                   :counter="100"
                   label="url"
                   required
                 ></v-text-field>
-              </v-col>
+              </v-col> -->
 
               <!-- <v-col cols="12" md="4">
               <v-text-field
@@ -43,7 +43,7 @@
             </v-col> -->
             </v-row>
           </v-form>
-          <v-btn @click="submitData" class="text-non-trans">submit</v-btn>
+          <!-- <v-btn @click="submitData" class="text-non-trans">submit</v-btn> -->
         </v-col>
       </v-row>
     </div>
@@ -51,51 +51,17 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  SetupContext,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, SetupContext } from '@nuxtjs/composition-api'
 import Header from '~/components/Header.vue'
-import { db } from '~/plugins/firebase'
 export default defineComponent({
   components: { Header },
-  setup(_, { root }: SetupContext) {
+  //  {}: SetupContext
+  setup(_) {
     const guest = 'Guest'
     const refUserName = ref('')
-    const refUserUid = ref('')
-    const refSubmitUrl = ref('')
-    onMounted(() => {
-      console.debug('mounted!!')
-      refUserName.value = root.$store.getters['auth/getUserName']
-      refUserUid.value = root.$store.getters['auth/getUserUid']
-      console.debug('user name: ', refUserName.value)
-    })
-    watch(
-      () => root.$store.getters['auth/getUserName'],
-      () => {
-        refUserName.value = root.$store.getters['auth/getUserName']
-        refUserUid.value = root.$store.getters['auth/getUserUid']
-      }
-    )
-    const submitData = () => {
-      const data = {
-        data: {
-          URL: refSubmitUrl.value,
-          title: '',
-          OGP: '',
-          description: '',
-        },
-      }
-      /** ここでfirestoreにdataを登録 */
-      db.collection('userdata')
-        .doc(refUserUid.value)
-        .collection('data')
-        .add(data)
-    }
-    return { guest, refUserName, refSubmitUrl, submitData }
+    // これはいずれgettersへのアクセスをmoduleからしてそこからとってくれば良いので.
+    // わざわざここからgetters叩いちゃだめ
+    return { guest, refUserName }
   },
 })
 </script>

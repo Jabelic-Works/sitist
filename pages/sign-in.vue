@@ -30,7 +30,7 @@
             outlined
             style="border-color: #979797"
             tile
-            @click="login"
+            @click="signIn"
           >
             <img
               class="button-logo-img mr-4"
@@ -60,7 +60,7 @@ export default defineComponent({
   layout: 'auth',
   setup(_, { root }) {
     const userName = ref('')
-    const login = () => {
+    const signIn = () => {
       console.debug('login!')
       const user = ref<any>()
       const provider = new firebase.auth.GoogleAuthProvider()
@@ -73,23 +73,25 @@ export default defineComponent({
           console.log(
             'success : ' + user.value.uid + ' : ' + user.value.displayName
           )
+          root.$store.dispatch('auth/login', user.value)
+          userName.value = root.$store.getters.getUserName
         })
         .catch(function (error) {
           const errorCode = error.code
-          console.log('error : ' + errorCode)
+          console.log('error : ' + errorCode) // NOTE: 登録されたドメインでないとエラーを吐く
         })
-        .then(() => {
-          root.$store.dispatch('auth/login', user.value)
-        })
-        .then(() => {
-          userName.value = root.$store.getters.getUserName
-        })
+        // .then(() => {
+        //   root.$store.dispatch('auth/login', user.value)
+        // })
+        // .then(() => {
+        //   userName.value = root.$store.getters.getUserName
+        // })
         .then(() => {
           root.$router.push('/')
         })
     }
     return {
-      login,
+      signIn,
       userName,
     }
   },
