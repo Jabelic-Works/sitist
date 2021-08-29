@@ -1,49 +1,20 @@
 <template>
   <div>
-    <Header />
+    <Header :refUserName="refUserName" :refUserUid="refUserUid" />
     <div class="" justify="center">
       <v-row justify="center" align="center">
         <v-col cols="12" sm="8" md="6">
           <div class="text-center"></div>
           <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
         </v-col>
+        <v-btn @click="checkLocalData"> hoge </v-btn>
       </v-row>
       <v-row>
-        <v-col>
-          <v-form>
-            <v-row>
-              <!-- <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="Name"
-            :rules="nameRules"
-            :counter="10"
-            label="Name"
-            required
-          ></v-text-field>
-        </v-col> -->
-
-              <!-- <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="refSubmitUrl"
-                  :counter="100"
-                  label="url"
-                  required
-                ></v-text-field>
-              </v-col> -->
-
-              <!-- <v-col cols="12" md="4">
-              <v-text-field
-                v-model="email"
-                label="title"
-                required
-              ></v-text-field>
-            </v-col> -->
-            </v-row>
-          </v-form>
-          <!-- <v-btn @click="submitData" class="text-non-trans">submit</v-btn> -->
+        <v-col v-for="doc in documentLocalData" :key="doc.id" cols="12">
+          hoge
+          <v-card>
+            <v-card-title> data: {{ doc.data }} </v-card-title>
+          </v-card>
         </v-col>
       </v-row>
     </div>
@@ -51,24 +22,87 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
-import Header from '~/components/Header.vue'
+import {
+  defineComponent,
+  watch,
+  ref,
+  onMounted,
+  useContext,
+  useFetch,
+  onBeforeMount,
+} from '@nuxtjs/composition-api'
+import { firestoreFetchData } from '@/modules/fetchData'
+
 export default defineComponent({
-  components: { Header },
   //  {}: SetupContext
-  setup(_, { root }) {
+  setup(_) {
     const guest = 'Guest'
     const refUserName = ref('')
+    const refUserUid = ref('')
+    const documentLocalData = ref<any>({})
+    const { store } = useContext()
+    const { fetchAllData, fetchData } = firestoreFetchData(
+      refUserUid.value,
+      store
+    )
+    const { $fetch } = useFetch(() => {
+      // store.dispatch('data/setAllData', store.getters['auth/getUserUid'])
+      // console.debug(
+      //   store.getters['auth/getUserUid'],
+      //   store.getters['data/getData']
+      // )
+    })
     watch(
-      () => root.$store.getters['auth/getUserName'],
+      () => store.getters['auth/getUserName'],
       () => {
-        refUserName.value = root.$store.getters['auth/getUserName']
+        refUserName.value = store.getters['auth/getUserName']
+        refUserUid.value = store.getters['auth/getUserUid']
+        store.dispatch('data/setAllData', refUserUid.value).then(() => {
+          documentLocalData.value = store.getters['data/getData']
+          console.debug(documentLocalData.value)
+        })
       }
     )
-    onMounted(() => {
-      refUserName.value = root.$store.getters['auth/getUserName']
+    onBeforeMount(() => {
+      refUserName.value = store.getters['auth/getUserName']
+      refUserUid.value = store.getters['auth/getUserUid']
     })
-    return { guest, refUserName }
+    onMounted(() => {
+      // refUserName.value = root.$store.getters['auth/getUserName']
+      // store.dispatch('data/setAllData', refUserUid.value)
+      // documentLocalData.value = store.getters['data/getData']
+      // if (refUserUid.value) {
+      //   console.debug('mounted.....')
+      //   docRef.value = db
+      //     .collection('userdata')
+      //     .doc(refUserUid.value)
+      //     .collection('data')
+      //   // 全件取得
+      //   docRef.value
+      //     .get()
+      //     .then((querySnapshot: any) => {
+      //       console.debug('Data:', querySnapshot.data)
+      //       querySnapshot.forEach((doc: any) => {
+      //         console.log(doc.id, ' => ', doc.data())
+      //         documentLocalData.value[doc.id] = doc.data()
+      //       })
+      //       console.debug(documentLocalData.value)
+      //       store.dispatch('data/setAllData', documentLocalData.value)
+      //     })
+      //     .catch((error: string) => {
+      //       console.log('Error getting cached document:', error)
+      //     })
+      // }
+    })
+    const checkLocalData = () => {
+      // store.dispatch('data/setAllData', refUserUid.value)
+      console.debug(
+        documentLocalData.value,
+        store.getters['data/getData'],
+        refUserUid.value
+      )
+    }
+    return { guest, refUserName, refUserUid, documentLocalData, checkLocalData }
   },
 })
 </script>

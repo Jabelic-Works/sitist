@@ -34,7 +34,11 @@
 import { defineComponent, ref, onMounted, watch } from '@vue/composition-api'
 import { db } from '~/plugins/firebase'
 export default defineComponent({
-  setup(_, { root }) {
+  props: {
+    refUserName: String,
+    refUserUid: String,
+  },
+  setup(props, { root }) {
     const dialog = ref(false)
     const url = ref('')
     const closeDialog = () => {
@@ -44,23 +48,21 @@ export default defineComponent({
       if (url.value) submitData(url.value)
       dialog.value = false
     }
-
-    // firestoreにデータを格納
-    const refUserName = ref('')
-    const refUserUid = ref('')
     onMounted(() => {
       console.debug('mounted!!')
-      refUserName.value = root.$store.getters['auth/getUserName']
-      refUserUid.value = root.$store.getters['auth/getUserUid']
-      console.debug('user name: ', refUserName.value)
+      // if (props.refUserName)
+      //   props.refUserName.value = root.$store.getters['auth/getUserName']
+      // if (props.refUserUid)
+      //   props.refUserUid.value = root.$store.getters['auth/getUserUid']
+      // console.debug('user name: ', props.refUserName.value)
     })
-    watch(
-      () => root.$store.getters['auth/getUserName'],
-      () => {
-        refUserName.value = root.$store.getters['auth/getUserName']
-        refUserUid.value = root.$store.getters['auth/getUserUid']
-      }
-    )
+    // watch(
+    //   () => root.$store.getters['auth/getUserName'],
+    //   () => {
+    //     // props.refUserName.value = root.$store.getters['auth/getUserName']
+    //     // props.refUserUid.value = root.$store.getters['auth/getUserUid']
+    //   }
+    // )
     const submitData = (url: string) => {
       const data = {
         data: {
@@ -70,11 +72,7 @@ export default defineComponent({
           description: '',
         },
       }
-      /** ここでfirestoreにdataを登録 */
-      db.collection('userdata')
-        .doc(refUserUid.value)
-        .collection('data')
-        .add(data)
+      root.$store.dispatch('data/setData', data, props.refUserUid)
     }
 
     return { dialog, url, closeDialog }

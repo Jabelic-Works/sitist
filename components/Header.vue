@@ -9,7 +9,7 @@
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <AddInfoDialog />
+    <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -20,6 +20,10 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
+  props: {
+    refUserName: String,
+    refUserUid: String,
+  },
   setup() {
     return {}
   },
