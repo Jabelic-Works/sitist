@@ -51,7 +51,7 @@ export default defineComponent({
     const dialog = ref(false)
     const url = ref('')
     const { store } = useContext()
-    const { fetchAllData, addData } = use()
+    const { addData } = use()
     const closeDialog = () => {
       // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
       // TODO: moduleから{title, OGP}を取得, firestoreに格納
