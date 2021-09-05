@@ -13,6 +13,7 @@ export const mutations = {
   setUserName(state: any, userName: any) {
     state.userName = userName
   },
+  // 使ってない。
   login(state: any, payload: any) {
     state.token = payload
   },

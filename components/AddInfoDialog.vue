@@ -31,53 +31,66 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watch } from '@vue/composition-api'
-import { db } from '~/plugins/firebase'
+import {
+  defineComponent,
+  ref,
+  PropType,
+  useContext,
+} from '@nuxtjs/composition-api'
+import { use } from '@/modules/fetchData'
 export default defineComponent({
-  setup(_, { root }) {
+  props: {
+    refUserName: String,
+    refUserUid: String,
+    update: {
+      type: Function as PropType<() => void>,
+      required: true,
+    },
+  },
+  setup(props) {
     const dialog = ref(false)
     const url = ref('')
+    const { store } = useContext()
+    const { addData } = use()
     const closeDialog = () => {
       // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
       // TODO: moduleから{title, OGP}を取得, firestoreに格納
       // TODO: firestoreにaddする処理をmodule切り出し
-      if (url.value) submitData(url.value)
+      if (url.value) {
+        submitData(url.value)
+        url.value = ''
+      }
       dialog.value = false
     }
-
-    // firestoreにデータを格納
-    const refUserName = ref('')
-    const refUserUid = ref('')
-    onMounted(() => {
-      console.debug('mounted!!')
-      refUserName.value = root.$store.getters['auth/getUserName']
-      refUserUid.value = root.$store.getters['auth/getUserUid']
-      console.debug('user name: ', refUserName.value)
-    })
-    watch(
-      () => root.$store.getters['auth/getUserName'],
-      () => {
-        refUserName.value = root.$store.getters['auth/getUserName']
-        refUserUid.value = root.$store.getters['auth/getUserUid']
-      }
-    )
-    const submitData = (url: string) => {
+    // watch(
+    //   () => root.$store.getters['auth/getUserName'],
+    //   () => {
+    //     // props.refUserName.value = root.$store.getters['auth/getUserName']
+    //     // props.refUserUid.value = root.$store.getters['auth/getUserUid']
+    //   }
+    // )
+    const submitData = (urlString: string) => {
       const data = {
         data: {
-          URL: url,
+          URL: urlString,
           title: '',
           OGP: '',
           description: '',
         },
       }
-      /** ここでfirestoreにdataを登録 */
-      db.collection('userdata')
-        .doc(refUserUid.value)
-        .collection('data')
-        .add(data)
+      const uid = props.refUserUid
+      let documentLocalData = {}
+      if (uid) {
+        console.debug(uid, 'add data:', data)
+        documentLocalData = addData(data, uid)
+        console.debug('new data', documentLocalData)
+        store.dispatch('data/setAllData', documentLocalData).finally(() => {
+          props.update()
+        })
+      }
     }
 
-    return { dialog, url, closeDialog }
+    return { dialog, url, closeDialog, submitData }
   },
 })
 </script>
