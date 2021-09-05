@@ -1,54 +1,39 @@
-import {
-  defineComponent,
-  watch,
-  ref,
-  onMounted,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { ref } from '@nuxtjs/composition-api'
 import { db } from '~/plugins/firebase'
 
-export const firestoreFetchData = (refUserUid: any, store: any) => {
+export const use = () => {
   const docRef = ref<firebase.default.firestore.DocumentData>()
-  const documentLocalData = ref<any>({})
-  const fetchAllData = () => {
-    // useFetch(async () => {
+  // firestoreからデータを取得、それをstoreへdispatch
+  const fetchAllData = (uid: string): any => {
+    let docs: any = {}
     docRef.value = db
       .collection('userdata')
-      .doc(refUserUid.value)
+      .doc(uid)
       .collection('data')
-    docRef.value
       .get()
       .then((querySnapshot: any) => {
-        console.debug('Data:', querySnapshot.data)
         querySnapshot.forEach((doc: any) => {
-          console.log(doc.id, ' => ', doc.data())
-          documentLocalData.value[doc.id] = doc.data()
+          //   console.log(doc.id, ' => ', doc.data())
+          docs[doc.id] = doc.data()
         })
-        console.debug(documentLocalData.value)
-        // store.dispatch('data/setAllData', documentLocalData.value)
-        console.debug(store.getters['data/setAllData'])
+        // console.debug(store.getters['data/setAllData'])
       })
       .catch((error: string) => {
         console.log('Error getting cached document:', error)
       })
-    // })
-    return documentLocalData.value
+    console.debug(docs)
+    return docs
   }
-  const fetchData = () => {
-    // useFetch(async () => {
-    docRef.value = db
-      .collection('userdata')
-      .doc(refUserUid.value)
+  const addData = (data: any, uid: string) => {
+    let addDb = {}
+    db.collection('userdata')
+      .doc(uid)
       .collection('data')
-    docRef.value.where('state', '==', 'CA').onSnapshot((querySnapshot: any) => {
-      var cities: any[] = []
-      querySnapshot.forEach((doc: any) => {
-        cities.push(doc.data().name)
-      })
-      console.log('Current cities in CA: ', cities.join(', '))
-    })
-    // })
-    return documentLocalData.value
+      .add(data)
+      .then(() => {})
+    addDb = fetchAllData(uid)
+    console.debug('addDb', addDb)
+    return addDb
   }
-  return { fetchAllData, fetchData }
+  return { fetchAllData, addData }
 }

@@ -39,7 +39,7 @@ import {
   PropType,
   useContext,
 } from '@nuxtjs/composition-api'
-import { db } from '~/plugins/firebase'
+import { use } from '@/modules/fetchData'
 export default defineComponent({
   props: {
     refUserName: String,
@@ -49,15 +49,19 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, { root }) {
+  setup(props) {
     const dialog = ref(false)
     const url = ref('')
     const { store } = useContext()
+    const { fetchAllData, addData } = use()
     const closeDialog = () => {
       // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
       // TODO: moduleから{title, OGP}を取得, firestoreに格納
       // TODO: firestoreにaddする処理をmodule切り出し
-      if (url.value) submitData(url.value)
+      if (url.value) {
+        submitData(url.value)
+        url.value = ''
+      }
       dialog.value = false
     }
     // watch(
@@ -67,21 +71,28 @@ export default defineComponent({
     //     // props.refUserUid.value = root.$store.getters['auth/getUserUid']
     //   }
     // )
-    const submitData = (url: string) => {
+    const submitData = (urlString: string) => {
       const data = {
         data: {
-          URL: url,
+          URL: urlString,
           title: '',
           OGP: '',
           description: '',
         },
       }
       const uid = props.refUserUid
-      if (uid)
-        store.dispatch('data/setData', { data, uid }).then(() => props.update())
+      let documentLocalData = {}
+      if (uid) {
+        console.debug(uid, 'add data:', data)
+        documentLocalData = addData(data, uid)
+        console.debug('new data', documentLocalData)
+        store.dispatch('data/setAllData', documentLocalData).finally(() => {
+          props.update()
+        })
+      }
     }
 
-    return { dialog, url, closeDialog }
+    return { dialog, url, closeDialog, submitData }
   },
 })
 </script>

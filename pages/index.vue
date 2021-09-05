@@ -3,17 +3,19 @@
     <Header
       :refUserName="refUserName"
       :refUserUid="refUserUid"
-      @updateData="updateData"
+      :updateData="updateData"
     />
     <div class="" justify="center">
       <v-row justify="center" align="center">
         <v-col cols="12" sm="8" md="6">
           <div class="text-center"></div>
           <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
+          <v-btn @click="checkGetters">updateData</v-btn>
+          <v-btn @click="fData">fetchAllData</v-btn>
         </v-col>
       </v-row>
       <v-row v-if="documentLocalData">
-        <v-col v-for="doc in documentLocalData" :key="doc.data.url" cols="12">
+        <v-col v-for="doc in documentLocalData" :key="doc.id" cols="12">
           <v-card>
             <v-card-title> data: {{ doc.data }} </v-card-title>
             <v-card-subtitle> data: {{ doc }} </v-card-subtitle>
@@ -29,38 +31,34 @@ import {
   defineComponent,
   watch,
   ref,
-  onMounted,
   useContext,
   useFetch,
-  onBeforeMount,
   onActivated,
   nextTick,
-  onBeforeUnmount,
 } from '@nuxtjs/composition-api'
-import { firestoreFetchData } from '@/modules/fetchData'
-import { db } from '~/plugins/firebase'
+import { use } from '@/modules/fetchData'
 export default defineComponent({
-  //  {}: SetupContext
-  setup(_) {
+  setup() {
     const guest = 'Guest'
     const refUserName = ref('')
     const refUserUid = ref('')
     const documentLocalData = ref<any>({})
     const { store } = useContext()
-    // const { fetchAllData, fetchData } = firestoreFetchData(
-    //   refUserUid.value,
-    //   store
-    // )
+    const { fetchAllData } = use()
+
+    //　すでにstoreにデータがある場合は再取得はボタンで行う(回数制限/有料制にする？)
     const { $fetch } = useFetch(() => {
       refUserUid.value = store.getters['auth/getUserUid']
       if (refUserUid.value) {
-        // store.dispatch('data/setAllData', store.getters['auth/getUserUid'])
-        documentLocalData.value = store.getters['data/getData']
+        documentLocalData.value = store.getters['data/getData'] //データがある場合
         console.debug('useFetch', documentLocalData.value)
+        //データがない場合
+        // データを追加していない人だけがサーバーへのアクセスが増える、だめだこれ
         if (Object.keys(documentLocalData.value).length === 0) {
           console.debug('data is empty')
-          store.dispatch('data/setAllData', refUserUid.value)
-          documentLocalData.value = store.getters['data/getData']
+          // fetch
+          documentLocalData.value = fetchAllData(refUserUid.value)
+          store.dispatch('data/setAllData', documentLocalData.value)
         }
       }
     })
@@ -82,40 +80,53 @@ export default defineComponent({
     watch(
       () => store.getters['data/getData'],
       () => {
-        documentLocalData.value = store.getters['data/getData']
+        documentLocalData.value = deepcopy(store.getters['data/getData'])
       }
     )
     nextTick(async () => {
-      documentLocalData.value = store.getters['data/getData']
+      documentLocalData.value = deepcopy(store.getters['data/getData'])
       console.debug('nextTick', documentLocalData.value)
     })
-    // onBeforeMount(() => {
-    //   refUserName.value = store.getters['auth/getUserName']
-    //   refUserUid.value = store.getters['auth/getUserUid']
-    //   documentLocalData.value = store.getters['data/getData']
-    // })
     onActivated(() => {
       refUserName.value = store.getters['auth/getUserName']
       refUserUid.value = store.getters['auth/getUserUid']
       documentLocalData.value = store.getters['data/getData']
       console.debug('activate', documentLocalData.value)
     })
-    // onBeforeUnmount(() => {
-    //   refUserName.value = store.getters['auth/getUserName']
-    //   refUserUid.value = store.getters['auth/getUserUid']
-    //   documentLocalData.value = store.getters['data/getData']
-    // })
+
     const checkLocalData = () => {
       console.debug(
-        documentLocalData.value,
+        JSON.stringify(documentLocalData.value),
         store.getters['data/getData'],
         refUserUid.value
       )
     }
-    const updateData = () => {
-      store.dispatch('data/setAllData', refUserUid.value)
-      documentLocalData.value = store.getters['data/getData']
-      console.debug('update data!', documentLocalData.value)
+
+    // 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
+    // stateの更新の完了を検知したいんだけど...
+    const updateData = async () => {
+      setTimeout(() => checkGetters(), 500)
+    }
+    // store.watch(
+    //   (state) => {
+    //     return state.data
+    //   },
+    //   (val) => {
+    //     console.debug('store.watch: ', val)
+    //   }
+    // )
+    const deepcopy = (objs: any) => {
+      return [objs].map((obj: any) => ({ ...obj }))[0]
+    }
+    const checkGetters = async () => {
+      documentLocalData.value = deepcopy(store.getters['data/getData'])
+      // deepcopyするようになったら fetch -> updatedataで表示されるようになった
+      console.debug(JSON.stringify(documentLocalData.value)) //fetchの時は{}になってしまうなぁ
+    }
+
+    const fData = async () => {
+      await store.dispatch('data/setAllData', fetchAllData(refUserUid.value))
+      setTimeout(() => checkGetters(), 500)
     }
 
     return {
@@ -125,6 +136,10 @@ export default defineComponent({
       documentLocalData,
       checkLocalData,
       updateData,
+      checkGetters,
+      fetchAllData,
+      fData,
+      deepcopy,
     }
   },
 })

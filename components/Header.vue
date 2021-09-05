@@ -12,7 +12,7 @@
     <AddInfoDialog
       :refUserName="refUserName"
       :refUserUid="refUserUid"
-      :update="update"
+      :update="updateData"
     />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
@@ -22,22 +22,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, PropType, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
     refUserName: String,
     refUserUid: String,
-    // updateData: {
-    //   type: Function as PropType<() => void>,
-    //   required: true,
-    // },
+    updateData: {
+      type: Function as PropType<() => void>,
+      required: true,
+    },
   },
-  setup(_, { emit }) {
-    const update = () => {
-      emit('updateData')
-    }
-    return { update }
+  setup() {
+    return {}
   },
 })
 </script>
