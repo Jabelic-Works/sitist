@@ -13,7 +13,7 @@ export const use = () => {
       .get()
       .then((querySnapshot: any) => {
         querySnapshot.forEach((doc: any) => {
-          //   console.log(doc.id, ' => ', doc.data())
+          //   console.log(doc.id, ' => ', doc.data())3
           docs[doc.id] = doc.data()
         })
         // console.debug(store.getters['data/setAllData'])

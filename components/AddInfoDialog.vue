@@ -34,8 +34,6 @@
 import {
   defineComponent,
   ref,
-  onMounted,
-  watch,
   PropType,
   useContext,
 } from '@nuxtjs/composition-api'

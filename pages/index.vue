@@ -104,7 +104,7 @@ export default defineComponent({
 
     // 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
     // stateの更新の完了を検知したいんだけど...
-    const updateData = async () => {
+    const updateData = () => {
       setTimeout(() => checkGetters(), 500)
     }
     // store.watch(
