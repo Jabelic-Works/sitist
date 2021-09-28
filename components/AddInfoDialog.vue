@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="addinfo">
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
         <template v-slot:activator="{ on, attrs }">
