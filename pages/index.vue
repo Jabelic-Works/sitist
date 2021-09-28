@@ -20,6 +20,8 @@
             <v-card-title> data: {{ doc.data }} </v-card-title>
             <v-card-subtitle> data: {{ doc }} </v-card-subtitle>
           </v-card>
+          <!-- for dynamic component debug : will be issue?-->
+          <!-- <component :is="'v-btn'">hoge</component> -->
         </v-col>
       </v-row>
     </div>
@@ -36,8 +38,15 @@ import {
   onActivated,
   nextTick,
 } from '@nuxtjs/composition-api'
+// import { VBtn } from '~/node_modules/vuetify/src/components'
+// //  ↑は型エラーがバンバン出る
+// import { VBtn } from '~/node_modules/vuetify/lib'
+// import { VBtn } from 'vuetify/lib'
+// ↑二つでは通る
+
 import { use } from '@/modules/fetchData'
 export default defineComponent({
+  // components: { VBtn },
   setup() {
     const guest = 'Guest'
     const refUserName = ref('')
