@@ -36,8 +36,8 @@ import {
   ref,
   PropType,
   useContext,
-} from '@nuxtjs/composition-api'
-import { use } from '@/modules/fetchData'
+} from "@nuxtjs/composition-api"
+import { use } from "@/modules/fetchData"
 export default defineComponent({
   props: {
     refUserName: String,
@@ -49,7 +49,7 @@ export default defineComponent({
   },
   setup(props) {
     const dialog = ref(false)
-    const url = ref('')
+    const url = ref("")
     const { store } = useContext()
     const { addData } = use()
     const closeDialog = () => {
@@ -58,7 +58,7 @@ export default defineComponent({
       // TODO: firestoreにaddする処理をmodule切り出し
       if (url.value) {
         submitData(url.value)
-        url.value = ''
+        url.value = ""
       }
       dialog.value = false
     }
@@ -73,18 +73,18 @@ export default defineComponent({
       const data = {
         data: {
           URL: urlString,
-          title: '',
-          OGP: '',
-          description: '',
+          title: "",
+          OGP: "",
+          description: "",
         },
       }
       const uid = props.refUserUid
       let documentLocalData = {}
       if (uid) {
-        console.debug(uid, 'add data:', data)
+        console.debug(uid, "add data:", data)
         documentLocalData = addData(data, uid)
-        console.debug('new data', documentLocalData)
-        store.dispatch('data/setAllData', documentLocalData).finally(() => {
+        console.debug("new data", documentLocalData)
+        store.dispatch("data/setAllData", documentLocalData).finally(() => {
           props.update()
         })
       }
