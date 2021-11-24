@@ -37,20 +37,20 @@ import {
   useFetch,
   onActivated,
   nextTick,
-} from '@nuxtjs/composition-api'
+} from "@nuxtjs/composition-api"
 // import { VBtn } from '~/node_modules/vuetify/src/components'
 // //  ↑は型エラーがバンバン出る
 // import { VBtn } from '~/node_modules/vuetify/lib'
 // import { VBtn } from 'vuetify/lib'
 // ↑二つでは通る
 
-import { use } from '@/modules/fetchData'
+import { use } from "@/modules/fetchData"
 export default defineComponent({
   // components: { VBtn },
   setup() {
-    const guest = 'Guest'
-    const refUserName = ref('')
-    const refUserUid = ref('')
+    const guest = "Guest"
+    const refUserName = ref("")
+    const refUserUid = ref("")
     const documentLocalData = ref<any>({})
     const { store } = useContext()
     const { fetchAllData } = use()
@@ -58,27 +58,26 @@ export default defineComponent({
     // すでにstoreにデータがある場合は再取得はボタンで行う(回数制限/有料制にする？)
     // const { $fetch } =
     useFetch(() => {
-      refUserUid.value = store.getters['auth/getUserUid']
+      refUserUid.value = store.getters["auth/getUserUid"]
       if (refUserUid.value) {
-        documentLocalData.value = store.getters['data/getData'] // データがある場合
-        console.debug('useFetch', documentLocalData.value)
+        documentLocalData.value = store.getters["data/getData"] // データがある場合
+        console.debug("useFetch", documentLocalData.value)
         // データがない場合
         // データを追加していない人だけがサーバーへのアクセスが増える、だめだこれ
         if (Object.keys(documentLocalData.value).length === 0) {
-          console.debug('data is empty')
-          // fetch
+          console.debug("data is empty")
           documentLocalData.value = fetchAllData(refUserUid.value)
-          store.dispatch('data/setAllData', documentLocalData.value)
+          store.dispatch("data/setAllData", documentLocalData.value)
         }
       }
     })
     // ユーザーが変わった場合
     watch(
-      () => store.getters['auth/getUserUid'],
+      () => store.getters["auth/getUserUid"],
       () => {
-        if (refUserUid.value !== store.getters['auth/getUserUid']) {
-          refUserName.value = store.getters['auth/getUserName']
-          refUserUid.value = store.getters['auth/getUserUid']
+        if (refUserUid.value !== store.getters["auth/getUserUid"]) {
+          refUserName.value = store.getters["auth/getUserName"]
+          refUserUid.value = store.getters["auth/getUserUid"]
           // store.dispatch('data/setAllData', refUserUid.value).then(() => {
           //   documentLocalData.value = store.getters['data/getData']
           //   console.debug('watch getUserName > data:', documentLocalData.value)
@@ -88,26 +87,26 @@ export default defineComponent({
     )
     // データが更新された場合
     watch(
-      () => store.getters['data/getData'],
+      () => store.getters["data/getData"],
       () => {
-        documentLocalData.value = deepcopy(store.getters['data/getData'])
+        documentLocalData.value = deepcopy(store.getters["data/getData"])
       }
     )
     nextTick(async () => {
-      documentLocalData.value = await deepcopy(store.getters['data/getData'])
-      console.debug('nextTick', documentLocalData.value)
+      documentLocalData.value = await deepcopy(store.getters["data/getData"])
+      console.debug("nextTick", documentLocalData.value)
     })
     onActivated(() => {
-      refUserName.value = store.getters['auth/getUserName']
-      refUserUid.value = store.getters['auth/getUserUid']
-      documentLocalData.value = store.getters['data/getData']
-      console.debug('activate', documentLocalData.value)
+      refUserName.value = store.getters["auth/getUserName"]
+      refUserUid.value = store.getters["auth/getUserUid"]
+      documentLocalData.value = store.getters["data/getData"]
+      console.debug("activate", documentLocalData.value)
     })
 
     const checkLocalData = () => {
       console.debug(
         JSON.stringify(documentLocalData.value),
-        store.getters['data/getData'],
+        store.getters["data/getData"],
         refUserUid.value
       )
     }
@@ -129,13 +128,13 @@ export default defineComponent({
       return [objs].map((obj: any) => ({ ...obj }))[0]
     }
     const checkGetters = async () => {
-      documentLocalData.value = await deepcopy(store.getters['data/getData'])
+      documentLocalData.value = await deepcopy(store.getters["data/getData"])
       // deepcopyするようになったら fetch -> updatedataで表示されるようになった
       console.debug(JSON.stringify(documentLocalData.value)) // fetchの時は{}になってしまうなぁ
     }
 
     const fData = async () => {
-      await store.dispatch('data/setAllData', fetchAllData(refUserUid.value))
+      await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
       setTimeout(() => checkGetters(), 500)
     }
 
