@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import firebase from "firebase"
 
 // ** Firebaseプロジェクトの設定を記す
 if (!firebase.apps.length) {

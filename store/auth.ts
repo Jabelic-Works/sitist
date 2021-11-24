@@ -1,8 +1,8 @@
-import { reactive } from '@nuxtjs/composition-api'
+import { reactive } from "@nuxtjs/composition-api"
 export const state = () =>
   reactive({
-    userUid: '',
-    userName: '',
+    userUid: "",
+    userName: "",
   })
 
 // TODO: 型修正
@@ -24,12 +24,12 @@ export const mutations = {
 
 export const actions = {
   login({ commit }: any, user: any) {
-    commit('setUserName', user.displayName ? user.displayName : 'Guest')
-    commit('setUserUid', user.uid)
+    commit("setUserName", user.displayName ? user.displayName : "Guest")
+    commit("setUserUid", user.uid)
   },
   logout({ commit }: any) {
-    commit('setUserName', null)
-    commit('setUserUid', null)
+    commit("setUserName", null)
+    commit("setUserUid", null)
   },
 }
 

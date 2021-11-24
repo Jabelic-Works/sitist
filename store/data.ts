@@ -1,5 +1,5 @@
-import { reactive, ref } from '@nuxtjs/composition-api'
-import { db } from '~/plugins/firebase'
+import { reactive, ref } from "@nuxtjs/composition-api"
+import { db } from "~/plugins/firebase"
 const docRef = ref<firebase.default.firestore.DocumentData>()
 
 export const state = () => ({
@@ -23,13 +23,13 @@ export const actions = {
   setData({ commit }: any, val: any) {
     const { data, uid } = val
     console.debug(uid)
-    commit('setData', { data, uid })
+    commit("setData", { data, uid })
   },
   setAllData({ commit }: any, data: any) {
-    commit('setAllData', data)
+    commit("setAllData", data)
   },
   setTimestamp({ commit }: any) {
-    commit('setTimestamp', 0)
+    commit("setTimestamp", 0)
   },
 }
 

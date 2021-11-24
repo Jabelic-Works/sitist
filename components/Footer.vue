@@ -19,14 +19,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from "@vue/composition-api"
 
 export default defineComponent({
   setup() {
     const linksInFooter = [
-      { title: 'プライバシーポリシー', link: '/policy' },
-      { title: '利用規約', link: '/regulation' },
-      { title: `${new Date().getFullYear()} — Sitist`, link: '/' },
+      { title: "プライバシーポリシー", link: "/policy" },
+      { title: "利用規約", link: "/regulation" },
+      { title: `${new Date().getFullYear()} — Sitist`, link: "/" },
     ]
     return {
       linksInFooter,

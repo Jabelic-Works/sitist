@@ -54,14 +54,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import firebase from '~/plugins/firebase'
+import { defineComponent, ref } from "@nuxtjs/composition-api"
+import firebase from "~/plugins/firebase"
 export default defineComponent({
-  layout: 'auth',
+  layout: "auth",
   setup(_, { root }) {
-    const userName = ref('')
+    const userName = ref("")
     const signIn = () => {
-      console.debug('login!')
+      console.debug("login!")
       const user = ref<any>()
       const provider = new firebase.auth.GoogleAuthProvider()
       firebase
@@ -69,16 +69,16 @@ export default defineComponent({
         .signInWithPopup(provider)
         .then(function (result) {
           user.value = result.user
-          console.log('success : ' + user.value)
+          console.log("success : " + user.value)
           console.log(
-            'success : ' + user.value.uid + ' : ' + user.value.displayName
+            "success : " + user.value.uid + " : " + user.value.displayName
           )
-          root.$store.dispatch('auth/login', user.value)
+          root.$store.dispatch("auth/login", user.value)
           userName.value = root.$store.getters.getUserName
         })
         .catch(function (error) {
           const errorCode = error.code
-          console.log('error : ' + errorCode) // NOTE: 登録されたドメインでないとエラーを吐く
+          console.log("error : " + errorCode) // NOTE: 登録されたドメインでないとエラーを吐く
         })
         // .then(() => {
         //   root.$store.dispatch('auth/login', user.value)
@@ -87,7 +87,7 @@ export default defineComponent({
         //   userName.value = root.$store.getters.getUserName
         // })
         .then(() => {
-          root.$router.push('/')
+          root.$router.push("/")
         })
     }
     return {

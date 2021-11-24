@@ -1,5 +1,5 @@
 {
-  "semi":false,
+  "semi": false,
   "singleQuote": false,
   "fix": "run-s fix:eslint fix:prettier",
   "fix:eslint": "npm run lint:eslint --fix",

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-import Footer from '@/components/Footer'
+import { defineComponent } from "@nuxtjs/composition-api"
+import Footer from "@/components/Footer"
 export default defineComponent({
   components: { Footer },
   setup() {

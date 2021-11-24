@@ -1,5 +1,5 @@
-import { ref } from '@nuxtjs/composition-api'
-import { db } from '~/plugins/firebase'
+import { ref } from "@nuxtjs/composition-api"
+import { db } from "~/plugins/firebase"
 
 export const use = () => {
   const docRef = ref<firebase.default.firestore.DocumentData>()
@@ -7,9 +7,9 @@ export const use = () => {
   const fetchAllData = (uid: string): any => {
     let docs: any = {}
     docRef.value = db
-      .collection('userdata')
+      .collection("userdata")
       .doc(uid)
-      .collection('data')
+      .collection("data")
       .get()
       .then((querySnapshot: any) => {
         querySnapshot.forEach((doc: any) => {
@@ -19,20 +19,20 @@ export const use = () => {
         // console.debug(store.getters['data/setAllData'])
       })
       .catch((error: string) => {
-        console.log('Error getting cached document:', error)
+        console.log("Error getting cached document:", error)
       })
     console.debug(docs)
     return docs
   }
   const addData = (data: any, uid: string) => {
     let addDb = {}
-    db.collection('userdata')
+    db.collection("userdata")
       .doc(uid)
-      .collection('data')
+      .collection("data")
       .add(data)
       .then(() => {})
     addDb = fetchAllData(uid)
-    console.debug('addDb', addDb)
+    console.debug("addDb", addDb)
     return addDb
   }
   return { fetchAllData, addData }

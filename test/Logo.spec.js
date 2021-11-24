@@ -1,10 +1,10 @@
-import { mount } from '@vue/test-utils'
-import AddInfoDialog from '@/components/AddInfoDialog'
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
+import { mount } from "@vue/test-utils"
+import AddInfoDialog from "@/components/AddInfoDialog"
+import Footer from "@/components/Footer"
+import Header from "@/components/Header"
 
-describe('Logo', () => {
-  test('is a Vue instance', () => {
+describe("Logo", () => {
+  test("is a Vue instance", () => {
     const wrapper = mount(AddInfoDialog)
     expect(wrapper.vm).toBeTruthy()
     const wrapperFooter = mount(Footer)
