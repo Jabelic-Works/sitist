@@ -55,13 +55,14 @@ export default defineComponent({
     const { store } = useContext()
     const { fetchAllData } = use()
 
-    //　すでにstoreにデータがある場合は再取得はボタンで行う(回数制限/有料制にする？)
-    const { $fetch } = useFetch(() => {
+    // すでにstoreにデータがある場合は再取得はボタンで行う(回数制限/有料制にする？)
+    // const { $fetch } =
+    useFetch(() => {
       refUserUid.value = store.getters['auth/getUserUid']
       if (refUserUid.value) {
-        documentLocalData.value = store.getters['data/getData'] //データがある場合
+        documentLocalData.value = store.getters['data/getData'] // データがある場合
         console.debug('useFetch', documentLocalData.value)
-        //データがない場合
+        // データがない場合
         // データを追加していない人だけがサーバーへのアクセスが増える、だめだこれ
         if (Object.keys(documentLocalData.value).length === 0) {
           console.debug('data is empty')
@@ -93,7 +94,7 @@ export default defineComponent({
       }
     )
     nextTick(async () => {
-      documentLocalData.value = deepcopy(store.getters['data/getData'])
+      documentLocalData.value = await deepcopy(store.getters['data/getData'])
       console.debug('nextTick', documentLocalData.value)
     })
     onActivated(() => {
@@ -128,9 +129,9 @@ export default defineComponent({
       return [objs].map((obj: any) => ({ ...obj }))[0]
     }
     const checkGetters = async () => {
-      documentLocalData.value = deepcopy(store.getters['data/getData'])
+      documentLocalData.value = await deepcopy(store.getters['data/getData'])
       // deepcopyするようになったら fetch -> updatedataで表示されるようになった
-      console.debug(JSON.stringify(documentLocalData.value)) //fetchの時は{}になってしまうなぁ
+      console.debug(JSON.stringify(documentLocalData.value)) // fetchの時は{}になってしまうなぁ
     }
 
     const fData = async () => {
