@@ -13,8 +13,8 @@
         </v-col>
       </v-row>
       <v-row v-if="documentLocalData">
-        <v-col v-for="doc in documentLocalData" :key="doc.id" cols="20">
-          <CardComponent :cardInfo="doc.data" />
+        <v-col v-for="doc in sitesInfo" :key="doc.id" cols="20">
+          <CardComponent :cardInfo="doc" />
         </v-col>
       </v-row>
     </div>
@@ -36,7 +36,8 @@ export default defineComponent({
     const guest = "Guest"
     const refUserName = ref("")
     const refUserUid = ref("")
-    const documentLocalData = ref<any>({})
+    const documentLocalData = ref<any>({}) // FIXME: type
+    const sitesInfo = ref([])
     const { store } = useContext()
     const { fetchAllData } = use()
     // すでにstoreにデータがある場合は再取得はボタンで行う(回数制限/有料制にする？)
@@ -92,6 +93,12 @@ export default defineComponent({
     const checkGetters = async () => {
       documentLocalData.value = await deepcopy(store.getters["data/getData"])
       console.debug(JSON.stringify(documentLocalData.value))
+      // console.debug(documentLocalData.value, Object.keys(documentLocalData.value))
+      let tmpArray = []
+      for (const [key, value] of Object.entries(documentLocalData.value)) {
+        tmpArray.push({ key, data: value.data })
+      }
+      sitesInfo.value = tmpArray
     }
     const isShowingUpdateDataDialog = ref(false)
     const showDialog = () => {
@@ -114,7 +121,8 @@ export default defineComponent({
       fData,
       isShowingUpdateDataDialog,
       showDialog,
-      closeDialog
+      closeDialog,
+      sitesInfo
     }
   },
   components: { UpdateDataDialog }
