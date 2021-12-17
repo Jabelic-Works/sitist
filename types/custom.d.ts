@@ -1,6 +1,6 @@
 export type CardInfo = {
   title?: string
-  url: string
+  URL: string
   OGP?: string | undefined
   description?: string | undefined
 }

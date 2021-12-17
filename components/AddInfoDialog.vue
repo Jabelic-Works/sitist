@@ -15,10 +15,12 @@
           <v-card-text>
             <v-container>
               <v-row>
+                <v-text-field label="title" required v-model="title"></v-text-field>
+              </v-row>
+              <v-row>
                 <v-text-field label="URL" required v-model="url"></v-text-field>
               </v-row>
             </v-container>
-            <!-- <small>*indicates required field</small> -->
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -45,30 +47,26 @@ export default defineComponent({
   setup(props) {
     const dialog = ref(false)
     const url = ref("")
+    const title = ref("")
     const { store } = useContext()
     const { addData } = use()
     const closeDialog = () => {
       // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
       // TODO: moduleから{title, OGP}を取得, firestoreに格納
       // TODO: firestoreにaddする処理をmodule切り出し
-      if (url.value) {
-        submitData(url.value)
+      if (url.value || title.value) {
+        submitData(url.value, title.value)
         url.value = ""
+        title.value = ""
       }
       dialog.value = false
     }
-    // watch(
-    //   () => root.$store.getters['auth/getUserName'],
-    //   () => {
-    //     // props.refUserName.value = root.$store.getters['auth/getUserName']
-    //     // props.refUserUid.value = root.$store.getters['auth/getUserUid']
-    //   }
-    // )
-    const submitData = (urlString: string) => {
+
+    const submitData = (urlString: string, titleString?: string) => {
       const data = {
         data: {
           URL: urlString,
-          title: "",
+          title: titleString,
           OGP: "",
           description: ""
         }
@@ -85,7 +83,7 @@ export default defineComponent({
       }
     }
 
-    return { dialog, url, closeDialog, submitData }
+    return { dialog, url, title, closeDialog, submitData }
   }
 })
 </script>
