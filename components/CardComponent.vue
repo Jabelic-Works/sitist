@@ -14,6 +14,10 @@
       </v-list-item>
       <v-list-item class="d-flex justify-center">
         <v-btn color="blue ma-3" :href="cardInfo.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
+        <v-spacer> </v-spacer>
+        <button class="pt-1">
+          <img src="https://img.icons8.com/material-outlined/24/000000/trash.png" class="trash-icon" />
+        </button>
       </v-list-item>
     </v-card>
   </div>
@@ -34,4 +38,11 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="sass" scoped></style>
+<style scoped>
+.trash-icon {
+  background-color: rgba(250, 0, 20, 1);
+  backdrop-filter: blur(12px);
+  border-radius: 0.3em;
+  /* filter: blur(5px); */
+}
+</style>
