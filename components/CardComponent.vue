@@ -1,6 +1,6 @@
 <template>
   <div id="card-component" class="my-1 justify-center">
-    <v-card class="mx-auto" max-width="344" outlined>
+    <v-card class="mx-auto" max-width="344" outlined :href="cardInfo.URL" target="_blank" rel="noopener noreferrer">
       <v-list-item three-line>
         <v-list-item-content>
           <v-list-item-title class="text-h5 my-1">

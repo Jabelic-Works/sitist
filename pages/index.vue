@@ -79,6 +79,7 @@ export default defineComponent({
       refUserUid.value = store.getters["auth/getUserUid"]
       documentLocalData.value = store.getters["data/getData"]
       console.debug("activate", documentLocalData.value)
+      afterPostData()
     })
 
     // const checkLocalData = () => {
