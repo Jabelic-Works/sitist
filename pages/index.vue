@@ -32,7 +32,6 @@ import { deepcopy } from "~/modules/utils"
 import UpdateDataDialog from "~/components/UpdateDataDialog.vue"
 
 export default defineComponent({
-  // components: { VBtn },
   setup() {
     const guest = "Guest"
     const refUserName = ref("")

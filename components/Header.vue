@@ -6,7 +6,7 @@
       </nuxt-link>
     </v-toolbar-title>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
     <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" :update="updateData" />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>

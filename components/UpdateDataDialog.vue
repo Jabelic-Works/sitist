@@ -7,7 +7,7 @@
         <v-divider />
         <v-card-actions>
           <v-btn color="green darken-1" text @click="_closeDialog"> Disagree </v-btn>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn color="primary" text @click="accept"> accept </v-btn>
         </v-card-actions>
       </v-card>

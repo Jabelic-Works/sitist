@@ -14,7 +14,7 @@
       </v-list-item>
       <v-list-item class="d-flex justify-center">
         <v-btn color="blue ma-3" :href="cardInfo.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
-        <v-spacer> </v-spacer>
+        <v-spacer />
         <button class="pt-1">
           <img src="https://img.icons8.com/material-outlined/24/000000/trash.png" class="trash-icon" />
         </button>
@@ -33,7 +33,7 @@ export default defineComponent({
       default: () => ({ title: "testCaseTitle", URL: "https://jabelic.netlify.app" })
     }
   },
-  setup(props, {}) {
+  setup(_, {}) {
     // https://qiita.com/ksyunnnn/items/bfe2b9c568e97bb6b494
   }
 })

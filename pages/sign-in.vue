@@ -16,7 +16,7 @@
       <v-card-title class="text-center pa-8">
         <h3 class="fill-width">Sign in</h3>
       </v-card-title>
-      <v-divider> </v-divider>
+      <v-divider />
       <div class="px-6 py-8">
         <div style="max-width: 344px" class="mx-auto">
           <v-btn
@@ -35,7 +35,7 @@
             Sign in with Google
           </v-btn>
           <div class="pt-6">
-            <v-divider></v-divider>
+            <v-divider />
             username: {{ userName }}
             <div class="pt-8 pb-4">
               <span>すでにアカウントをお持ちですか？</span>
