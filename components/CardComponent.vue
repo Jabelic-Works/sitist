@@ -41,8 +41,6 @@ export default defineComponent({
 <style scoped>
 .trash-icon {
   background-color: rgba(250, 0, 20, 1);
-  backdrop-filter: blur(12px);
   border-radius: 0.3em;
-  /* filter: blur(5px); */
 }
 </style>
