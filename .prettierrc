@@ -3,5 +3,8 @@
   "singleQuote": false,
   "fix": "run-s fix:eslint fix:prettier",
   "fix:eslint": "npm run lint:eslint --fix",
-  "fix:prettier": "npm run lint:prettier --write"
+  "fix:prettier": "npm run lint:prettier --write",
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "printWidth": 120
 }

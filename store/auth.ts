@@ -2,7 +2,7 @@ import { reactive } from "@nuxtjs/composition-api"
 export const state = () =>
   reactive({
     userUid: "",
-    userName: "",
+    userName: ""
   })
 
 // TODO: 型修正
@@ -19,7 +19,7 @@ export const mutations = {
   },
   logoutM(state: any) {
     state.token = null
-  },
+  }
 }
 
 export const actions = {
@@ -30,7 +30,7 @@ export const actions = {
   logout({ commit }: any) {
     commit("setUserName", null)
     commit("setUserUid", null)
-  },
+  }
 }
 
 export const getters = {
@@ -39,5 +39,5 @@ export const getters = {
   },
   getUserName(state: any) {
     return state.userName
-  },
+  }
 }

@@ -1,5 +1,5 @@
 import firebase from "firebase"
-
+import "firebase/storage"
 // ** Firebaseプロジェクトの設定を記す
 if (!firebase.apps.length) {
   firebase.initializeApp({
@@ -9,7 +9,7 @@ if (!firebase.apps.length) {
     storageBucket: process.env.FB_STORAGE_BUCKET,
     messagingSenderId: process.env.FB_MESSAGEING_SENDER_ID,
     appId: process.env.FB_APP_ID,
-    measurementId: process.env.FB_MEASUREMENT_ID,
+    measurementId: process.env.FB_MEASUREMENT_ID
   })
 }
 

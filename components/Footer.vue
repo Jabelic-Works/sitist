@@ -26,11 +26,11 @@ export default defineComponent({
     const linksInFooter = [
       { title: "プライバシーポリシー", link: "/policy" },
       { title: "利用規約", link: "/regulation" },
-      { title: `${new Date().getFullYear()} — Sitist`, link: "/" },
+      { title: `${new Date().getFullYear()} — Sitist`, link: "/" }
     ]
     return {
-      linksInFooter,
+      linksInFooter
     }
-  },
+  }
 })
 </script>

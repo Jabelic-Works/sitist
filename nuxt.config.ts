@@ -12,9 +12,9 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      { hid: "description", name: "description", content: "" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -24,7 +24,7 @@ export default {
   plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: ["@/components", "@/templates"], // Auto import の設定
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -33,7 +33,7 @@ export default {
     "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/vuetify
     "@nuxtjs/vuetify",
-    "@nuxtjs/dotenv",
+    "@nuxtjs/dotenv"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -41,7 +41,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
-    "@nuxtjs/pwa",
+    "@nuxtjs/pwa"
   ],
   privateRuntimeConfig: {
     env_api_key: process.env.FB_API_KEY,
@@ -50,8 +50,15 @@ export default {
     env_storage_bucket: process.env.FB_STORAGE_BUCKET,
     env_messaging_sender_id: process.env.FB_MESSAGEING_SENDER_ID,
     env_app_id: process.env.FB_APP_ID,
-    env_measurement_id: process.env.FB_MEASUREMENT_ID,
+    env_measurement_id: process.env.FB_MEASUREMENT_ID
   },
+  // typescript: {
+  //   typeCheck: {
+  //     eslint: {
+  //       files: "./**/*.{ts,vue}"
+  //     }
+  //   }
+  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -59,8 +66,8 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: "en",
-    },
+      lang: "en"
+    }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -76,25 +83,25 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
+          success: colors.green.accent3
+        }
+      }
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     extend(config) {
       config.node = {
-        fs: "empty",
+        fs: "empty"
       }
-    },
+    }
   },
   // generate: {
   //   // choose to suit your project
   //   interval: 3000,
   // }
   router: {
-    middleware: "authenticated",
-  },
+    middleware: "authenticated"
+  }
 }

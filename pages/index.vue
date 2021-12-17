@@ -1,10 +1,6 @@
 <template>
   <div>
-    <Header
-      :refUserName="refUserName"
-      :refUserUid="refUserUid"
-      :updateData="updateData"
-    />
+    <Header :refUserName="refUserName" :refUserUid="refUserUid" :updateData="afterPostData" />
     <div class="" justify="center">
       <v-row justify="center" align="center">
         <v-col cols="12" sm="8" md="6">
@@ -15,13 +11,8 @@
         </v-col>
       </v-row>
       <v-row v-if="documentLocalData">
-        <v-col v-for="doc in documentLocalData" :key="doc.id" cols="12">
-          <v-card>
-            <v-card-title> data: {{ doc.data }} </v-card-title>
-            <v-card-subtitle> data: {{ doc }} </v-card-subtitle>
-          </v-card>
-          <!-- for dynamic component debug : will be issue?-->
-          <!-- <component :is="'v-btn'">hoge</component> -->
+        <v-col v-for="doc in documentLocalData" :key="doc.id" cols="20">
+          <CardComponent :cardInfo="doc.data" />
         </v-col>
       </v-row>
     </div>
@@ -29,22 +20,9 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  watch,
-  ref,
-  useContext,
-  useFetch,
-  onActivated,
-  nextTick,
-} from "@nuxtjs/composition-api"
-// import { VBtn } from '~/node_modules/vuetify/src/components'
-// //  ↑は型エラーがバンバン出る
-// import { VBtn } from '~/node_modules/vuetify/lib'
-// import { VBtn } from 'vuetify/lib'
-// ↑二つでは通る
-
+import { defineComponent, watch, ref, useContext, useFetch, onActivated, nextTick } from "@nuxtjs/composition-api"
 import { use } from "@/modules/fetchData"
+
 export default defineComponent({
   // components: { VBtn },
   setup() {
@@ -103,27 +81,16 @@ export default defineComponent({
       console.debug("activate", documentLocalData.value)
     })
 
-    const checkLocalData = () => {
-      console.debug(
-        JSON.stringify(documentLocalData.value),
-        store.getters["data/getData"],
-        refUserUid.value
-      )
-    }
+    // const checkLocalData = () => {
+    //   console.debug(JSON.stringify(documentLocalData.value), store.getters["data/getData"], refUserUid.value)
+    // }
 
     // 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
     // stateの更新の完了を検知したいんだけど...
-    const updateData = () => {
+    /** postした後にstoreの後の値を */
+    const afterPostData = () => {
       setTimeout(() => checkGetters(), 500)
     }
-    // store.watch(
-    //   (state) => {
-    //     return state.data
-    //   },
-    //   (val) => {
-    //     console.debug('store.watch: ', val)
-    //   }
-    // )
     const deepcopy = (objs: any) => {
       return [objs].map((obj: any) => ({ ...obj }))[0]
     }
@@ -143,14 +110,12 @@ export default defineComponent({
       refUserName,
       refUserUid,
       documentLocalData,
-      checkLocalData,
-      updateData,
+      // checkLocalData,
+      afterPostData,
       checkGetters,
-      fetchAllData,
-      fData,
-      deepcopy,
+      fData
     }
-  },
+  }
 })
 </script>
 <style scoped>

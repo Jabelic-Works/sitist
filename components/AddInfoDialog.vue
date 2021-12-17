@@ -31,12 +31,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  PropType,
-  useContext,
-} from "@nuxtjs/composition-api"
+import { defineComponent, ref, PropType, useContext } from "@nuxtjs/composition-api"
 import { use } from "@/modules/fetchData"
 export default defineComponent({
   props: {
@@ -44,8 +39,8 @@ export default defineComponent({
     refUserUid: String,
     update: {
       type: Function as PropType<() => void>,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props) {
     const dialog = ref(false)
@@ -75,8 +70,8 @@ export default defineComponent({
           URL: urlString,
           title: "",
           OGP: "",
-          description: "",
-        },
+          description: ""
+        }
       }
       const uid = props.refUserUid
       let documentLocalData = {}
@@ -91,6 +86,6 @@ export default defineComponent({
     }
 
     return { dialog, url, closeDialog, submitData }
-  },
+  }
 })
 </script>

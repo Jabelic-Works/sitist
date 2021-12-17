@@ -12,12 +12,7 @@
         </v-card>
       </v-col>
     </v-row> -->
-    <v-card
-      :tile="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
-      class="mx-auto fill-width"
-      flat
-      max-width="640"
-    >
+    <v-card :tile="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs" class="mx-auto fill-width" flat max-width="640">
       <v-card-title class="text-center pa-8">
         <h3 class="fill-width">Sign in</h3>
       </v-card-title>
@@ -70,9 +65,7 @@ export default defineComponent({
         .then(function (result) {
           user.value = result.user
           console.log("success : " + user.value)
-          console.log(
-            "success : " + user.value.uid + " : " + user.value.displayName
-          )
+          console.log("success : " + user.value.uid + " : " + user.value.displayName)
           root.$store.dispatch("auth/login", user.value)
           userName.value = root.$store.getters.getUserName
         })
@@ -92,9 +85,9 @@ export default defineComponent({
     }
     return {
       signIn,
-      userName,
+      userName
     }
-  },
+  }
 })
 </script>
 <style scoped>

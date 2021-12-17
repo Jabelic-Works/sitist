@@ -2,18 +2,12 @@
   <v-toolbar color="primary lighten-1">
     <v-toolbar-title>
       <nuxt-link to="/" style="text-decoration: none; color: inherit">
-        <v-btn text exact class="text-non-trans">
-          <span style="font-size: 1.5rem"> Sitist</span></v-btn
-        >
+        <v-btn text exact class="text-non-trans"> <span style="font-size: 1.5rem"> Sitist</span></v-btn>
       </nuxt-link>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <AddInfoDialog
-      :refUserName="refUserName"
-      :refUserUid="refUserUid"
-      :update="updateData"
-    />
+    <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" :update="updateData" />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -30,12 +24,12 @@ export default defineComponent({
     refUserUid: String,
     updateData: {
       type: Function as PropType<() => void>,
-      required: true,
-    },
+      required: true
+    }
   },
   setup() {
     return {}
-  },
+  }
 })
 </script>
 
