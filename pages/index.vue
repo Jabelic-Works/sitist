@@ -13,8 +13,8 @@
         </v-col>
       </v-row>
       <v-row v-if="documentLocalData">
-        <v-col v-for="doc in sitesInfo" :key="doc.id" cols="20">
-          <CardComponent :cardInfo="doc" />
+        <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
+          <CardComponent :cardInfo="doc" @afterPostData="afterPostData" />
         </v-col>
       </v-row>
     </div>
@@ -30,13 +30,14 @@ import { defineComponent, watch, ref, useContext, useFetch, onActivated, nextTic
 import { use } from "@/modules/fetchData"
 import { deepcopy } from "~/modules/utils"
 import UpdateDataDialog from "~/components/UpdateDataDialog.vue"
+import { CardInfo } from "~/types/custom"
 
 export default defineComponent({
   setup() {
     const guest = "Guest"
     const refUserName = ref("")
     const refUserUid = ref("")
-    const documentLocalData = ref<any>({}) // FIXME: type
+    const documentLocalData = ref<{ data: CardInfo }>() // FIXME: type
     const sitesInfo = ref([])
     const { store } = useContext()
     const { fetchAllData } = use()

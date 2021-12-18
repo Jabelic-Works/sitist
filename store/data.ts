@@ -8,7 +8,7 @@ export const state = (): State => ({
 })
 type State = {
   data: Array<{
-    uid: { title?: string; url: string; OGP?: string | undefined; description?: string | undefined } | undefined
+    id: { title?: string; url: string; OGP?: string | undefined; description?: string | undefined } | undefined
   }>
   timestamp: number
 }

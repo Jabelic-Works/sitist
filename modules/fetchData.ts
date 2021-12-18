@@ -1,6 +1,7 @@
 import { ref } from "@nuxtjs/composition-api"
 import { db } from "~/plugins/firebase"
 
+/** APIs */
 export const use = () => {
   const docRef = ref<firebase.default.firestore.DocumentData>()
   // firestoreからデータを取得、それをstoreへdispatch

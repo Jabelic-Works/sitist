@@ -1,6 +1,7 @@
 import { ref } from "@nuxtjs/composition-api"
 import { db } from "~/plugins/firebase"
 
+/** APIs */
 export const deleteData = () => {
   const docRef = ref<firebase.default.firestore.DocumentData>()
   const deleteCard = (uid: string, keyId: string) => {
