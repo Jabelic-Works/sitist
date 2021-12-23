@@ -6,7 +6,7 @@ import { deleteData } from "./deleteData"
 const { deleteCard } = deleteData()
 export const deleteCardInfomation = async (info: CardInfo, store, emit) => {
   // TODO: Dialogを表示して削除の警告を出す
-  //   await deleteCard(store.getters["auth/getUserUid"], info.key)
+  await deleteCard(store.getters["auth/getUserUid"], info.key)
   const storeData = await store.getters["data/getData"]
   console.debug(storeData)
   for (const [key, item] of Object.entries(storeData)) {
