@@ -1,6 +1,5 @@
-import { reactive, ref } from "@nuxtjs/composition-api"
-import { db } from "~/plugins/firebase"
-const docRef = ref<firebase.default.firestore.DocumentData>()
+// import { reactive, ref } from "@nuxtjs/composition-api"
+// const docRef = ref<firebase.default.firestore.DocumentData>()
 
 export const state = (): State => ({
   data: [],
@@ -16,9 +15,16 @@ type State = {
 // TODO: 型修正
 export const mutations = {
   // こりゃおかしいな=>いらない？moduleでやるので。
-  // setData(state: any, val: any) {
-  //   const { data, uid } = val
-  // },
+  setData(state: State, val: any) {
+    const { data, id } = val
+    for (const [key, item] of Object.entries(state.data)) {
+      console.debug(key, id)
+      if (key == id) {
+        console.debug(state.data[id], JSON.parse(JSON.stringify({ data: data })))
+        state.data[id] = JSON.parse(JSON.stringify({ data: data }))
+      }
+    }
+  },
   setAllData(state: any, Data: any) {
     state.data = Data
   },
@@ -26,13 +32,11 @@ export const mutations = {
 }
 
 export const actions = {
-  // setData({ commit }: any, val: any) {
-  //   const { data, uid } = val
-  //   console.debug(uid)
-  //   commit("setData", { data, uid })
-  // },
   setAllData({ commit }: any, data: any) {
     commit("setAllData", data)
+  },
+  setData({ commit }: any, { data, id }: any) {
+    commit("setData", { data, id })
   },
   setTimestamp({ commit }: any) {
     commit("setTimestamp", 0)
@@ -40,6 +44,9 @@ export const actions = {
 }
 
 export const getters = {
+  getAllData(state: any) {
+    return state.data
+  },
   getData(state: any) {
     return state.data
   },

@@ -46,7 +46,7 @@ export default defineComponent({
     useFetch(() => {
       refUserUid.value = store.getters["auth/getUserUid"]
       if (refUserUid.value) {
-        documentLocalData.value = store.getters["data/getData"] // データがある場合
+        documentLocalData.value = store.getters["data/getAllData"] // データがある場合
         console.debug("useFetch", documentLocalData.value)
         // データがない場合
         // データを追加していない人だけがサーバーへのアクセスが増える、だめだこれ
@@ -69,19 +69,19 @@ export default defineComponent({
     )
     // データが更新された場合
     watch(
-      () => store.getters["data/getData"],
+      () => store.getters["data/getAllData"],
       () => {
-        documentLocalData.value = deepcopy(store.getters["data/getData"])
+        documentLocalData.value = deepcopy(store.getters["data/getAllData"])
       }
     )
     nextTick(async () => {
-      documentLocalData.value = await deepcopy(store.getters["data/getData"])
+      documentLocalData.value = await deepcopy(store.getters["data/getAllData"])
       console.debug("nextTick", documentLocalData.value)
     })
     onActivated(() => {
       refUserName.value = store.getters["auth/getUserName"]
       refUserUid.value = store.getters["auth/getUserUid"]
-      documentLocalData.value = store.getters["data/getData"]
+      documentLocalData.value = store.getters["data/getAllData"]
       console.debug("activate", documentLocalData.value)
       afterPostData()
     })
@@ -95,9 +95,8 @@ export default defineComponent({
       setTimeout(() => checkGetters(), 500)
     }
     const checkGetters = async () => {
-      documentLocalData.value = await deepcopy(store.getters["data/getData"])
+      documentLocalData.value = await deepcopy(store.getters["data/getAllData"])
       console.debug(JSON.stringify(documentLocalData.value))
-      // console.debug(documentLocalData.value, Object.keys(documentLocalData.value))
       let tmpArray = []
       for (const [key, value] of Object.entries(documentLocalData.value)) {
         tmpArray.push({ key, data: value.data })

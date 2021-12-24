@@ -33,7 +33,6 @@ export const use = () => {
       .add(data)
       .then(() => {})
     addDb = fetchAllData(uid)
-    // console.debug("addDb", addDb)
     return addDb
   }
   return { fetchAllData, addData }

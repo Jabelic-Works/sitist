@@ -3,7 +3,6 @@
     <v-dialog v-model="open" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="" dark v-bind="attrs" v-on="on" icon>
-          <!-- Open Dialog -->
           <v-icon>mdi-pen</v-icon>
         </v-btn>
       </template>
@@ -41,8 +40,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const { store } = useContext()
     const open = ref(false)
-    const title = ref(props.cardInfo.data?.title)
-    const url = ref(props.cardInfo.data?.URL)
+    const title = ref("")
+    title.value = props.cardInfo.data?.title
+    const url = ref("")
+    url.value = props.cardInfo.data?.URL
     const edittedInfo = ref<SiteInformation>()
     const closeDialog = () => {
       const info = {
@@ -51,6 +52,7 @@ export default defineComponent({
       }
       editCardInfomation(info, store)
       emit("afterEditData")
+      open.value = false
     }
     return { open, edittedInfo, title, url, closeDialog }
   }

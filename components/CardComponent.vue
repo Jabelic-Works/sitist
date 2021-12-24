@@ -39,7 +39,8 @@ export default defineComponent({
   setup(_, { emit }) {
     const { store } = useContext()
     const deleteCard = (info: CardInfo) => {
-      deleteCardInfomation(info, store, emit)
+      deleteCardInfomation(info, store)
+      emit("afterPostData")
     }
     const afterEditData = () => {
       emit("afterEditData")
