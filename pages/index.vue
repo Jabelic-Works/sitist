@@ -14,7 +14,7 @@
       </v-row>
       <v-row v-if="documentLocalData">
         <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
-          <CardComponent :cardInfo="doc" @afterPostData="afterPostData" />
+          <CardComponent :cardInfo="doc" @afterPostData="afterPostData" @afterEditData="afterEditData" />
         </v-col>
       </v-row>
     </div>
@@ -91,6 +91,9 @@ export default defineComponent({
     const afterPostData = () => {
       setTimeout(() => checkGetters(), 500)
     }
+    const afterEditData = () => {
+      setTimeout(() => checkGetters(), 500)
+    }
     const checkGetters = async () => {
       documentLocalData.value = await deepcopy(store.getters["data/getData"])
       console.debug(JSON.stringify(documentLocalData.value))
@@ -123,7 +126,8 @@ export default defineComponent({
       isShowingUpdateDataDialog,
       showDialog,
       closeDialog,
-      sitesInfo
+      sitesInfo,
+      afterEditData
     }
   },
   components: { UpdateDataDialog }

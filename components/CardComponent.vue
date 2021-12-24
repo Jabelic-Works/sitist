@@ -3,17 +3,19 @@
     <v-card class="mx-auto" max-width="344" outlined>
       <v-list-item three-line>
         <v-list-item-content>
-          <div class="text-h5 my-1">
+          <div class="text-h5 my-1" v-if="cardInfo.data && cardInfo.data.title">
             {{ cardInfo.data.title }}
           </div>
-          <div class="caption">
+          <div class="caption" v-if="cardInfo.data && cardInfo.data.URL">
             {{ cardInfo.data.URL }}
           </div>
         </v-list-item-content>
         <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
       </v-list-item>
-      <v-list-item class="d-flex justify-center">
+      <v-list-item class="d-flex justify-center" v-if="cardInfo.data && cardInfo.data.URL">
         <v-btn color="blue ma-3" :href="cardInfo.data.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
+        <v-spacer />
+        <EditInfoDialog :cardInfo="cardInfo" @afterEditData="afterEditData" />
         <v-spacer />
         <button class="pt-1" @click="deleteCard(cardInfo)">
           <img src="https://img.icons8.com/material-outlined/24/000000/trash.png" class="trash-icon" />
@@ -39,7 +41,10 @@ export default defineComponent({
     const deleteCard = (info: CardInfo) => {
       deleteCardInfomation(info, store, emit)
     }
-    return { deleteCard }
+    const afterEditData = () => {
+      emit("afterEditData")
+    }
+    return { deleteCard, afterEditData }
   }
 })
 </script>
