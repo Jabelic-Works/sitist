@@ -12,9 +12,7 @@ type State = {
   timestamp: number
 }
 
-// TODO: 型修正
 export const mutations = {
-  // こりゃおかしいな=>いらない？moduleでやるので。
   setData(state: State, val: any) {
     const { data, id } = val
     for (const [key, item] of Object.entries(state.data)) {

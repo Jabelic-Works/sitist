@@ -17,6 +17,7 @@
         <v-spacer />
         <EditInfoDialog :cardInfo="cardInfo" @afterEditData="afterEditData" />
         <v-spacer />
+        <!-- TODO: confirmdialog! -->
         <button class="pt-1" @click="deleteCard(cardInfo)">
           <img src="https://img.icons8.com/material-outlined/24/000000/trash.png" class="trash-icon" />
         </button>

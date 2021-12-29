@@ -3,7 +3,7 @@
     <v-dialog v-model="openStatus" persistent class="" @close="_closeDialog" max-width="290">
       <v-card>
         <v-divider />
-        <div class="ma-3">データを更新しますか？</div>
+        <div class="ma-3">{{ confirmText }}</div>
         <v-divider />
         <v-card-actions>
           <v-btn color="green darken-1" text @click="_closeDialog"> Disagree </v-btn>
@@ -18,7 +18,7 @@
 import { defineComponent, ref, watch } from "@nuxtjs/composition-api"
 
 export default defineComponent({
-  props: { isOpened: { type: Boolean, default: false } },
+  props: { isOpened: { type: Boolean, default: false }, confirmText: { type: String } },
   setup(props, { emit }) {
     const openStatus = ref(props.isOpened)
     watch(

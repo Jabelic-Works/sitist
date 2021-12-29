@@ -19,9 +19,12 @@
       </v-row>
     </div>
 
-    <UpdateDataDialog :is-opened="isShowingUpdateDataDialog" @closeDialog="closeDialog" @fechData="fData"
-      >閉じる</UpdateDataDialog
-    >
+    <ConfirmDialog
+      :is-opened="isShowingUpdateDataDialog"
+      @closeDialog="closeDialog"
+      @fechData="fData"
+      :confirmText="'データを更新しますか？'"
+    />
   </div>
 </template>
 
@@ -29,7 +32,6 @@
 import { defineComponent, watch, ref, useContext, useFetch, onActivated, nextTick } from "@nuxtjs/composition-api"
 import { use } from "@/modules/fetchData"
 import { deepcopy } from "~/modules/utils"
-import UpdateDataDialog from "~/components/UpdateDataDialog.vue"
 import { CardInfo } from "~/types/custom"
 
 export default defineComponent({
@@ -128,8 +130,7 @@ export default defineComponent({
       sitesInfo,
       afterEditData
     }
-  },
-  components: { UpdateDataDialog }
+  }
 })
 </script>
 <style scoped>
