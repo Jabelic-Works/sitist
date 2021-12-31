@@ -15,10 +15,10 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-text-field label="title" required v-model="title"></v-text-field>
+                <v-text-field label="URL" required v-model="url"></v-text-field>
               </v-row>
               <v-row>
-                <v-text-field label="URL" required v-model="url"></v-text-field>
+                <v-text-field label="title" required v-model="title"></v-text-field>
               </v-row>
             </v-container>
           </v-card-text>
