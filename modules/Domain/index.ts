@@ -1,4 +1,15 @@
-import { nextTick, onActivated, ref, useContext, useFetch, useStore, watch } from "@nuxtjs/composition-api"
+import {
+  nextTick,
+  onActivated,
+  onDeactivated,
+  onMounted,
+  reactive,
+  ref,
+  useContext,
+  useFetch,
+  useStore,
+  watch
+} from "@nuxtjs/composition-api"
 import { use as useFetchData } from "@/modules/fetchData"
 import { CardInfo } from "~/types/custom"
 import { deepcopy } from "../utils"
@@ -16,7 +27,6 @@ export const use = () => {
       documentLocalData.value = store.getters["data/getAllData"] // データがある場合
       console.debug("useFetch", documentLocalData.value)
       // データがない場合
-      // データを追加していない人だけがサーバーへのアクセスが増える、だめだこれ
       if (Object.keys(documentLocalData.value).length === 0) {
         console.debug("data is empty")
         documentLocalData.value = fetchAllData(refUserUid.value)
@@ -63,7 +73,6 @@ export const use = () => {
   }
   const checkGetters = async () => {
     documentLocalData.value = await deepcopy(store.getters["data/getAllData"])
-    console.debug(JSON.stringify(documentLocalData.value))
     let tmpArray = []
     for (const [key, value] of Object.entries(documentLocalData.value)) {
       tmpArray.push({ key, data: value.data })
@@ -81,6 +90,9 @@ export const use = () => {
     await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
     setTimeout(() => checkGetters(), 500)
   }
+  const width = window.innerWidth
+  const height = window.innerHeight
+  const windowSize = reactive({ width, height })
   return {
     refUserName,
     refUserUid,
@@ -92,6 +104,7 @@ export const use = () => {
     showDialog,
     closeDialog,
     sitesInfo,
-    afterEditData
+    afterEditData,
+    windowSize
   }
 }

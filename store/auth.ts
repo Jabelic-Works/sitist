@@ -2,7 +2,7 @@ import { reactive } from "@nuxtjs/composition-api"
 export const state = () =>
   reactive({
     userUid: "",
-    userName: ""
+    userName: "Guest"
   })
 
 // TODO: 型修正
