@@ -93,6 +93,15 @@ export const use = () => {
   const width = window.innerWidth
   const height = window.innerHeight
   const windowSize = reactive({ width, height })
+  const isShowAddInfodialog = ref(false)
+  const showAddInfodialog = () => {
+    isShowAddInfodialog.value = true
+    console.debug(isShowAddInfodialog.value)
+  }
+  const unshowAddInfodialog = () => {
+    isShowAddInfodialog.value = false
+    console.debug("sdfsdf")
+  }
   return {
     refUserName,
     refUserUid,
@@ -105,6 +114,9 @@ export const use = () => {
     closeDialog,
     sitesInfo,
     afterEditData,
-    windowSize
+    windowSize,
+    isShowAddInfodialog,
+    showAddInfodialog,
+    unshowAddInfodialog
   }
 }

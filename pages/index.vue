@@ -2,7 +2,13 @@
   <div>
     <Header>
       <template slot="AddInfoDialog">
-        <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" :update="afterPostData" />
+        <AddInfoDialog
+          :isShowAddInfodialog="isShowAddInfodialog"
+          :refUserName="refUserName"
+          :refUserUid="refUserUid"
+          :update="afterPostData"
+          @unshowAddInfodialog="unshowAddInfodialog"
+        />
       </template>
     </Header>
     <v-container>
@@ -23,23 +29,26 @@
           </v-col>
         </v-row>
       </div>
-      <v-fab-transition>
-        <v-btn dark fixed bottom right fab color="#BDBDBD88" class="add-btn">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-fab-transition>
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
         @closeDialog="closeDialog"
         @fechData="fData"
         :confirmText="'データを更新しますか？'"
       />
+      <AddInfoDialog
+        :kinds="'floating'"
+        :isShowAddInfodialog="isShowAddInfodialog"
+        :refUserName="refUserName"
+        :refUserUid="refUserUid"
+        :update="afterPostData"
+        @unshowAddInfodialog="unshowAddInfodialog"
+      />
     </v-container>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api"
+import { defineComponent, watch } from "@nuxtjs/composition-api"
 import { use } from "@/modules/Domain/index"
 import AddFloatingButton from "~/components/AddFloatingButton.vue"
 
@@ -57,8 +66,17 @@ export default defineComponent({
       closeDialog,
       sitesInfo,
       afterEditData,
-      windowSize
+      windowSize,
+      isShowAddInfodialog,
+      showAddInfodialog,
+      unshowAddInfodialog
     } = use()
+    watch(
+      () => isShowAddInfodialog,
+      val => {
+        console.debug(val)
+      }
+    )
     return {
       refUserName,
       refUserUid,
@@ -71,7 +89,10 @@ export default defineComponent({
       closeDialog,
       sitesInfo,
       afterEditData,
-      windowSize
+      windowSize,
+      isShowAddInfodialog,
+      showAddInfodialog,
+      unshowAddInfodialog
     }
   },
   components: { AddFloatingButton }
@@ -82,6 +103,12 @@ export default defineComponent({
   text-transform: none;
 }
 .add-btn {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+  left: calc(90%);
+}
+::v-deep .add-btn {
   position: -webkit-sticky;
   position: sticky;
   top: 20px;
