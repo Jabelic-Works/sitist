@@ -111,7 +111,6 @@ export default defineComponent({
 ::v-deep .add-btn {
   position: -webkit-sticky;
   position: sticky;
-  top: 20px;
   left: calc(90%);
 }
 </style>
