@@ -15,12 +15,13 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch } from "@nuxtjs/composition-api"
+import { defineComponent, getCurrentInstance, ref, watch } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: { isOpened: { type: Boolean, default: false }, confirmText: { type: String } },
-  setup(props, { emit }) {
+  setup(props) {
     const openStatus = ref(props.isOpened)
+    const { emit } = getCurrentInstance()
     watch(
       () => props.isOpened,
       val => (openStatus.value = val)

@@ -15,7 +15,7 @@
       <v-list-item class="d-flex justify-center" v-if="cardInfo.data && cardInfo.data.URL">
         <v-btn color="blue ma-3" :href="cardInfo.data.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
         <v-spacer />
-        <EditInfoDialog :cardInfo="cardInfo" @afterEditData="afterEditData" @closeDialog="closeDialog" />
+        <EditInfoDialog :cardInfo="cardInfo" @closeDialog="closeDialog" />
         <v-spacer />
         <!-- TODO: confirmdialog! -->
         <button class="pt-1" @click="$emit('comfirmDeleteCardInformation', cardInfo)">
@@ -26,9 +26,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, useContext } from "@nuxtjs/composition-api"
+import { defineComponent, getCurrentInstance, PropType, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
-import { deleteCardInformation, editCardInfomation } from "@/modules/dataOperations"
+import { editCardInfomation } from "@/modules/dataOperations"
 
 export default defineComponent({
   props: {
@@ -37,7 +37,8 @@ export default defineComponent({
       default: () => ({ key: "00000", data: { title: "testCaseTitle", URL: "https://jabelic.netlify.app" } })
     }
   },
-  setup(props, { emit }) {
+  setup(props) {
+    const { emit } = getCurrentInstance()
     const { store } = useContext()
     const afterEditData = () => {
       emit("afterEditData")

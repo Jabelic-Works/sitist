@@ -128,7 +128,10 @@ export default defineComponent({
       isShowingUpdateDataDialog.value = true
       deletedCardInfo.value = cardInfo
     }
+
+    /** possible deleted data(when show confirm dialog) */
     const deletedCardInfo = ref<CardInfo>()
+
     const deleteCard = (info: CardInfo) => {
       deleteCardInformation(info, store)
       afterPostData()
@@ -138,6 +141,7 @@ export default defineComponent({
     }
 
     type modeOfConfirmDialog = "forceFetch" | "deleteData"
+    /** comfirmDialogで叩くmethodの中身の切り替えのためのStatsフラグ */
     const statusOfConfirmDialog = ref<modeOfConfirmDialog>("forceFetch")
     const acceptMethod = async () => {
       // 強制fetchの時
@@ -150,6 +154,8 @@ export default defineComponent({
       }
       setTimeout(() => checkGetters(), 500)
     }
+
+    /** Headerの+ボタン経由でダイアログ */
     const addDataFromHeader = (urlString: string, titleString?: string) => {
       const data = {
         data: {

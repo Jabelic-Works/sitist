@@ -29,14 +29,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, ref } from "@nuxtjs/composition-api"
+import { defineComponent, getCurrentInstance, PropType, ref } from "@nuxtjs/composition-api"
 import { CardInfo } from "~/types/custom"
 
 export default defineComponent({
   props: {
     cardInfo: { type: Object as PropType<CardInfo> }
   },
-  setup(props, { emit }) {
+  setup(props) {
+    const { emit } = getCurrentInstance()
     const isOpen = ref(false)
     const title = ref("")
     title.value = props.cardInfo.data?.title
