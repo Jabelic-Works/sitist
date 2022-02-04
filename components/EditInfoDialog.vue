@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="open" max-width="600px">
+    <v-dialog v-model="isOpen" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="" dark v-bind="attrs" v-on="on" icon>
           <v-icon>mdi-pen</v-icon>
@@ -29,8 +29,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, ref, useContext } from "@nuxtjs/composition-api"
-import { editCardInfomation } from "~/modules/dataOperations"
+import { defineComponent, PropType, ref } from "@nuxtjs/composition-api"
 import { CardInfo, SiteInformation } from "~/types/custom"
 
 export default defineComponent({
@@ -38,23 +37,17 @@ export default defineComponent({
     cardInfo: { type: Object as PropType<CardInfo> }
   },
   setup(props, { emit }) {
-    const { store } = useContext()
-    const open = ref(false)
+    const isOpen = ref(false)
     const title = ref("")
     title.value = props.cardInfo.data?.title
     const url = ref("")
     url.value = props.cardInfo.data?.URL
-    const edittedInfo = ref<SiteInformation>()
+
     const closeDialog = () => {
-      const info = {
-        key: props.cardInfo.key,
-        data: { title: title.value, URL: url.value, OGP: "", description: "" }
-      }
-      editCardInfomation(info, store)
-      emit("afterEditData")
-      open.value = false
+      emit("closeDialog", { url: url.value, title: title.value })
+      isOpen.value = false
     }
-    return { open, edittedInfo, title, url, closeDialog }
+    return { isOpen, title, url, closeDialog }
   }
 })
 </script>

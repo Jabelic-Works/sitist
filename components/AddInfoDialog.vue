@@ -33,8 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, useContext } from "@nuxtjs/composition-api"
-import { use } from "@/modules/fetchData"
+import { defineComponent, ref, PropType } from "@nuxtjs/composition-api"
 export default defineComponent({
   props: {
     refUserName: String,
@@ -51,38 +50,14 @@ export default defineComponent({
     const dialog = ref(false)
     const url = ref("")
     const title = ref("")
-    const { store } = useContext()
-    const { addData } = use()
     const closeDialog = () => {
       if (url.value || title.value) {
-        // submitData(url.value, title.value)
         props.addDataFromHeader(url.value, title.value)
         url.value = ""
         title.value = ""
       }
       dialog.value = false
     }
-
-    // const submitData = (urlString: string, titleString?: string) => {
-    //   const data = {
-    //     data: {
-    //       URL: urlString,
-    //       title: titleString,
-    //       OGP: "",
-    //       description: ""
-    //     }
-    //   }
-    //   const uid = props.refUserUid
-    //   let documentLocalData = {}
-    //   if (uid) {
-    //     console.debug(uid, "add data:", data)
-    //     documentLocalData = addData(data, uid)
-    //     console.debug("new data", documentLocalData)
-    //     store.dispatch("data/setAllData", documentLocalData).finally(() => {
-    //       props.update()
-    //     })
-    //   }
-    // }
 
     return { dialog, url, title, closeDialog }
   }
