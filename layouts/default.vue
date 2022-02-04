@@ -1,9 +1,7 @@
 <template>
   <v-app dark>
     <v-main>
-      <v-container>
-        <nuxt keep-alive />
-      </v-container>
+      <nuxt keep-alive />
     </v-main>
     <Footer />
   </v-app>

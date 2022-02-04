@@ -6,7 +6,7 @@ import { commitEditedCardInfo } from "./editData"
 /** viewModels */
 
 const { deleteCard } = deleteData()
-export const deleteCardInfomation = async (info: CardInfo, store) => {
+export const deleteCardInformation = async (info: CardInfo, store) => {
   // TODO: Dialogを表示して削除の警告を出す
   await deleteCard(store.getters["auth/getUserUid"], info.key)
   const storeData = await store.getters["data/getAllData"]

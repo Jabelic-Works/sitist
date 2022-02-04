@@ -42,6 +42,9 @@ export default defineComponent({
     update: {
       type: Function as PropType<() => void>,
       required: true
+    },
+    addDataFromHeader: {
+      type: Function as PropType<(urlString: string, titleString?: string) => void>
     }
   },
   setup(props) {
@@ -51,39 +54,37 @@ export default defineComponent({
     const { store } = useContext()
     const { addData } = use()
     const closeDialog = () => {
-      // TODO: urlを取得, moduleでscrayping, title, OGP,etc...を取得
-      // TODO: moduleから{title, OGP}を取得, firestoreに格納
-      // TODO: firestoreにaddする処理をmodule切り出し
       if (url.value || title.value) {
-        submitData(url.value, title.value)
+        // submitData(url.value, title.value)
+        props.addDataFromHeader(url.value, title.value)
         url.value = ""
         title.value = ""
       }
       dialog.value = false
     }
 
-    const submitData = (urlString: string, titleString?: string) => {
-      const data = {
-        data: {
-          URL: urlString,
-          title: titleString,
-          OGP: "",
-          description: ""
-        }
-      }
-      const uid = props.refUserUid
-      let documentLocalData = {}
-      if (uid) {
-        console.debug(uid, "add data:", data)
-        documentLocalData = addData(data, uid)
-        console.debug("new data", documentLocalData)
-        store.dispatch("data/setAllData", documentLocalData).finally(() => {
-          props.update()
-        })
-      }
-    }
+    // const submitData = (urlString: string, titleString?: string) => {
+    //   const data = {
+    //     data: {
+    //       URL: urlString,
+    //       title: titleString,
+    //       OGP: "",
+    //       description: ""
+    //     }
+    //   }
+    //   const uid = props.refUserUid
+    //   let documentLocalData = {}
+    //   if (uid) {
+    //     console.debug(uid, "add data:", data)
+    //     documentLocalData = addData(data, uid)
+    //     console.debug("new data", documentLocalData)
+    //     store.dispatch("data/setAllData", documentLocalData).finally(() => {
+    //       props.update()
+    //     })
+    //   }
+    // }
 
-    return { dialog, url, title, closeDialog, submitData }
+    return { dialog, url, title, closeDialog }
   }
 })
 </script>

@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, PropType, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
-import { deleteCardInfomation } from "@/modules/dataOperations"
+import { deleteCardInformation } from "@/modules/dataOperations"
 
 export default defineComponent({
   props: {
@@ -40,7 +40,7 @@ export default defineComponent({
   setup(_, { emit }) {
     const { store } = useContext()
     const deleteCard = (info: CardInfo) => {
-      deleteCardInfomation(info, store)
+      deleteCardInformation(info, store)
       emit("afterPostData")
     }
     const afterEditData = () => {

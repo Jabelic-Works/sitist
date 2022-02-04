@@ -29,7 +29,7 @@ export default defineComponent({
       emit("closeDialog")
     }
     const accept = () => {
-      emit("fechData")
+      emit("fetchData")
       emit("closeDialog")
     }
     return {

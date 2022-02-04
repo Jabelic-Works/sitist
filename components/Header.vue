@@ -7,7 +7,12 @@
     </v-toolbar-title>
 
     <v-spacer />
-    <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" :update="updateData" />
+    <AddInfoDialog
+      :refUserName="refUserName"
+      :refUserUid="refUserUid"
+      :update="updateData"
+      :addDataFromHeader="addDataFromHeader"
+    />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -25,6 +30,9 @@ export default defineComponent({
     updateData: {
       type: Function as PropType<() => void>,
       required: true
+    },
+    addDataFromHeader: {
+      type: Function as PropType<(urlString: string, titleString?: string) => void>
     }
   },
   setup() {
