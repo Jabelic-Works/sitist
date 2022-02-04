@@ -19,7 +19,7 @@
         <v-spacer />
         <!-- TODO: confirmdialog! -->
         <button class="pt-1" @click="deleteCard(cardInfo)">
-          <img src="https://img.icons8.com/material-outlined/24/000000/trash.png" class="trash-icon" />
+          <img src="https://img.icons8.com/material-outlined/28/000000/trash.png" class="trash-icon" />
         </button>
       </v-list-item>
     </v-card>

@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType, ref } from "@nuxtjs/composition-api"
-import { CardInfo, SiteInformation } from "~/types/custom"
+import { CardInfo } from "~/types/custom"
 
 export default defineComponent({
   props: {
