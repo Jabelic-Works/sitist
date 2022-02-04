@@ -16,12 +16,17 @@
           </v-col>
           <v-col
             ><v-btn @click="checkGetters">updateData: 画面の更新</v-btn>
-            <v-btn @click="showDialog">fetchAllData: データの更新</v-btn>
+            <v-btn @click="comfirmForceFetch">fetchAllData: データの更新</v-btn>
           </v-col>
         </v-row>
         <v-row v-if="documentLocalData">
           <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
-            <CardComponent :cardInfo="doc" @afterPostData="afterPostData" @afterEditData="afterEditData" />
+            <CardComponent
+              :cardInfo="doc"
+              @afterPostData="afterPostData"
+              @afterEditData="afterEditData"
+              @comfirmDeleteCardInformation="comfirmDeleteCardInformation"
+            />
           </v-col>
         </v-row>
       </div>
@@ -29,7 +34,7 @@
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
         @closeDialog="closeDialog"
-        @fetchData="fData"
+        @acceptMethod="acceptMethod"
         :confirmText="'データを更新しますか？'"
       />
     </v-container>
@@ -37,6 +42,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, onActivated, ref, useContext, useFetch, watch } from "@nuxtjs/composition-api"
+import { deleteCardInformation } from "~/modules/dataOperations"
 import { use } from "~/modules/fetchData"
 import { deepcopy } from "~/modules/utils"
 import { CardInfo } from "~/types/custom"
@@ -112,14 +118,36 @@ export default defineComponent({
       sitesInfo.value = tmpArray
     }
     const isShowingUpdateDataDialog = ref(false)
-    const showDialog = () => {
+
+    const comfirmForceFetch = () => {
+      statusOfConfirmDialog.value = "forceFetch"
       isShowingUpdateDataDialog.value = true
+    }
+    const comfirmDeleteCardInformation = cardInfo => {
+      statusOfConfirmDialog.value = "deleteData"
+      isShowingUpdateDataDialog.value = true
+      deletedCardInfo.value = cardInfo
+    }
+    const deletedCardInfo = ref<CardInfo>()
+    const deleteCard = (info: CardInfo) => {
+      deleteCardInformation(info, store)
+      afterPostData()
     }
     const closeDialog = () => {
       isShowingUpdateDataDialog.value = false
     }
-    const fData = async () => {
-      await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
+
+    type modeOfConfirmDialog = "forceFetch" | "deleteData"
+    const statusOfConfirmDialog = ref<modeOfConfirmDialog>("forceFetch")
+    const acceptMethod = async () => {
+      // 強制fetchの時
+      if (statusOfConfirmDialog.value == "forceFetch") {
+        await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
+      }
+      // データの削除
+      else if (deletedCardInfo.value) {
+        deleteCard(deletedCardInfo.value)
+      }
       setTimeout(() => checkGetters(), 500)
     }
     const addDataFromHeader = (urlString: string, titleString?: string) => {
@@ -149,13 +177,14 @@ export default defineComponent({
       documentLocalData,
       afterPostData,
       checkGetters,
-      fData,
+      acceptMethod,
       isShowingUpdateDataDialog,
-      showDialog,
+      comfirmForceFetch,
       closeDialog,
       sitesInfo,
       afterEditData,
-      addDataFromHeader
+      addDataFromHeader,
+      comfirmDeleteCardInformation
     }
   }
 })

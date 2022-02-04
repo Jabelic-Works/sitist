@@ -18,7 +18,7 @@
         <EditInfoDialog :cardInfo="cardInfo" @afterEditData="afterEditData" @closeDialog="closeDialog" />
         <v-spacer />
         <!-- TODO: confirmdialog! -->
-        <button class="pt-1" @click="deleteCard(cardInfo)">
+        <button class="pt-1" @click="$emit('comfirmDeleteCardInformation', cardInfo)">
           <img src="https://img.icons8.com/material-outlined/28/000000/trash.png" class="trash-icon" />
         </button>
       </v-list-item>
@@ -39,10 +39,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const { store } = useContext()
-    const deleteCard = (info: CardInfo) => {
-      deleteCardInformation(info, store)
-      emit("afterPostData")
-    }
     const afterEditData = () => {
       emit("afterEditData")
     }
@@ -54,7 +50,7 @@ export default defineComponent({
       editCardInfomation(info, store)
       emit("afterEditData")
     }
-    return { deleteCard, afterEditData, closeDialog }
+    return { afterEditData, closeDialog }
   }
 })
 </script>
