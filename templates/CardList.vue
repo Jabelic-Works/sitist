@@ -3,31 +3,28 @@
     <!-- FIXME: Headerはpages/indexに移動 -->
     <Header :refUserName="refUserName" :refUserUid="refUserUid" :addDataFromHeader="addDataFromHeader" />
     <v-container>
-      <div class="" justify="center">
-        <div v-if="!refUserName">
-          <v-btn to="/sign-in">Sign in</v-btn>
-        </div>
-        <v-row justify="center" align="center">
-          <v-col cols="12" sm="8" md="6">
-            <div class="text-center"></div>
-            <h3>Hello! {{ refUserName ? refUserName : guest }}</h3>
-          </v-col>
-          <!-- <v-col
+      <!-- <div class="" justify="center"> -->
+      <v-row justify="start" class="align-center ma-2 d-flex justify-space-between">
+        <span class="ml-auto ma-2 my-2" style="font-size: 1.1rem">Hello! {{ refUserName ? refUserName : guest }}</span>
+        <span class="mr-auto ma-2">
+          <v-btn to="/sign-in" class="text-non-trans" width="30%" color="gray lighten-5">Sign-in</v-btn>
+        </span>
+        <!-- <v-col
             ><v-btn @click="checkGetters">updateData: 画面の更新</v-btn>
             <v-btn @click="confirmForceFetch">fetchAllData: データの更新</v-btn>
           </v-col> -->
-        </v-row>
-        <v-row v-if="allCardInformationList">
-          <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
-            <CardComponent
-              :cardInfo="doc"
-              @afterPostData="afterPostData"
-              @afterEditData="afterEditData"
-              @confirmDeleteCardInformation="confirmDeleteCardInformation"
-            />
-          </v-col>
-        </v-row>
-      </div>
+      </v-row>
+      <v-row v-if="allCardInformationList">
+        <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
+          <CardComponent
+            :cardInfo="doc"
+            @afterPostData="afterPostData"
+            @afterEditData="afterEditData"
+            @confirmDeleteCardInformation="confirmDeleteCardInformation"
+          />
+        </v-col>
+      </v-row>
+      <!-- </div> -->
 
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
@@ -205,4 +202,8 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="sass" scoped></style>
+<style scoped>
+.text-non-trans {
+  text-transform: none;
+}
+</style>
