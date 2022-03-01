@@ -27,8 +27,8 @@
 import { defineComponent, useContext } from "@nuxtjs/composition-api"
 export default defineComponent({
   setup(_, {}) {
-    const { $vuetify } = useContext()
-    return { $vuetify }
+    // const { $vuetify } = useContext()
+    // return { $vuetify }
   }
 })
 </script>
