@@ -38,10 +38,6 @@ export default defineComponent({
   props: {
     refUserName: String,
     refUserUid: String,
-    update: {
-      type: Function as PropType<() => void>,
-      required: true
-    },
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     }

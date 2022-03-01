@@ -18,7 +18,7 @@
         <EditInfoDialog :cardInfo="cardInfo" @closeDialog="closeDialog" />
         <v-spacer />
         <!-- TODO: confirmdialog! -->
-        <button class="pt-1" @click="$emit('comfirmDeleteCardInformation', cardInfo)">
+        <button class="pt-1" @click="$emit('confirmDeleteCardInformation', cardInfo)">
           <img src="https://img.icons8.com/material-outlined/28/000000/trash.png" class="trash-icon" />
         </button>
       </v-list-item>

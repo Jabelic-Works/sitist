@@ -1,23 +1,39 @@
 <template>
   <v-app>
-    <v-app-bar height="128px" color="#F5F5F5" dense flat>
-      <div class="header-title justify-center d-flex fill-width">
-        <nuxt-link to="/">
-          <!-- https://placeholder.com/ -->
-          <img src="http://placehold.it/350x150" style="height: 48px" />
-        </nuxt-link>
-      </div>
-    </v-app-bar>
-    <v-main style="background: #f5f5f5; height: auto" class="pa-0 fill-height">
-      <v-container :class="{ 'pa-0': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs }">
-        <nuxt />
-      </v-container>
-    </v-main>
-    <footer style="background: #f5f5f5">
-      <div class="pa-8 d-flex flex-warp justify-center fill-wdith">
-        <nuxt-link to="privacy" class="link-caption mr-8">プライバシーポリシー</nuxt-link>
-        <nuxt-link to="tos" class="link-caption mr-8">利用規約</nuxt-link>
-      </div>
-    </footer>
+    <!-- color="#F5F5F5" -->
+    <div>
+      <v-toolbar color="primary lighten-1">
+        <v-toolbar-title>
+          <nuxt-link to="/" style="text-decoration: none; color: inherit">
+            <v-btn text exact class="text-non-trans"> <span style="font-size: 1.5rem"> Sitist</span></v-btn>
+          </nuxt-link>
+        </v-toolbar-title>
+      </v-toolbar>
+      <v-main style="height: auto" class="pa-0 fill-height" color="primary lighten-1">
+        <v-container :class="{ 'pa-0': $vuetify.breakpoint.sm || $vuetify.breakpoint.xs }">
+          <nuxt />
+        </v-container>
+      </v-main>
+      <footer>
+        <div class="pa-8 d-flex flex-warp justify-center fill-wdith">
+          <nuxt-link to="privacy" class="link-caption mr-8">プライバシーポリシー</nuxt-link>
+          <nuxt-link to="tos" class="link-caption mr-8">利用規約</nuxt-link>
+        </div>
+      </footer>
+    </div>
   </v-app>
 </template>
+<script lang="ts">
+import { defineComponent, useContext } from "@nuxtjs/composition-api"
+export default defineComponent({
+  setup(_, {}) {
+    const { $vuetify } = useContext()
+    return { $vuetify }
+  }
+})
+</script>
+<style scoped>
+.text-non-trans {
+  text-transform: none;
+}
+</style>

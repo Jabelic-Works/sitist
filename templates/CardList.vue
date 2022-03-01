@@ -1,23 +1,21 @@
 <template>
   <div class="card-list">
     <!-- FIXME: Headerはpages/indexに移動 -->
-    <Header
-      :refUserName="refUserName"
-      :refUserUid="refUserUid"
-      :updateData="afterPostData"
-      :addDataFromHeader="addDataFromHeader"
-    />
+    <Header :refUserName="refUserName" :refUserUid="refUserUid" :addDataFromHeader="addDataFromHeader" />
     <v-container>
       <div class="" justify="center">
+        <div v-if="!refUserName">
+          <v-btn to="/sign-in">Sign in</v-btn>
+        </div>
         <v-row justify="center" align="center">
           <v-col cols="12" sm="8" md="6">
             <div class="text-center"></div>
-            <h3>hello, {{ refUserName ? refUserName : guest }}</h3>
+            <h3>Hello! {{ refUserName ? refUserName : guest }}</h3>
           </v-col>
-          <v-col
+          <!-- <v-col
             ><v-btn @click="checkGetters">updateData: 画面の更新</v-btn>
-            <v-btn @click="comfirmForceFetch">fetchAllData: データの更新</v-btn>
-          </v-col>
+            <v-btn @click="confirmForceFetch">fetchAllData: データの更新</v-btn>
+          </v-col> -->
         </v-row>
         <v-row v-if="allCardInformationList">
           <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
@@ -25,7 +23,7 @@
               :cardInfo="doc"
               @afterPostData="afterPostData"
               @afterEditData="afterEditData"
-              @comfirmDeleteCardInformation="comfirmDeleteCardInformation"
+              @confirmDeleteCardInformation="confirmDeleteCardInformation"
             />
           </v-col>
         </v-row>
@@ -34,8 +32,8 @@
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
         @closeDialog="closeDialog"
-        @acceptMethod="acceptMethod"
-        :confirmText="'データを更新しますか？'"
+        @acceptMethod="fetchOrDeleteData"
+        :confirmText="confirmMessage"
       />
     </v-container>
   </div>
@@ -56,6 +54,7 @@ export default defineComponent({
     const sitesInfo = ref([])
     const store = useStore()
     const { fetchAllData, addData } = use()
+
     // すでにstoreにデータがある場合は再取得はボタンで行う(回数制限/有料制にする？)
     const { $fetchState } = useFetch(() => {
       refUserUid.value = store.getters["auth/getUserUid"]
@@ -100,7 +99,8 @@ export default defineComponent({
       afterPostData()
     })
 
-    /** postした後にstoreの後の値を */
+    // FIXME: watchでstoreを監視して、checkGettersして良いのでは？
+    /** postした後にstoreの後の値を変更してから画面に反映 */
     const afterPostData = () => {
       setTimeout(() => checkGetters(), 500)
     }
@@ -108,6 +108,7 @@ export default defineComponent({
       setTimeout(() => checkGetters(), 500)
     }
 
+    /** storeからデータを取ってくる */
     const checkGetters = async () => {
       allCardInformationList.value = await deepcopy(store.getters["data/getAllData"])
       console.debug(JSON.stringify(allCardInformationList.value))
@@ -119,12 +120,18 @@ export default defineComponent({
     }
     const isShowingUpdateDataDialog = ref(false)
 
-    const comfirmForceFetch = () => {
-      statusOfConfirmDialog.value = "forceFetch"
-      isShowingUpdateDataDialog.value = true
-    }
-    const comfirmDeleteCardInformation = (cardInfo: CardInfo) => {
+    /** temporally unused. */
+    // const confirmForceFetch = () => {
+    //   statusOfConfirmDialog.value = "forceFetch"
+    //   isShowingUpdateDataDialog.value = true
+    //   confirmMessage.value = "データを更新しますか？"
+    // }
+    const confirmMessage = ref("カードを消去しますか？")
+
+    /** カードのゴミ箱アイコンで発火 */
+    const confirmDeleteCardInformation = (cardInfo: CardInfo) => {
       statusOfConfirmDialog.value = "deleteData"
+      confirmMessage.value = "カードを消去しますか？"
       isShowingUpdateDataDialog.value = true
       deletedCardInfo.value = cardInfo
     }
@@ -141,9 +148,11 @@ export default defineComponent({
     }
 
     type modeOfConfirmDialog = "forceFetch" | "deleteData"
-    /** comfirmDialogで叩くmethodの中身の切り替えのためのStatsフラグ */
+    /** comfirmDialogで叩くmethodの中身の切り替えのためのStatusフラグ */
     const statusOfConfirmDialog = ref<modeOfConfirmDialog>("forceFetch")
-    const acceptMethod = async () => {
+
+    /** confirmDialogでacceptした時に発火するmethod */
+    const fetchOrDeleteData = async () => {
       // 強制fetchの時
       if (statusOfConfirmDialog.value == "forceFetch") {
         await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
@@ -155,7 +164,7 @@ export default defineComponent({
       setTimeout(() => checkGetters(), 500)
     }
 
-    /** Headerの+ボタン経由でダイアログ */
+    /** Headerの+ボタン経由で開かれるダイアログ */
     const addDataFromHeader = (urlString: string, titleString?: string) => {
       const data = {
         data: {
@@ -182,15 +191,16 @@ export default defineComponent({
       refUserUid,
       allCardInformationList,
       afterPostData,
-      checkGetters,
-      acceptMethod,
+      // checkGetters,
+      fetchOrDeleteData,
       isShowingUpdateDataDialog,
-      comfirmForceFetch,
+      // confirmForceFetch,
       closeDialog,
       sitesInfo,
       afterEditData,
       addDataFromHeader,
-      comfirmDeleteCardInformation
+      confirmDeleteCardInformation,
+      confirmMessage
     }
   }
 })
