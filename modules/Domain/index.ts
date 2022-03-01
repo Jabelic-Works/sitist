@@ -112,13 +112,13 @@ export const use = () => {
     checkGetters,
     // fData,
     isShowingUpdateDataDialog,
-    showDialog,
+    // showDialog,
     closeDialog,
     sitesInfo,
     afterEditData,
-    windowSize,
+    // windowSize,
     isShowAddInfodialog,
-    showAddInfodialog,
+    // showAddInfodialog,
     unshowAddInfodialog
   }
 }
