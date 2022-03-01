@@ -44,16 +44,11 @@ export default defineComponent({
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     },
-    update: {
-      type: Function as PropType<() => void>,
-      required: true
-    },
-    isShowAddInfodialog: { type: Boolean, required: true },
+    isShowAddInfodialog: { type: Boolean },
     kinds: { type: String }
   },
   setup(props, { emit }) {
     const dialog = ref(false)
-    const { addData } = use()
     watch(
       () => props.isShowAddInfodialog,
       val => {
@@ -74,29 +69,8 @@ export default defineComponent({
       console.debug("ppppp")
       emit("unshowAddInfodialog")
     }
-    const store = useStore()
-    const submitData = (urlString: string, titleString?: string) => {
-      const data = {
-        data: {
-          URL: urlString,
-          title: titleString,
-          OGP: "",
-          description: ""
-        }
-      }
-      const uid = props.refUserUid
-      let documentLocalData = {}
-      if (uid) {
-        console.debug(uid, "add data:", data)
-        documentLocalData = addData(data, uid)
-        console.debug("new data", documentLocalData)
-        store.dispatch("data/setAllData", documentLocalData).finally(() => {
-          props.update()
-        })
-      }
-    }
 
-    return { dialog, url, title, closeDialog, submitData, cancelAction }
+    return { dialog, url, title, closeDialog, cancelAction }
   }
 })
 </script>

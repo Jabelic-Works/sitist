@@ -17,20 +17,20 @@ import { deepcopy } from "../utils"
 export const use = () => {
   const refUserName = ref("Guest")
   const refUserUid = ref("")
-  const documentLocalData = ref<{ data: CardInfo }>() // FIXME: type
+  const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref([])
   const { store } = useContext()
   const { fetchAllData } = useFetchData()
   useFetch(() => {
     refUserUid.value = store.getters["auth/getUserUid"]
     if (refUserUid.value) {
-      documentLocalData.value = store.getters["data/getAllData"] // データがある場合
-      console.debug("useFetch", documentLocalData.value)
+      allCardInformationList.value = store.getters["data/getAllData"] // データがある場合
+      console.debug("useFetch", allCardInformationList.value)
       // データがない場合
-      if (Object.keys(documentLocalData.value).length === 0) {
+      if (Object.keys(allCardInformationList.value).length === 0) {
         console.debug("data is empty")
-        documentLocalData.value = fetchAllData(refUserUid.value)
-        store.dispatch("data/setAllData", documentLocalData.value)
+        allCardInformationList.value = fetchAllData(refUserUid.value)
+        store.dispatch("data/setAllData", allCardInformationList.value)
       }
     }
   })
@@ -48,33 +48,34 @@ export const use = () => {
   watch(
     () => store.getters["data/getAllData"],
     () => {
-      documentLocalData.value = deepcopy(store.getters["data/getAllData"])
+      allCardInformationList.value = deepcopy(store.getters["data/getAllData"])
     }
   )
   nextTick(async () => {
-    documentLocalData.value = await deepcopy(store.getters["data/getAllData"])
-    console.debug("nextTick", documentLocalData.value)
+    allCardInformationList.value = await deepcopy(store.getters["data/getAllData"])
+    console.debug("nextTick", allCardInformationList.value)
   })
   onActivated(() => {
     refUserName.value = store.getters["auth/getUserName"]
     refUserUid.value = store.getters["auth/getUserUid"]
-    documentLocalData.value = store.getters["data/getAllData"]
-    console.debug("activate", documentLocalData.value)
+    allCardInformationList.value = store.getters["data/getAllData"]
+    console.debug("activate", allCardInformationList.value)
     afterPostData()
   })
   // 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
   // stateの更新の完了を検知したいんだけど...
-  /** postした後にstoreの後の値を */
+  /** postした後にstoreの後の値を変更してから画面に反映 */
   const afterPostData = () => {
     setTimeout(() => checkGetters(), 500)
   }
   const afterEditData = () => {
     setTimeout(() => checkGetters(), 500)
   }
+  /** storeからデータを取ってくる */
   const checkGetters = async () => {
-    documentLocalData.value = await deepcopy(store.getters["data/getAllData"])
+    allCardInformationList.value = await deepcopy(store.getters["data/getAllData"])
     let tmpArray = []
-    for (const [key, value] of Object.entries(documentLocalData.value)) {
+    for (const [key, value] of Object.entries(allCardInformationList.value)) {
       tmpArray.push({ key, data: value.data })
     }
     sitesInfo.value = tmpArray
@@ -86,10 +87,11 @@ export const use = () => {
   const closeDialog = () => {
     isShowingUpdateDataDialog.value = false
   }
-  const fData = async () => {
-    await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
-    setTimeout(() => checkGetters(), 500)
-  }
+
+  // const fData = async () => {
+  //   await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
+  //   setTimeout(() => checkGetters(), 500)
+  // }
   const width = window.innerWidth
   const height = window.innerHeight
   const windowSize = reactive({ width, height })
@@ -105,10 +107,10 @@ export const use = () => {
   return {
     refUserName,
     refUserUid,
-    documentLocalData,
+    allCardInformationList,
     afterPostData,
     checkGetters,
-    fData,
+    // fData,
     isShowingUpdateDataDialog,
     showDialog,
     closeDialog,

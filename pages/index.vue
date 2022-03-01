@@ -45,6 +45,7 @@
         @unshowAddInfodialog="unshowAddInfodialog"
       />
     </v-container> -->
+    <AddFloatingButton />
   </div>
 </template>
 
