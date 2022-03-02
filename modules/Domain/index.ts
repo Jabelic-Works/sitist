@@ -13,6 +13,7 @@ import {
 import { use as useFetchData } from "@/modules/fetchData"
 import { CardInfo } from "~/types/custom"
 import { deepcopy } from "../utils"
+import { deleteCardInformation } from "../dataOperations"
 
 export const use = () => {
   const refUserName = ref("Guest")
@@ -104,6 +105,39 @@ export const use = () => {
     isShowAddInfodialog.value = false
     console.debug("sdfsdf")
   }
+
+  const confirmMessage = ref("カードを消去しますか？")
+
+  /** カードのゴミ箱アイコンで発火 */
+  const confirmDeleteCardInformation = (cardInfo: CardInfo) => {
+    statusOfConfirmDialog.value = "deleteData"
+    confirmMessage.value = "カードを消去しますか？"
+    isShowingUpdateDataDialog.value = true
+    deletedCardInfo.value = cardInfo
+  }
+  type modeOfConfirmDialog = "forceFetch" | "deleteData"
+  /** comfirmDialogで叩くmethodの中身の切り替えのためのStatusフラグ */
+  const statusOfConfirmDialog = ref<modeOfConfirmDialog>("forceFetch")
+  /** possible deleted data(when show confirm dialog) */
+  const deletedCardInfo = ref<CardInfo>()
+  const deleteCard = (info: CardInfo) => {
+    deleteCardInformation(info, store)
+    afterPostData()
+  }
+
+  /** confirmDialogでacceptした時に発火するmethod */
+  const fetchOrDeleteData = async () => {
+    // 強制fetchの時
+    if (statusOfConfirmDialog.value == "forceFetch") {
+      await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
+    }
+    // データの削除
+    else if (deletedCardInfo.value) {
+      deleteCard(deletedCardInfo.value)
+    }
+    setTimeout(() => checkGetters(), 500)
+  }
+
   return {
     refUserName,
     refUserUid,
@@ -119,6 +153,10 @@ export const use = () => {
     // windowSize,
     isShowAddInfodialog,
     // showAddInfodialog,
-    unshowAddInfodialog
+    unshowAddInfodialog,
+    confirmMessage,
+    confirmDeleteCardInformation,
+    statusOfConfirmDialog,
+    fetchOrDeleteData
   }
 }

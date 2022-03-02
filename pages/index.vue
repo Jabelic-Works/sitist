@@ -5,54 +5,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from "@nuxtjs/composition-api"
-import { use } from "@/modules/Domain/index"
-import AddFloatingButton from "~/components/AddFloatingButton.vue"
+import { defineComponent } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   setup() {
-    const {
-      refUserName,
-      refUserUid,
-      documentLocalData,
-      afterPostData,
-      checkGetters,
-      fData,
-      isShowingUpdateDataDialog,
-      showDialog,
-      closeDialog,
-      sitesInfo,
-      afterEditData,
-      windowSize,
-      isShowAddInfodialog,
-      showAddInfodialog,
-      unshowAddInfodialog
-    } = use()
-    watch(
-      () => isShowAddInfodialog,
-      val => {
-        console.debug(val)
-      }
-    )
-    return {
-      refUserName,
-      refUserUid,
-      documentLocalData,
-      afterPostData,
-      checkGetters,
-      fData,
-      isShowingUpdateDataDialog,
-      showDialog,
-      closeDialog,
-      sitesInfo,
-      afterEditData,
-      windowSize,
-      isShowAddInfodialog,
-      showAddInfodialog,
-      unshowAddInfodialog
-    }
-  },
-  components: { AddFloatingButton }
+    return {}
+  }
 })
 </script>
 <style scoped>

@@ -54,58 +54,20 @@ export default defineComponent({
       allCardInformationList,
       afterPostData,
       checkGetters,
-      // fData,
       isShowingUpdateDataDialog,
-      // showDialog,
       closeDialog,
       sitesInfo,
       afterEditData,
-      // windowSize,
       isShowAddInfodialog,
-      // showAddInfodialog,
-      unshowAddInfodialog
+      unshowAddInfodialog,
+      confirmMessage,
+      confirmDeleteCardInformation,
+      statusOfConfirmDialog,
+      fetchOrDeleteData
     } = domain()
 
     const store = useStore()
     const { fetchAllData, addData } = use()
-
-    const confirmMessage = ref("カードを消去しますか？")
-
-    /** カードのゴミ箱アイコンで発火 */
-    const confirmDeleteCardInformation = (cardInfo: CardInfo) => {
-      statusOfConfirmDialog.value = "deleteData"
-      confirmMessage.value = "カードを消去しますか？"
-      isShowingUpdateDataDialog.value = true
-      deletedCardInfo.value = cardInfo
-    }
-
-    /** possible deleted data(when show confirm dialog) */
-    const deletedCardInfo = ref<CardInfo>()
-
-    const deleteCard = (info: CardInfo) => {
-      deleteCardInformation(info, store)
-      afterPostData()
-    }
-    // const closeDialog = () => {
-    //   isShowingUpdateDataDialog.value = false
-    // }
-
-    type modeOfConfirmDialog = "forceFetch" | "deleteData"
-    /** comfirmDialogで叩くmethodの中身の切り替えのためのStatusフラグ */
-    const statusOfConfirmDialog = ref<modeOfConfirmDialog>("forceFetch")
-
-    /** confirmDialogでacceptした時に発火するmethod */
-    const fetchOrDeleteData = async () => {
-      // 強制fetchの時
-      if (statusOfConfirmDialog.value == "forceFetch") {
-        await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
-      }
-      // データの削除
-      else if (deletedCardInfo.value) {
-        deleteCard(deletedCardInfo.value)
-      }
-      setTimeout(() => checkGetters(), 500)
-    }
 
     /** Headerの+ボタン経由で開かれるダイアログ */
     const addDataFromHeader = (urlString: string, titleString?: string) => {
