@@ -96,6 +96,7 @@ export const use = () => {
   const height = window.innerHeight
   const windowSize = reactive({ width, height })
   const isShowAddInfodialog = ref(false)
+  //unUsed...
   const showAddInfodialog = () => {
     isShowAddInfodialog.value = true
     console.debug(isShowAddInfodialog.value)
@@ -178,6 +179,5 @@ export const use = () => {
     statusOfConfirmDialog,
     fetchOrDeleteData,
     addDataFromHeader
-
   }
 }

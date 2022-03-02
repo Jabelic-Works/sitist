@@ -65,6 +65,7 @@ export default defineComponent({
         url.value = ""
         title.value = ""
       }
+      dialog.value = false
       emit("unshowAddInfodialog")
     }
     const cancelAction = () => {

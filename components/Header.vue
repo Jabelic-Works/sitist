@@ -7,8 +7,14 @@
     </v-toolbar-title>
 
     <v-spacer />
-    <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" :addDataFromHeader="addDataFromHeader" />
-    <slot name="AddInfoDialog"></slot>
+    <AddInfoDialog
+      :refUserName="refUserName"
+      :refUserUid="refUserUid"
+      :addDataFromHeader="addDataFromHeader"
+      :isShowAddInfodialog="isShowAddInfodialog"
+      @unshowAddInfodialog="unshowAddInfodialog"
+    />
+    <!-- <slot name="AddInfoDialog"></slot> -->
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
@@ -24,6 +30,14 @@ export default defineComponent({
     refUserUid: String,
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
+    },
+    isShowAddInfodialog: {
+      type: Boolean,
+      required: true
+    },
+    unshowAddInfodialog: {
+      type: Function,
+      required: true
     }
   },
   setup() {
