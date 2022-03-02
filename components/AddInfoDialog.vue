@@ -53,6 +53,7 @@ export default defineComponent({
     watch(
       () => props.isShowAddInfodialog,
       val => {
+        console.debug("isShowAddInfodialog", props.isShowAddInfodialog)
         dialog.value = val
       }
     )
@@ -72,7 +73,6 @@ export default defineComponent({
     }
 
     return { dialog, url, title, closeDialog, cancelAction }
-
   }
 })
 </script>

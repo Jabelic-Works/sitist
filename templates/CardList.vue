@@ -32,7 +32,7 @@
         :isShowAddInfodialog="isShowAddInfodialog"
         :refUserName="refUserName"
         :refUserUid="refUserUid"
-        :update="afterPostData"
+        :addDataFromHeader="addDataFromHeader"
         @unshowAddInfodialog="unshowAddInfodialog"
       />
     </v-container>

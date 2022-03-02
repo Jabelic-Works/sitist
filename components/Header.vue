@@ -16,10 +16,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@nuxtjs/composition-api"
+import { defineComponent, PropType } from "@nuxtjs/composition-api"
 
 export default defineComponent({
-  props: {},
+  props: {
+    refUserName: String,
+    refUserUid: String,
+    addDataFromHeader: {
+      type: Function as PropType<(urlString: string, titleString?: string) => void>
+    }
+  },
   setup() {
     return {}
   }
