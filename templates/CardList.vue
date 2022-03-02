@@ -40,11 +40,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, onActivated, ref, useFetch, useStore, watch } from "@nuxtjs/composition-api"
-import { deleteCardInformation } from "~/modules/dataOperations"
 import { use } from "~/modules/fetchData"
 import { use as domain } from "@/modules/Domain/index"
-import { deepcopy } from "~/modules/utils"
-import { CardInfo } from "~/types/custom"
 
 export default defineComponent({
   setup() {
@@ -63,32 +60,9 @@ export default defineComponent({
       confirmMessage,
       confirmDeleteCardInformation,
       statusOfConfirmDialog,
-      fetchOrDeleteData
+      fetchOrDeleteData,
+      addDataFromHeader
     } = domain()
-
-    const store = useStore()
-    const { fetchAllData, addData } = use()
-
-    /** Headerの+ボタン経由で開かれるダイアログ */
-    const addDataFromHeader = (urlString: string, titleString?: string) => {
-      const data = {
-        data: {
-          URL: urlString,
-          title: titleString,
-          OGP: "",
-          description: ""
-        }
-      }
-      let allCardInformationList = {}
-      if (refUserUid.value) {
-        console.debug(refUserUid.value, "add data:", data)
-        allCardInformationList = addData(data, refUserUid.value)
-        console.debug("new data", allCardInformationList)
-        store.dispatch("data/setAllData", allCardInformationList).finally(() => {
-          afterPostData()
-        })
-      }
-    }
 
     return {
       refUserName,

@@ -21,7 +21,7 @@ export const use = () => {
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref([])
   const { store } = useContext()
-  const { fetchAllData } = useFetchData()
+  const { addData, fetchAllData } = useFetchData()
   useFetch(() => {
     refUserUid.value = store.getters["auth/getUserUid"]
     if (refUserUid.value) {
@@ -137,6 +137,26 @@ export const use = () => {
     }
     setTimeout(() => checkGetters(), 500)
   }
+  /** Headerの+ボタン経由で開かれるダイアログ */
+  const addDataFromHeader = (urlString: string, titleString?: string) => {
+    const data = {
+      data: {
+        URL: urlString,
+        title: titleString,
+        OGP: "",
+        description: ""
+      }
+    }
+    let allCardInformationList = {}
+    if (refUserUid.value) {
+      console.debug(refUserUid.value, "add data:", data)
+      allCardInformationList = addData(data, refUserUid.value)
+      console.debug("new data", allCardInformationList)
+      store.dispatch("data/setAllData", allCardInformationList).finally(() => {
+        afterPostData()
+      })
+    }
+  }
 
   return {
     refUserName,
@@ -157,6 +177,7 @@ export const use = () => {
     confirmMessage,
     confirmDeleteCardInformation,
     statusOfConfirmDialog,
-    fetchOrDeleteData
+    fetchOrDeleteData,
+    addDataFromHeader
   }
 }
