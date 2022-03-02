@@ -37,6 +37,7 @@
 <script lang="ts">
 import { defineComponent, ref, PropType, useContext, watch, useStore } from "@nuxtjs/composition-api"
 import { use } from "@/modules/fetchData"
+
 export default defineComponent({
   props: {
     refUserName: String,
@@ -71,6 +72,7 @@ export default defineComponent({
     }
 
     return { dialog, url, title, closeDialog, cancelAction }
+
   }
 })
 </script>

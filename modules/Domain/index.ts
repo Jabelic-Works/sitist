@@ -88,7 +88,6 @@ export const use = () => {
   const closeDialog = () => {
     isShowingUpdateDataDialog.value = false
   }
-
   // const fData = async () => {
   //   await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
   //   setTimeout(() => checkGetters(), 500)
@@ -179,5 +178,6 @@ export const use = () => {
     statusOfConfirmDialog,
     fetchOrDeleteData,
     addDataFromHeader
+
   }
 }
