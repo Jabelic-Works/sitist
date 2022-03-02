@@ -1,7 +1,13 @@
 <template>
   <div class="card-list">
     <!-- FIXME: Headerはpages/indexに移動 -->
-    <Header :refUserName="refUserName" :refUserUid="refUserUid" :addDataFromHeader="addDataFromHeader" />
+    <Header
+      :refUserName="refUserName"
+      :refUserUid="refUserUid"
+      :addDataFromHeader="addDataFromHeader"
+      :isShowAddInfodialog="isShowAddInfodialog"
+      :unshowAddInfodialog="unshowAddInfodialog"
+    />
     <v-container>
       <v-row justify="start" class="align-center ma-2 d-flex justify-space-between">
         <span class="ml-auto ma-2 my-2" style="font-size: 1.1rem">Hello! {{ refUserName }}</span>
@@ -32,7 +38,7 @@
         :isShowAddInfodialog="isShowAddInfodialog"
         :refUserName="refUserName"
         :refUserUid="refUserUid"
-        :update="afterPostData"
+        :addDataFromHeader="addDataFromHeader"
         @unshowAddInfodialog="unshowAddInfodialog"
       />
     </v-container>
