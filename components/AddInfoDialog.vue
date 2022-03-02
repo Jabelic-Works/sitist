@@ -35,16 +35,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
+import { defineComponent, ref, PropType, useContext, watch, useStore } from "@nuxtjs/composition-api"
+import { use } from "@/modules/fetchData"
+
 export default defineComponent({
   props: {
     refUserName: String,
     refUserUid: String,
-    update: {
-      type: Function as PropType<() => void>,
-      required: true
+    addDataFromHeader: {
+      type: Function as PropType<(urlString: string, titleString?: string) => void>
     },
-    isShowAddInfodialog: { type: Boolean, required: true },
+    isShowAddInfodialog: { type: Boolean },
     kinds: { type: String }
   },
   setup(props, { emit }) {
@@ -70,28 +71,8 @@ export default defineComponent({
       emit("unshowAddInfodialog")
     }
 
-    const submitData = (urlString: string, titleString?: string) => {
-      const data = {
-        data: {
-          URL: urlString,
-          title: titleString,
-          OGP: "",
-          description: ""
-        }
-      }
-      const uid = props.refUserUid
-      let documentLocalData = {}
-      if (uid) {
-        console.debug(uid, "add data:", data)
-        documentLocalData = addData(data, uid)
-        console.debug("new data", documentLocalData)
-        store.dispatch("data/setAllData", documentLocalData).finally(() => {
-          props.update()
-        })
-      }
-    }
+    return { dialog, url, title, closeDialog, cancelAction }
 
-    return { dialog, url, title, closeDialog, submitData, cancelAction }
   }
 })
 </script>

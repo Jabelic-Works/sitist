@@ -7,6 +7,7 @@
     </v-toolbar-title>
 
     <v-spacer />
+    <AddInfoDialog :refUserName="refUserName" :refUserUid="refUserUid" :addDataFromHeader="addDataFromHeader" />
     <slot name="AddInfoDialog"></slot>
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
