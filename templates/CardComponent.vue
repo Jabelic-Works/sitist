@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, PropType, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
-import { editCardInfomation } from "@/modules/dataOperations"
+import { editCardInfomation } from "@/modules/Domain/model/dataOperations"
 
 export default defineComponent({
   props: {

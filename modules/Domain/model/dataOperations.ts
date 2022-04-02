@@ -1,7 +1,7 @@
 import { Context } from "@nuxt/types"
 import { CardInfo, SiteInformation } from "~/types/custom"
-import { deleteData } from "./deleteData"
-import { commitEditedCardInfo } from "./editData"
+import { deleteData } from "../../firestoreClient/deleteData"
+import { commitEditedCardInfo } from "../../firestoreClient/editData"
 
 /** viewModels */
 

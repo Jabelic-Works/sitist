@@ -25,7 +25,6 @@
           />
         </v-col>
       </v-row>
-      <!-- </div> -->
 
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
@@ -45,9 +44,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, nextTick, onActivated, ref, useFetch, useStore, watch } from "@nuxtjs/composition-api"
-import { use } from "~/modules/fetchData"
-import { use as domain } from "@/modules/Domain/index"
+import { defineComponent } from "@nuxtjs/composition-api"
+import { use as domain } from "~/modules/Domain/viewModel/index"
 
 export default defineComponent({
   setup() {
@@ -75,10 +73,8 @@ export default defineComponent({
       refUserUid,
       allCardInformationList,
       afterPostData,
-      // checkGetters,
       fetchOrDeleteData,
       isShowingUpdateDataDialog,
-      // confirmForceFetch,
       closeDialog,
       sitesInfo,
       afterEditData,
