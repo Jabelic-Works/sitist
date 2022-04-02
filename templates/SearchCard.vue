@@ -5,25 +5,64 @@
         <v-btn dark v-bind="attrs" v-on="on" icon> <v-icon>mdi-magnify</v-icon> </v-btn>
       </template>
       <v-card>
-        <v-toolbar color="primary" dark>Opening from the bottom</v-toolbar>
+        <v-toolbar color="primary lighten-1" dark>検索して、どうぞ。</v-toolbar>
         <v-card-text>
-          <div class="text-h2 pa-12">Hello world!</div>
+          <!-- <div class="text-h4 pa-1">Hello world!</div> -->
+          <Input
+            class="my-4"
+            inputmode="rawinput"
+            label="Tweet!"
+            placeholder="タイトルで検索"
+            @setInputText="syncInputText"
+          />
         </v-card-text>
+        <v-data-table :headers="headers" :items="dataTableItems"></v-data-table>
         <v-card-actions class="justify-end">
           <v-btn text @click.stop="open = false">Close</v-btn>
+          <v-btn text @click.fstop="search">検索</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, getCurrentInstance, watch } from "@nuxtjs/composition-api"
+import { defineComponent, ref } from "@nuxtjs/composition-api"
+import { data } from "browserslist"
+import { filter } from "vue/types/umd"
+import { useSearch } from "../modules/Domain/viewModel/search"
 
 export default defineComponent({
   name: "SearchCard",
-  setup(_, { emit }) {
+  setup(_, {}) {
     const open = ref<boolean>()
-    return { open }
+    const inputValue = ref("")
+    const setInputText = (args: string) => {
+      inputValue.value = args
+    }
+    const syncInputText = (args: string) => {
+      inputValue.value = args
+    }
+    const { searchContents } = useSearch(inputValue)
+    const dataTableItems = ref([])
+    const headers = ref([
+      { text: "Title", value: "title" },
+      { text: "URL", value: "URL" },
+      { text: "GO", value: "goAction" }
+    ])
+    const search = async () => {
+      const filtered = await searchContents()
+      filtered.forEach(item => dataTableItems.value.push({ title: item[1].data.title, URL: item[1].data.URL }))
+    }
+    return {
+      inputValue,
+      setInputText,
+      syncInputText,
+      open,
+      searchContents,
+      search,
+      dataTableItems,
+      headers
+    }
   }
 })
 </script>

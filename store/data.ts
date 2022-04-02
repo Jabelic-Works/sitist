@@ -5,7 +5,7 @@ export const state = (): State => ({
   data: [],
   timestamp: 0
 })
-type State = {
+export type State = {
   data: Array<{
     id: { title?: string; url: string; OGP?: string | undefined; description?: string | undefined } | undefined
   }>
