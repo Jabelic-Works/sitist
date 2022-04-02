@@ -1,18 +1,20 @@
-import { nextTick, onActivated, ref, useContext, useFetch, watch } from "@nuxtjs/composition-api"
+import { nextTick, onActivated, ref, useContext, useFetch, useStore, watch } from "@nuxtjs/composition-api"
 import { use as useFetchData } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
 import { deepcopy } from "../../utils"
-import { deleteCardInformation } from "../model/dataOperations"
+import { useCardList } from "./cardList"
+import { useDelete } from "./delete"
 
 export const use = () => {
   const refUserName = ref("Guest")
   const refUserUid = ref("")
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref([])
-  const { store } = useContext()
+  const store = useStore()
   const { addData, fetchAllData } = useFetchData()
-  // 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
-  // stateの更新の完了を検知したいんだけど...
+  const { checkGetters } = useCardList({ allCardInformationList, sitesInfo })
+
+  // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
   /** postした後にstoreの後の値を変更してから画面に反映 */
   const afterPostData = () => {
     setTimeout(() => checkGetters(), 500)
@@ -20,17 +22,9 @@ export const use = () => {
   const afterEditData = () => {
     setTimeout(() => checkGetters(), 500)
   }
-  /** storeからデータを取ってくる */
-  const checkGetters = async () => {
-    allCardInformationList.value = await deepcopy(store.getters["data/getAllData"])
-    let tmpArray = []
-    for (const [key, value] of Object.entries(allCardInformationList.value)) {
-      tmpArray.push({ key, data: value.data })
-    }
-    sitesInfo.value = tmpArray
-  }
+
   const isShowingUpdateDataDialog = ref(false)
-  const showDialog = () => {
+  const showConfirmDeleteDialog = () => {
     confirmMessage.value = "カードを消去しますか？"
     isShowingUpdateDataDialog.value = true
   }
@@ -44,34 +38,12 @@ export const use = () => {
 
   const confirmMessage = ref("カードを消去しますか？")
 
-  /** カードのゴミ箱アイコンで発火 */
-  const confirmDeleteCardInformation = (cardInfo: CardInfo) => {
-    statusOfConfirmDialog.value = "deleteData"
-    showDialog()
-    deletedCardInfo.value = cardInfo
-  }
-  type modeOfConfirmDialog = "forceFetch" | "deleteData"
-  /** comfirmDialogで叩くmethodの中身の切り替えのためのStatusフラグ */
-  const statusOfConfirmDialog = ref<modeOfConfirmDialog>("forceFetch")
-  /** possible deleted data(when show confirm dialog) */
-  const deletedCardInfo = ref<CardInfo>()
-  const deleteCard = (info: CardInfo) => {
-    deleteCardInformation(info, store)
-    afterPostData()
-  }
+  const { deleteData, confirmDeleteCardInformation } = useDelete({
+    showConfirmDeleteDialog,
+    afterPostData,
+    checkGetters
+  })
 
-  /** confirmDialogでacceptした時に発火するmethod */
-  const fetchOrDeleteData = async () => {
-    // 強制fetchの時
-    if (statusOfConfirmDialog.value == "forceFetch") {
-      await store.dispatch("data/setAllData", fetchAllData(refUserUid.value))
-    }
-    // データの削除
-    else if (deletedCardInfo.value) {
-      deleteCard(deletedCardInfo.value)
-    }
-    setTimeout(() => checkGetters(), 500)
-  }
   /** Headerの+ボタン経由で開かれるダイアログ */
   const addDataFromHeader = (urlString: string, titleString?: string) => {
     const data = {
@@ -148,8 +120,7 @@ export const use = () => {
     unshowAddInfodialog,
     confirmMessage,
     confirmDeleteCardInformation,
-    statusOfConfirmDialog,
-    fetchOrDeleteData,
+    deleteData,
     addDataFromHeader
   }
 }

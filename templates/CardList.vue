@@ -29,7 +29,7 @@
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
         @closeDialog="closeDialog"
-        @acceptMethod="fetchOrDeleteData"
+        @acceptMethod="deleteData"
         :confirmText="confirmMessage"
       />
       <AddInfoDialog
@@ -63,8 +63,7 @@ export default defineComponent({
       unshowAddInfodialog,
       confirmMessage,
       confirmDeleteCardInformation,
-      statusOfConfirmDialog,
-      fetchOrDeleteData,
+      deleteData,
       addDataFromHeader
     } = domain()
 
@@ -73,7 +72,7 @@ export default defineComponent({
       refUserUid,
       allCardInformationList,
       afterPostData,
-      fetchOrDeleteData,
+      deleteData,
       isShowingUpdateDataDialog,
       closeDialog,
       sitesInfo,
