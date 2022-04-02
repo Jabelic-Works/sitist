@@ -27,8 +27,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "@nuxtjs/composition-api"
-import { data } from "browserslist"
-import { filter } from "vue/types/umd"
 import { useSearch } from "../modules/Domain/viewModel/search"
 
 export default defineComponent({
@@ -36,9 +34,9 @@ export default defineComponent({
   setup(_, {}) {
     const open = ref<boolean>()
     const inputValue = ref("")
-    const setInputText = (args: string) => {
-      inputValue.value = args
-    }
+    // const setInputText = (args: string) => {
+    //   inputValue.value = args
+    // }
     const syncInputText = (args: string) => {
       inputValue.value = args
     }
@@ -51,11 +49,16 @@ export default defineComponent({
     ])
     const search = async () => {
       const filtered = await searchContents()
-      filtered.forEach(item => dataTableItems.value.push({ title: item[1].data.title, URL: item[1].data.URL }))
+      if (Array.isArray(filtered) && filtered.length) {
+        dataTableItems.value.length = 0
+        filtered.map(item => dataTableItems.value.push({ title: item[1].data.title, URL: item[1].data.URL }))
+      } else {
+        dataTableItems.value.splice(0)
+      }
     }
     return {
       inputValue,
-      setInputText,
+      // setInputText,
       syncInputText,
       open,
       searchContents,

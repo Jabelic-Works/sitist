@@ -27,7 +27,7 @@ export default defineComponent({
     watch(
       () => inputValue.value,
       val => {
-        if (val) root?.emit("setInputText", val)
+        root?.emit("setInputText", val)
       }
     )
     return { inputValue }

@@ -42,13 +42,13 @@ export const actions = {
 }
 
 export const getters = {
-  getAllData(state: any) {
+  getAllData(state: State) {
     return state.data
   },
-  getData(state: any) {
+  getData(state: State) {
     return state.data
   },
-  getTimestamp(state: any) {
+  getTimestamp(state: State) {
     return state.timestamp
   }
 }
