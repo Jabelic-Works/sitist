@@ -35,8 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, useContext, watch, useStore } from "@nuxtjs/composition-api"
-import { use } from "@/modules/fetchData"
+import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {

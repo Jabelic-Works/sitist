@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, PropType, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
-import { editCardInfomation } from "@/modules/dataOperations"
+import { editCardInformation } from "~/modules/Domain/viewModel/edit"
 
 export default defineComponent({
   props: {
@@ -48,7 +48,7 @@ export default defineComponent({
         key: props.cardInfo.key,
         data: { title: data.title, URL: data.url, OGP: "", description: "" }
       }
-      editCardInfomation(info, store)
+      editCardInformation(info, store)
       emit("afterEditData")
     }
     return { afterEditData, closeDialog }
