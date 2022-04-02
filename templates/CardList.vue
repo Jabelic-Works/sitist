@@ -54,7 +54,6 @@ export default defineComponent({
       refUserUid,
       allCardInformationList,
       afterPostData,
-      checkGetters,
       isShowingUpdateDataDialog,
       closeDialog,
       sitesInfo,
