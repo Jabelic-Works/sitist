@@ -14,10 +14,7 @@
       :isShowAddInfodialog="isShowAddInfodialog"
       @unshowAddInfodialog="unshowAddInfodialog"
     />
-    <!-- <slot name="AddInfoDialog"></slot> -->
-    <v-btn icon>
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+    <SearchCard />
   </v-toolbar>
 </template>
 
@@ -40,7 +37,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props, { emit }) {
     return {}
   }
 })
