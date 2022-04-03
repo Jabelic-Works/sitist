@@ -5,7 +5,7 @@ export const state = (): State => ({
   data: [],
   timestamp: 0
 })
-type State = {
+export type State = {
   data: Array<{
     id: { title?: string; url: string; OGP?: string | undefined; description?: string | undefined } | undefined
   }>
@@ -42,13 +42,13 @@ export const actions = {
 }
 
 export const getters = {
-  getAllData(state: any) {
+  getAllData(state: State) {
     return state.data
   },
-  getData(state: any) {
+  getData(state: State) {
     return state.data
   },
-  getTimestamp(state: any) {
+  getTimestamp(state: State) {
     return state.timestamp
   }
 }

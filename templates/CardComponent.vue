@@ -1,32 +1,32 @@
 <template>
   <div id="card-component" class="my-1 justify-center">
-    <v-card class="mx-auto" max-width="344" outlined>
-      <v-list-item three-line>
-        <v-list-item-content>
-          <div class="text-h5 my-1" v-if="cardInfo.data && cardInfo.data.title">
-            {{ cardInfo.data.title }}
-          </div>
-          <div class="caption" v-if="cardInfo.data && cardInfo.data.URL">
+    <v-card class="d-flex mx-auto" :width="$vuetify.breakpoint.smAndUp ? 344 : 300" height="160" outlined>
+      <div class="flex-row title-style">
+        <div class="flex-wrap text-h6 ma-5 my-2" v-if="cardInfo.data && cardInfo.data.title">
+          {{ cardInfo.data.title }}
+          <div class="text-caption pt-2" v-if="cardInfo.data && cardInfo.data.URL">
             {{ cardInfo.data.URL }}
           </div>
-        </v-list-item-content>
-        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
-      </v-list-item>
-      <v-list-item class="d-flex justify-center" v-if="cardInfo.data && cardInfo.data.URL">
-        <v-btn color="blue ma-3" :href="cardInfo.data.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
-        <v-spacer />
-        <EditInfoDialog :cardInfo="cardInfo" @closeDialog="closeDialog" />
-        <v-spacer />
+        </div>
+      </div>
+      <!--  ===== buttons ===== -->
+      <div class="flex-row ml-auto ma-3" v-if="cardInfo.data && cardInfo.data.URL">
+        <div class="flex-column">
+          <v-btn color="blue mr-auto" :href="cardInfo.data.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
+        </div>
+        <div class="flex-column align-self-center pl-6 py-3 ml-auto">
+          <EditInfoDialog :cardInfo="cardInfo" @closeDialog="closeDialog" />
+        </div>
         <!-- TODO: confirmdialog! -->
-        <button class="pt-1" @click="$emit('confirmDeleteCardInformation', cardInfo)">
+        <button class="pt-1 pl-7 py-3 ml-auto" @click="$emit('confirmDeleteCardInformation', cardInfo)">
           <img src="https://img.icons8.com/material-outlined/28/000000/trash.png" class="trash-icon" />
         </button>
-      </v-list-item>
+      </div>
     </v-card>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, PropType, useContext } from "@nuxtjs/composition-api"
+import { defineComponent, getCurrentInstance, PropType, ref, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
 import { editCardInformation } from "~/modules/Domain/viewModel/edit"
 
@@ -43,7 +43,14 @@ export default defineComponent({
     const afterEditData = () => {
       emit("afterEditData")
     }
-    const closeDialog = (data: { url: string; title?: string }) => {
+    // const ogp = ref("")
+    // nextTick(async () => {
+    //   console.debug(props.cardInfo)
+    //   const imageUrls = await getOGP(props.cardInfo.data.URL)
+    //   console.debug(imageUrls)
+    //   ogp.value = imageUrls[0]
+    // })
+    const closeDialog = async (data: { url: string; title?: string }) => {
       const info = {
         key: props.cardInfo.key,
         data: { title: data.title, URL: data.url, OGP: "", description: "" }
@@ -59,5 +66,12 @@ export default defineComponent({
 .trash-icon {
   background-color: rgba(250, 0, 20, 1);
   border-radius: 0.3em;
+}
+.title-style {
+  text-overflow: ellipsis;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
 }
 </style>

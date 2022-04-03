@@ -15,17 +15,18 @@
           <v-btn to="/sign-in" class="text-non-trans" width="30%" color="gray lighten-5">Sign-in</v-btn>
         </span>
       </v-row>
-      <v-row v-if="allCardInformationList">
-        <v-col v-for="doc in sitesInfo" :key="doc.key" cols="20">
+      <!-- <div v-for="i in 20"> -->
+      <div v-if="allCardInformationList" class="d-flex flex-row justify-center flex-wrap">
+        <div v-for="doc in sitesInfo" :key="doc.key" class="flex-column ma-4">
           <CardComponent
             :cardInfo="doc"
             @afterPostData="afterPostData"
             @afterEditData="afterEditData"
             @confirmDeleteCardInformation="confirmDeleteCardInformation"
           />
-        </v-col>
-      </v-row>
-
+        </div>
+      </div>
+      <!-- </div> -->
       <ConfirmDialog
         :is-opened="isShowingUpdateDataDialog"
         @closeDialog="closeDialog"
