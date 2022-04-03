@@ -4,7 +4,6 @@ import { CardInfo } from "~/types/custom"
 import { deepcopy } from "../../utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
-import { getOGP } from "./OGP"
 
 export const use = () => {
   const refUserName = ref("Guest")
@@ -64,7 +63,6 @@ export const use = () => {
       })
     }
   }
-  /** ===== search dialog ===== */
 
   /** init */
   useFetch(() => {
