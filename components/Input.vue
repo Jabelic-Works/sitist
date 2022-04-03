@@ -7,6 +7,7 @@
       :readonly="$attrs.readonly"
       :label="$attrs.label"
       :placeholder="$attrs.placeholder"
+      @keyup.enter="search"
     />
   </div>
 </template>
@@ -19,6 +20,9 @@ export default defineComponent({
     inputmode: {
       type: String,
       required: true
+    },
+    search: {
+      type: Function
     }
   },
   setup() {

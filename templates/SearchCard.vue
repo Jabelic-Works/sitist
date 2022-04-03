@@ -14,12 +14,35 @@
             label="Tweet!"
             placeholder="タイトルで検索"
             @setInputText="syncInputText"
+            :search="search"
           />
         </v-card-text>
-        <v-data-table :headers="headers" :items="dataTableItems"></v-data-table>
+        <v-data-table :headers="headers" :items="dataTableItems">
+          <template v-slot:item.goAction="{ item }">
+            <v-btn @click.stop="toPageLink(item.URL)">Go Page</v-btn>
+          </template>
+        </v-data-table>
+
+        <v-simple-table height="300px">
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">Name</th>
+                <th class="text-left">URL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in dataTableItems" :key="item.URL">
+                <td>{{ item.title }}</td>
+                <td>{{ item.URL }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+
         <v-card-actions class="justify-end">
           <v-btn text @click.stop="open = false">Close</v-btn>
-          <v-btn text @click.fstop="search">検索</v-btn>
+          <v-btn text @click.stop="search">検索</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -34,9 +57,6 @@ export default defineComponent({
   setup(_, {}) {
     const open = ref<boolean>()
     const inputValue = ref("")
-    // const setInputText = (args: string) => {
-    //   inputValue.value = args
-    // }
     const syncInputText = (args: string) => {
       inputValue.value = args
     }
@@ -56,15 +76,18 @@ export default defineComponent({
         dataTableItems.value.splice(0)
       }
     }
+    const toPageLink = (url: string) => {
+      window.open(url, "_blank")
+    }
     return {
       inputValue,
-      // setInputText,
       syncInputText,
       open,
       searchContents,
       search,
       dataTableItems,
-      headers
+      headers,
+      toPageLink
     }
   }
 })
