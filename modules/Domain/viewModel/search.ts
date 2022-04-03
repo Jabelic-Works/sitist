@@ -15,7 +15,7 @@ export const useSearch = (searchKeywords: Ref<string>) => {
     if (!searchKeywords.value) return
     const allData = await deepcopy(store.getters["data/getAllData"])
     const filteredContents = Object.entries(allData).filter(([key, val]: any) =>
-      val.data.title.includes(searchKeywords.value)
+      val.data.title.toLowerCase().includes(searchKeywords.value.toLowerCase())
     ) as filteredArray
     console.debug("検索：", filteredContents)
     return filteredContents

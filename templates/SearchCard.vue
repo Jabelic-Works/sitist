@@ -5,9 +5,8 @@
         <v-btn dark v-bind="attrs" v-on="on" icon> <v-icon>mdi-magnify</v-icon> </v-btn>
       </template>
       <v-card>
-        <v-toolbar color="primary lighten-1" dark>検索して、どうぞ。</v-toolbar>
+        <v-toolbar color="primary lighten-1" dark>Search Links</v-toolbar>
         <v-card-text>
-          <!-- <div class="text-h4 pa-1">Hello world!</div> -->
           <Input
             class="my-4"
             inputmode="rawinput"
@@ -17,24 +16,19 @@
             :search="search"
           />
         </v-card-text>
-        <v-data-table :headers="headers" :items="dataTableItems">
-          <template v-slot:item.goAction="{ item }">
-            <v-btn @click.stop="toPageLink(item.URL)">Go Page</v-btn>
-          </template>
-        </v-data-table>
 
         <v-simple-table height="300px">
           <template v-slot:default>
             <thead>
               <tr>
                 <th class="text-left">Name</th>
-                <th class="text-left">URL</th>
+                <th class="text-left">GoPage</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in dataTableItems" :key="item.URL">
                 <td>{{ item.title }}</td>
-                <td>{{ item.URL }}</td>
+                <td><v-btn @click.stop="toPageLink(item.URL)">Go Page</v-btn></td>
               </tr>
             </tbody>
           </template>

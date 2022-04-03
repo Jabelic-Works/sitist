@@ -8,11 +8,12 @@
       :label="$attrs.label"
       :placeholder="$attrs.placeholder"
       @keyup.enter="search"
+      ref="textInput"
     />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch, getCurrentInstance, PropType } from "@nuxtjs/composition-api"
+import { defineComponent, ref, watch, getCurrentInstance, PropType, Ref, nextTick } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   //   name: "Input",
@@ -25,7 +26,7 @@ export default defineComponent({
       type: Function
     }
   },
-  setup() {
+  setup(props) {
     const inputValue = ref("")
     const root = getCurrentInstance()
     watch(
