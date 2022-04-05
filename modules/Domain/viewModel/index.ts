@@ -1,7 +1,7 @@
 import { nextTick, onActivated, ref, useContext, useFetch, useStore, watch } from "@nuxtjs/composition-api"
 import { use as useFetchData } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepcopy } from "../../utils"
+import { deepcopy, shuffleArray } from "../../utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 
@@ -16,11 +16,15 @@ export const use = () => {
 
   // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
   /** postした後にstoreの後の値を変更してから画面に反映 */
-  const afterPostData = () => {
+  const updateData = () => {
     setTimeout(() => checkGetters(), 500)
   }
-  const afterEditData = () => {
-    setTimeout(() => checkGetters(), 500)
+  const updateDataAndShuffle = () => {
+    setTimeout(async () => {
+      await checkGetters()
+      sitesInfo.value = shuffleArray(sitesInfo.value)
+      console.debug(sitesInfo.value, allCardInformationList.value)
+    }, 1000)
   }
 
   const isShowingUpdateDataDialog = ref(false)
@@ -40,7 +44,7 @@ export const use = () => {
 
   const { deleteData, confirmDeleteCardInformation } = useDelete({
     showConfirmDeleteDialog,
-    afterPostData,
+    updateData,
     checkGetters
   })
 
@@ -59,7 +63,7 @@ export const use = () => {
       allCardInformationList = addData(data, refUserUid.value)
       console.debug("new data", allCardInformationList)
       store.dispatch("data/setAllData", allCardInformationList).finally(() => {
-        afterPostData()
+        updateData()
       })
     }
   }
@@ -83,7 +87,7 @@ export const use = () => {
     refUserUid.value = store.getters["auth/getUserUid"]
     allCardInformationList.value = store.getters["data/getAllData"]
     console.debug("activate", allCardInformationList.value)
-    afterPostData()
+    updateDataAndShuffle()
   })
   nextTick(async () => {
     allCardInformationList.value = await deepcopy(store.getters["data/getAllData"])
@@ -110,12 +114,11 @@ export const use = () => {
     refUserName,
     refUserUid,
     allCardInformationList,
-    afterPostData,
+    updateData,
     checkGetters,
     isShowingUpdateDataDialog,
     closeDialog,
     sitesInfo,
-    afterEditData,
     isShowAddInfodialog,
     unshowAddInfodialog,
     confirmMessage,

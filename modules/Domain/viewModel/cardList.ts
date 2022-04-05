@@ -1,5 +1,5 @@
 import { Ref, useStore } from "@nuxtjs/composition-api"
-import { deepcopy } from "~/modules/utils"
+import { deepcopy, shuffleArray } from "~/modules/utils"
 import { CardInfo } from "~/types/custom"
 
 export const useCardList = (input: { allCardInformationList: Ref<{ data: CardInfo }>; sitesInfo: Ref<any[]> }) => {

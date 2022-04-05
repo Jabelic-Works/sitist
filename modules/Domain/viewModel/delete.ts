@@ -17,7 +17,7 @@ export const deleteCardInformation = async (info: CardInfo, store) => {
 
 export const useDelete = (input: {
   showConfirmDeleteDialog: Function
-  afterPostData: Function
+  updateData: Function
   checkGetters: Function
 }) => {
   /** カードのゴミ箱アイコンで発火 */
@@ -34,7 +34,7 @@ export const useDelete = (input: {
   const deletedCardInfo = ref<CardInfo>()
   const deleteCard = async (info: CardInfo) => {
     await deleteCardInformation(info, store)
-    input.afterPostData()
+    input.updateData()
   }
   /** confirmDialogでacceptした時に発火するmethod */
   const deleteData = async (cardInfo: CardInfo) => {

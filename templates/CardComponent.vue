@@ -40,25 +40,18 @@ export default defineComponent({
   setup(props) {
     const { emit } = getCurrentInstance()
     const { store } = useContext()
-    const afterEditData = () => {
-      emit("afterEditData")
+    const updateData = () => {
+      emit("updateData")
     }
-    // const ogp = ref("")
-    // nextTick(async () => {
-    //   console.debug(props.cardInfo)
-    //   const imageUrls = await getOGP(props.cardInfo.data.URL)
-    //   console.debug(imageUrls)
-    //   ogp.value = imageUrls[0]
-    // })
     const closeDialog = async (data: { url: string; title?: string }) => {
       const info = {
         key: props.cardInfo.key,
         data: { title: data.title, URL: data.url, OGP: "", description: "" }
       }
       editCardInformation(info, store)
-      emit("afterEditData")
+      emit("updateData")
     }
-    return { afterEditData, closeDialog }
+    return { updateData, closeDialog }
   }
 })
 </script>
