@@ -10,24 +10,24 @@
       :unshowAddInfodialog="unshowAddInfodialog"
     />
     <v-main class="pa-3">
-      <v-container class="mb-10">
-        <v-row justify="start" class="align-center d-flex justify-space-between">
-          <span class="ml-auto ma-2 my-2" style="font-size: 1.1rem">Hello! {{ refUserName }}</span>
-          <span class="mr-auto ma-2">
-            <v-btn to="/sign-in" class="text-non-trans" width="30%" color="gray lighten-5">Sign-in</v-btn>
-          </span>
-        </v-row>
-        <!-- <div v-for="i in 20"> -->
+      <v-container class="mb-10" :class="{ 'mt-2': $vuetify.breakpoint.smAndUp }">
+        <!-- <v-row justify="start" class="align-center d-flex justify-space-between"> -->
+        <!-- <span class="ml-auto ma-2 my-2" style="font-size: 1.1rem">Hello! {{ refUserName }}</span> -->
+        <!-- <span class="mr-auto ma-2"> -->
+        <!-- <v-btn to="/sign-in" class="text-non-trans" width="30%" color="gray lighten-5">Sign-in</v-btn> -->
+        <!-- </span> -->
+        <!-- </v-row> -->
         <div v-if="allCardInformationList" class="d-flex flex-row justify-center flex-wrap pb-4">
-          <div v-for="doc in sitesInfo" :key="doc.key" class="flex-column ma-4">
-            <CardComponent
-              :cardInfo="doc"
-              @updateData="updateData"
-              @confirmDeleteCardInformation="confirmDeleteCardInformation"
-            />
+          <div v-for="i in 5">
+            <div v-for="doc in sitesInfo" :key="doc.key" class="flex-column ma-4">
+              <CardComponent
+                :cardInfo="doc"
+                @updateData="updateData"
+                @confirmDeleteCardInformation="confirmDeleteCardInformation"
+              />
+            </div>
           </div>
         </div>
-        <!-- </div> -->
         <ConfirmDialog
           :is-opened="isShowingUpdateDataDialog"
           @closeDialog="closeDialog"

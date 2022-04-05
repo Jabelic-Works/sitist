@@ -2,7 +2,18 @@
   <div id="addinfo">
     <v-dialog v-model="dialog" @close="cancelAction" max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn v-if="kinds == 'floating'" color="#BDBDBD88" dark v-bind="attrs" v-on="on" fixed bottom right fab>
+        <v-btn
+          v-if="kinds == 'floating'"
+          class="mb-12"
+          color="#BDBDBD88"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          fixed
+          bottom
+          right
+          fab
+        >
           <v-fab-transition class="add-btn">
             <v-icon>mdi-plus</v-icon>
           </v-fab-transition>

@@ -12,19 +12,18 @@ export const use = () => {
   const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
   const { addData, fetchAllData } = useFetchData()
-  const { checkGetters } = useCardList({ allCardInformationList, sitesInfo })
+  const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
 
   // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
   /** postした後にstoreの後の値を変更してから画面に反映 */
   const updateData = () => {
-    setTimeout(() => checkGetters(), 500)
+    setTimeout(() => getAllDataFromStoreThenArranged(), 500)
   }
   const updateDataAndShuffle = () => {
     setTimeout(async () => {
-      await checkGetters()
+      await getAllDataFromStoreThenArranged()
       sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
-      console.debug(sitesInfo.value, allCardInformationList.value)
-    }, 500)
+    }, 0)
   }
 
   const isShowingUpdateDataDialog = ref(false)
@@ -45,7 +44,7 @@ export const use = () => {
   const { deleteData, confirmDeleteCardInformation } = useDelete({
     showConfirmDeleteDialog,
     updateData,
-    checkGetters
+    getAllDataFromStoreThenArranged
   })
 
   /** Headerの+ボタン経由で開かれるダイアログ */
@@ -120,7 +119,7 @@ export const use = () => {
     refUserUid,
     allCardInformationList,
     updateData,
-    checkGetters,
+    getAllDataFromStoreThenArranged,
     isShowingUpdateDataDialog,
     closeDialog,
     sitesInfo,

@@ -18,7 +18,7 @@ export const deleteCardInformation = async (info: CardInfo, store) => {
 export const useDelete = (input: {
   showConfirmDeleteDialog: Function
   updateData: Function
-  checkGetters: Function
+  getAllDataFromStoreThenArranged: Function
 }) => {
   /** カードのゴミ箱アイコンで発火 */
   const confirmDeleteCardInformation = async (cardInfo: CardInfo) => {
@@ -42,7 +42,7 @@ export const useDelete = (input: {
     if (deletedCardInfo.value) {
       deleteCard(deletedCardInfo.value)
     }
-    setTimeout(() => input.checkGetters(), 500)
+    setTimeout(() => input.getAllDataFromStoreThenArranged(), 500)
   }
   return { deleteData, confirmDeleteCardInformation }
 }
