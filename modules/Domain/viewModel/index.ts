@@ -9,7 +9,7 @@ export const use = () => {
   const refUserName = ref("Guest")
   const refUserUid = ref("")
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
-  const sitesInfo = ref([])
+  const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
   const { addData, fetchAllData } = useFetchData()
   const { checkGetters } = useCardList({ allCardInformationList, sitesInfo })
@@ -22,7 +22,7 @@ export const use = () => {
   const updateDataAndShuffle = () => {
     setTimeout(async () => {
       await checkGetters()
-      sitesInfo.value = await shuffleArray(sitesInfo.value)
+      sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
       console.debug(sitesInfo.value, allCardInformationList.value)
     }, 500)
   }
@@ -69,7 +69,7 @@ export const use = () => {
   }
 
   /** init */
-  useFetch(() => {
+  useFetch(async () => {
     refUserUid.value = store.getters["auth/getUserUid"]
     if (refUserUid.value) {
       allCardInformationList.value = store.getters["data/getAllData"] // データがある場合
@@ -77,7 +77,7 @@ export const use = () => {
       // データがない場合
       if (Object.keys(allCardInformationList.value).length === 0) {
         console.debug("data is empty")
-        allCardInformationList.value = fetchAllData(refUserUid.value)
+        allCardInformationList.value = await fetchAllData(refUserUid.value)
         store.dispatch("data/setAllData", allCardInformationList.value)
       }
     }
@@ -96,11 +96,11 @@ export const use = () => {
   // ユーザーが変わった場合
   watch(
     () => store.getters["auth/getUserUid"],
-    () => {
+    async () => {
       console.debug("===== User changed =====")
       refUserName.value = store.getters["auth/getUserName"]
       refUserUid.value = store.getters["auth/getUserUid"]
-      allCardInformationList.value = fetchAllData(refUserUid.value)
+      allCardInformationList.value = await fetchAllData(refUserUid.value)
       store.dispatch("data/setAllData", allCardInformationList.value)
     },
     { immediate: true }

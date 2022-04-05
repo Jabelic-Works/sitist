@@ -3,9 +3,10 @@ import { db } from "~/plugins/firebase"
 /** APIs */
 export const use = () => {
   // firestoreからデータを取得、それをstoreへdispatch
-  const fetchAllData = (uid: string): any => {
+  const fetchAllData = async (uid: string) => {
     let docs: any = {}
-    db.collection("userdata")
+    await db
+      .collection("userdata")
       .doc(uid)
       .collection("data")
       .get()

@@ -5,7 +5,8 @@ export const deepcopy = (objs: any) => {
 }
 
 //FIXME: Type
-export const shuffleArray = async (arg: any[]) => {
+export const shuffleArray = async <T>(arg: T) => {
+  if (!Array.isArray(arg)) return
   const shuffle = ([...array]) => {
     for (let i = array.length - 1; i >= 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
