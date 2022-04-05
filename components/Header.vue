@@ -1,11 +1,10 @@
 <template>
-  <v-toolbar color="primary lighten-1">
-    <v-toolbar-title>
+  <v-app-bar app absolute collapse-on-scroll color="primary lighten-1">
+    <v-app-bar-title>
       <nuxt-link to="/" style="text-decoration: none; color: inherit">
         <v-btn text exact class="text-non-trans"> <span style="font-size: 1.5rem"> Sitist</span></v-btn>
       </nuxt-link>
-    </v-toolbar-title>
-
+    </v-app-bar-title>
     <v-spacer />
     <AddInfoDialog
       :refUserName="refUserName"
@@ -15,11 +14,11 @@
       @unshowAddInfodialog="unshowAddInfodialog"
     />
     <SearchCard />
-  </v-toolbar>
+  </v-app-bar>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "@nuxtjs/composition-api"
+import { defineComponent, PropType, ref } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {
@@ -38,7 +37,8 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    return {}
+    const collapseOnScroll = ref(true)
+    return { collapseOnScroll }
   }
 })
 </script>

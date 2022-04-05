@@ -25,7 +25,10 @@ export default {
   plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: ["@/components", "@/templates"], // Auto import の設定
+  components: [
+    { path: "@/components", pathPrefix: false },
+    { path: "@/templates", pathPrefix: false }
+  ], // Auto import の設定
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [

@@ -1,8 +1,6 @@
 <template>
   <v-app dark>
-    <v-main>
-      <nuxt keep-alive :keep-alive-props="{ max: 5 }" />
-    </v-main>
+    <nuxt keep-alive :keep-alive-props="{ max: 5 }" />
     <Footer />
   </v-app>
 </template>
