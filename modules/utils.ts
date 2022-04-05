@@ -1,6 +1,6 @@
 import { SiteInformation } from "~/types/custom"
 
-export const deepcopy = (objs: any) => {
+export const deepCopy = (objs: any) => {
   return [objs].map((obj: any) => ({ ...obj }))[0]
 }
 

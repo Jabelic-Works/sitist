@@ -1,7 +1,7 @@
 import { nextTick, onActivated, ref, useContext, useFetch, useStore, watch } from "@nuxtjs/composition-api"
 import { use as useFetchData } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepcopy, shuffleArray } from "../../utils"
+import { deepCopy, shuffleArray } from "../../utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 
@@ -86,12 +86,12 @@ export const use = () => {
     refUserName.value = store.getters["auth/getUserName"]
     refUserUid.value = store.getters["auth/getUserUid"]
     allCardInformationList.value = store.getters["data/getAllData"]
-    console.debug("activate", allCardInformationList.value, refUserName.value, refUserUid.value)
+    console.debug("onActivate: ", allCardInformationList.value)
     updateDataAndShuffle()
   })
   nextTick(async () => {
-    allCardInformationList.value = await deepcopy(store.getters["data/getAllData"])
-    console.debug("nextTick", allCardInformationList.value)
+    allCardInformationList.value = await deepCopy(store.getters["data/getAllData"])
+    console.debug("nextTick: ", allCardInformationList.value)
   })
   // ユーザーが変わった場合
   watch(
@@ -109,7 +109,7 @@ export const use = () => {
   watch(
     () => store.getters["data/getAllData"],
     () => {
-      allCardInformationList.value = deepcopy(store.getters["data/getAllData"])
+      allCardInformationList.value = deepCopy(store.getters["data/getAllData"])
     },
     { immediate: true }
   )
