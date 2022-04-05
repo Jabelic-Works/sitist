@@ -22,9 +22,9 @@ export const use = () => {
   const updateDataAndShuffle = () => {
     setTimeout(async () => {
       await checkGetters()
-      sitesInfo.value = shuffleArray(sitesInfo.value)
+      sitesInfo.value = await shuffleArray(sitesInfo.value)
       console.debug(sitesInfo.value, allCardInformationList.value)
-    }, 1000)
+    }, 500)
   }
 
   const isShowingUpdateDataDialog = ref(false)
@@ -86,7 +86,7 @@ export const use = () => {
     refUserName.value = store.getters["auth/getUserName"]
     refUserUid.value = store.getters["auth/getUserUid"]
     allCardInformationList.value = store.getters["data/getAllData"]
-    console.debug("activate", allCardInformationList.value)
+    console.debug("activate", allCardInformationList.value, refUserName.value, refUserUid.value)
     updateDataAndShuffle()
   })
   nextTick(async () => {
@@ -97,18 +97,21 @@ export const use = () => {
   watch(
     () => store.getters["auth/getUserUid"],
     () => {
-      if (refUserUid.value !== store.getters["auth/getUserUid"]) {
-        refUserName.value = store.getters["auth/getUserName"]
-        refUserUid.value = store.getters["auth/getUserUid"]
-      }
-    }
+      console.debug("===== User changed =====")
+      refUserName.value = store.getters["auth/getUserName"]
+      refUserUid.value = store.getters["auth/getUserUid"]
+      allCardInformationList.value = fetchAllData(refUserUid.value)
+      store.dispatch("data/setAllData", allCardInformationList.value)
+    },
+    { immediate: true }
   )
   // データが更新された場合
   watch(
     () => store.getters["data/getAllData"],
     () => {
       allCardInformationList.value = deepcopy(store.getters["data/getAllData"])
-    }
+    },
+    { immediate: true }
   )
   return {
     refUserName,
