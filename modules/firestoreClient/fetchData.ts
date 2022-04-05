@@ -3,9 +3,10 @@ import { db } from "~/plugins/firebase"
 /** APIs */
 export const use = () => {
   // firestoreからデータを取得、それをstoreへdispatch
-  const fetchAllData = (uid: string): any => {
+  const fetchAllData = async (uid: string) => {
     let docs: any = {}
-    db.collection("userdata")
+    await db
+      .collection("userdata")
       .doc(uid)
       .collection("data")
       .get()
@@ -13,6 +14,7 @@ export const use = () => {
         querySnapshot.forEach((doc: any) => {
           docs[doc.id] = doc.data()
         })
+        console.debug("firestore: fetch All Data")
       })
       .catch((error: string) => {
         console.log("Error getting cached document:", error)
@@ -22,7 +24,13 @@ export const use = () => {
   }
   const addData = (data: any, uid: string) => {
     let addDb = {}
-    db.collection("userdata").doc(uid).collection("data").add(data)
+    db.collection("userdata")
+      .doc(uid)
+      .collection("data")
+      .add(data)
+      .then(() => {
+        console.debug("firestore: add Data")
+      })
     addDb = fetchAllData(uid)
     return addDb
   }

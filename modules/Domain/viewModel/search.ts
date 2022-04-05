@@ -1,5 +1,5 @@
 import { Ref, useStore } from "@nuxtjs/composition-api"
-import { deepcopy } from "~/modules/utils"
+import { deepCopy } from "~/modules/utils"
 
 export const useSearch = (searchKeywords: Ref<string>) => {
   const store = useStore()
@@ -13,7 +13,7 @@ export const useSearch = (searchKeywords: Ref<string>) => {
   // FIXME: 型
   const searchContents = async () => {
     if (!searchKeywords.value) return
-    const allData = await deepcopy(store.getters["data/getAllData"])
+    const allData = await deepCopy(store.getters["data/getAllData"])
     const filteredContents = Object.entries(allData).filter(([key, val]: any) =>
       val.data.title.toLowerCase().includes(searchKeywords.value.toLowerCase())
     ) as filteredArray

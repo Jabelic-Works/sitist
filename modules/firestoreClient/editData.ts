@@ -13,7 +13,7 @@ export const commitEditedCardInfo = async (info: CardInfo, store: Context["store
     .doc(keyid)
     .update({ data: info.data })
     .then(() => {
-      console.log("Document successfully updated!")
+      console.log("firestore: Document successfully updated!")
     })
     .catch(error => {
       console.error("Error removing document: ", error)

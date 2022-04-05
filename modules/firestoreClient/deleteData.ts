@@ -8,6 +8,9 @@ export const deleteDataFS = () => {
       .collection("data")
       .doc(keyId)
       .delete()
+      .then(() => {
+        console.debug("firestore: deleteCard")
+      })
       .catch(error => {
         console.error("Error removing document: ", error)
       })

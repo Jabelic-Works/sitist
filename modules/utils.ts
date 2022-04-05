@@ -1,11 +1,12 @@
 import { SiteInformation } from "~/types/custom"
 
-export const deepcopy = (objs: any) => {
+export const deepCopy = (objs: any) => {
   return [objs].map((obj: any) => ({ ...obj }))[0]
 }
 
 //FIXME: Type
-export const shuffleArray = (arg: any[]) => {
+export const shuffleArray = async <T>(arg: T) => {
+  if (!Array.isArray(arg)) return
   const shuffle = ([...array]) => {
     for (let i = array.length - 1; i >= 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))

@@ -40,9 +40,6 @@ export default defineComponent({
   setup(props) {
     const { emit } = getCurrentInstance()
     const { store } = useContext()
-    const updateData = () => {
-      emit("updateData")
-    }
     const closeDialog = async (data: { url: string; title?: string }) => {
       const info = {
         key: props.cardInfo.key,
@@ -51,7 +48,7 @@ export default defineComponent({
       editCardInformation(info, store)
       emit("updateData")
     }
-    return { updateData, closeDialog }
+    return { closeDialog }
   }
 })
 </script>

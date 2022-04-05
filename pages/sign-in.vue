@@ -39,12 +39,11 @@ export default defineComponent({
   setup(_, {}) {
     const store = useStore()
     const router = useRouter()
-    const userName = ref("")
-    const signIn = () => {
+    const signIn = async () => {
       console.debug("login!")
       const user = ref<any>()
       const provider = new firebase.auth.GoogleAuthProvider()
-      firebase
+      await firebase
         .auth()
         .signInWithPopup(provider)
         .then(function (result) {
@@ -52,7 +51,6 @@ export default defineComponent({
           console.log("success : " + user.value)
           console.log("success : " + user.value.uid + " : " + user.value.displayName)
           store.dispatch("auth/login", user.value)
-          userName.value = store.getters.getUserName
         })
         .catch(function (error) {
           const errorCode = error.code
@@ -63,8 +61,7 @@ export default defineComponent({
         })
     }
     return {
-      signIn,
-      userName
+      signIn
     }
   }
 })
