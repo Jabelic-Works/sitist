@@ -96,12 +96,14 @@ export const use = () => {
   // ユーザーが変わった場合
   watch(
     () => store.getters["auth/getUserUid"],
-    async () => {
-      console.debug("===== User changed =====")
-      refUserName.value = store.getters["auth/getUserName"]
-      refUserUid.value = store.getters["auth/getUserUid"]
-      allCardInformationList.value = await fetchAllData(refUserUid.value)
-      store.dispatch("data/setAllData", allCardInformationList.value)
+    async val => {
+      if (refUserUid.value !== val) {
+        console.debug("===== User changed =====")
+        refUserName.value = store.getters["auth/getUserName"]
+        refUserUid.value = store.getters["auth/getUserUid"]
+        allCardInformationList.value = await fetchAllData(refUserUid.value)
+        store.dispatch("data/setAllData", allCardInformationList.value)
+      }
     },
     { immediate: true }
   )
