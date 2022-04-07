@@ -6,8 +6,8 @@
       </nuxt-link>
     </v-app-bar-title>
     <nuxt-link to="/sign-in" style="text-decoration: none; color: inherit">
-      <v-avatar color="primary" :size="$vuetify.breakpoint.smAndUp ? '56' : '40'">
-        <img :src="photoUrl" alt="user photo" />
+      <v-avatar color="grey" :size="$vuetify.breakpoint.smAndUp ? '56' : '40'">
+        <img v-if="photoUrl" :src="photoUrl" alt="user photo" />
       </v-avatar>
     </nuxt-link>
     <v-spacer />
