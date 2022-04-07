@@ -16,7 +16,6 @@ export const shuffleArray = async <T>(arg: T) => {
   }
   const indexs = [...Array(arg.length).keys()].map(it => it)
   const shuffledIndexs = shuffle(indexs)
-  console.debug(indexs, shuffledIndexs)
   let ret = []
   for (let i of shuffledIndexs) ret.push(arg[i])
   return ret
