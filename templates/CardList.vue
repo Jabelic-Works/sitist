@@ -12,7 +12,12 @@
     <v-main class="pa-3">
       <v-container class="mb-10" :class="{ 'mt-2': $vuetify.breakpoint.smAndUp }">
         <div v-if="allCardInformationList" class="d-flex flex-row justify-center flex-wrap pb-4">
-          <div v-for="doc in sitesInfo" :key="doc.key" class="flex-column ma-4">
+          <div
+            v-for="doc in sitesInfo"
+            :key="doc.key"
+            class="flex-column"
+            :class="{ 'ma-4': $vuetify.breakpoint.smAndUp, 'ma-1': $vuetify.breakpoint.xs }"
+          >
             <CardComponent
               :cardInfo="doc"
               @updateData="updateData"
