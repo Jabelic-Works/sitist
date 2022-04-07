@@ -8,7 +8,10 @@
           :to="link.link"
           color="white"
           text
+          raised
           exact
+          min
+          min-width="40%"
           class="ma-1 text-non-trans white--text"
           :class="{ 'button-block': link.link !== '/', 'button-block-home': link.link === '/' }"
         >
