@@ -23,6 +23,7 @@ export const use = () => {
     setTimeout(async () => {
       await getAllDataFromStoreThenArranged()
       sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
+      console.debug(sitesInfo.value)
     }, 0)
   }
 
@@ -48,7 +49,7 @@ export const use = () => {
   })
 
   /** Headerの+ボタン経由で開かれるダイアログ */
-  const addDataFromHeader = (urlString: string, titleString?: string) => {
+  const addDataFromHeader = async (urlString: string, titleString?: string) => {
     const data = {
       data: {
         URL: urlString,
@@ -59,7 +60,7 @@ export const use = () => {
     }
     let allCardInformationList = {}
     if (refUserUid.value) {
-      allCardInformationList = addData(data, refUserUid.value)
+      allCardInformationList = await addData(data, refUserUid.value)
       console.debug("new data", allCardInformationList)
       store.dispatch("data/setAllData", allCardInformationList).finally(() => {
         updateData()

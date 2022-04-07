@@ -22,7 +22,7 @@ export const use = () => {
     console.debug("fetchAllData: ", docs)
     return docs
   }
-  const addData = (data: any, uid: string) => {
+  const addData = async (data: any, uid: string) => {
     let addDb = {}
     db.collection("userdata")
       .doc(uid)
