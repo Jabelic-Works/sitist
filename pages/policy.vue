@@ -19,30 +19,33 @@
           <h1>Sitist</h1>
         </div>
         <div class="d-flex flex-row justify-center ma-5">
-          <div class="description" id="desc">{{ description }}</div>
+          <div class="description" id="desc">{{ policy.description }}</div>
         </div>
         <div class="d-flex flex-row justify-center ma-10"></div>
         <div class="d-flex flex-row justify-center ma-5">
           <h3>Owner</h3>
         </div>
-        <div class="d-flex flex-row justify-center ma-5">Jabelic</div>
+        <div class="d-flex flex-row justify-center ma-5">
+          <v-avatar color="primary mx-2" :size="$vuetify.breakpoint.smAndUp ? '56' : '40'">
+            <img src="@/assets/jabelic-favicon.jpeg" alt=""
+          /></v-avatar>
+          <div class="mt-2">{{ policy.author }}</div>
+        </div>
       </v-main>
     </v-app>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, ref, useStore } from "@nuxtjs/composition-api"
+import { policy } from "~/modules/Commons/i18n"
 export default defineComponent({
   setup() {
     const photoUrl = ref("")
     const store = useStore()
-    const description = ref<any>(
-      "このアプリはRSSリーダーライクな、WebサイトをまとめておくWebアプリケーションです。日々の技術のキャッチアップやブックマークツールとしてお使いください。"
-    )
     nextTick(() => {
       photoUrl.value = store.getters["auth/getUserPhotoUrl"]
     })
-    return { photoUrl, description }
+    return { photoUrl, policy }
   }
 })
 </script>

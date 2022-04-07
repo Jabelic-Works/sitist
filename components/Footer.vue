@@ -1,16 +1,16 @@
 <template>
   <div>
     <v-footer color="primary lighten-1" padless fixed>
-      <v-row justify="center" no-gutters>
+      <v-row justify="center" no-gutters class="d-flex justify-space-around">
         <v-btn
           v-for="link in linksInFooter"
           :key="link.title"
           :to="link.link"
           color="white"
           text
-          rounded
           exact
-          class="my-1 text-non-trans"
+          class="ma-1 text-non-trans white--text"
+          :class="{ 'button-block': link.link !== '/', 'button-block-home': link.link === '/' }"
         >
           {{ link.title }}
         </v-btn>
@@ -40,7 +40,7 @@ export default defineComponent({
       } else if (route.value.path === "/") {
         return [
           {
-            title: "Switch User",
+            title: "Switch Account",
             link: "/sign-in"
           },
           { title: "What's Sitist?", link: "/policy" }
@@ -49,7 +49,7 @@ export default defineComponent({
         // Userなし.しかしおそらくこのケースはない(sign in にredirectされるから)
         return [
           {
-            title: "Switch User",
+            title: "Switch Account",
             link: "/sign-in"
           },
           { title: "What's Sitist?", link: "/policy" }
@@ -81,5 +81,13 @@ export default defineComponent({
 <style scoped>
 .text-non-trans {
   text-transform: none;
+}
+.button-block {
+  outline-style: solid;
+  outline-width: 1px;
+}
+.button-block-home {
+  outline-style: double;
+  outline-width: 4px;
 }
 </style>
