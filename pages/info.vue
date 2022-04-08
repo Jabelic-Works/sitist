@@ -19,11 +19,14 @@
           <h1>Sitist</h1>
         </div>
         <div class="d-flex flex-row justify-center ma-5">
-          <div class="description" id="desc">{{ policy.description }}</div>
+          <div class="description" id="desc">{{ info.description }}</div>
         </div>
         <div class="d-flex flex-row justify-center ma-10"></div>
         <div class="d-flex flex-row justify-center ma-5">
           <h3>Policy</h3>
+          <div>
+            {{ info.policy }}
+          </div>
         </div>
         <div class="d-flex flex-row justify-center ma-5">
           <h3>Owner</h3>
@@ -32,7 +35,7 @@
           <v-avatar color="primary mx-2" :size="$vuetify.breakpoint.smAndUp ? '56' : '40'">
             <img src="@/assets/jabelic-favicon.jpeg" alt=""
           /></v-avatar>
-          <div class="mt-2">{{ policy.author }}</div>
+          <div class="mt-2">{{ info.author }}</div>
         </div>
         <div class="d-flex justify-center">
           <v-card elevation="5" outlined rounded>
@@ -70,7 +73,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, ref, useStore } from "@nuxtjs/composition-api"
-import { policy } from "~/modules/Commons/i18n"
+import { info } from "~/modules/Commons/i18n"
 export default defineComponent({
   setup() {
     const photoUrl = ref("")
@@ -78,7 +81,7 @@ export default defineComponent({
     nextTick(() => {
       photoUrl.value = store.getters["auth/getUserPhotoUrl"]
     })
-    return { photoUrl, policy }
+    return { photoUrl, info }
   }
 })
 </script>

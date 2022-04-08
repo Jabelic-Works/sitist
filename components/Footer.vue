@@ -38,7 +38,7 @@ export default defineComponent({
             title: "Sign in",
             link: "/sign-in"
           },
-          { title: "What's Sitist?", link: "/policy" }
+          { title: "What's Sitist?", link: "/info" }
         ]
       } else if (route.value.path === "/") {
         return [
@@ -46,18 +46,18 @@ export default defineComponent({
             title: "Switch Account",
             link: "/sign-in"
           },
-          { title: "What's Sitist?", link: "/policy" }
+          { title: "What's Sitist?", link: "/info" }
         ]
-      } else if (route.value.path === "/policy" && !user) {
+      } else if (route.value.path === "/info" && !user) {
         // Userなし.しかしおそらくこのケースはない(sign in にredirectされるから)
         return [
           {
             title: "Switch Account",
             link: "/sign-in"
           },
-          { title: "What's Sitist?", link: "/policy" }
+          { title: "What's Sitist?", link: "/info" }
         ]
-      } else if (route.value.path === "/policy") {
+      } else if (route.value.path === "/info") {
         return [
           {
             title: "Sign in",
