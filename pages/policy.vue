@@ -23,6 +23,9 @@
         </div>
         <div class="d-flex flex-row justify-center ma-10"></div>
         <div class="d-flex flex-row justify-center ma-5">
+          <h3>Policy</h3>
+        </div>
+        <div class="d-flex flex-row justify-center ma-5">
           <h3>Owner</h3>
         </div>
         <div class="d-flex flex-row justify-center ma-5">
