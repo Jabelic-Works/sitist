@@ -1,8 +1,8 @@
 <template>
   <div id="search-dialog">
     <v-dialog v-model="open" transition="dialog-bottom-transition" max-width="600">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn dark v-bind="attrs" v-on="on" icon> <v-icon>mdi-magnify</v-icon> </v-btn>
+      <template #activator="{ on, attrs }">
+        <v-btn dark v-bind="attrs" icon v-on="on"> <v-icon>mdi-magnify</v-icon> </v-btn>
       </template>
       <v-card>
         <v-toolbar color="primary lighten-1" dark>Search Links</v-toolbar>
@@ -12,13 +12,13 @@
             inputmode="rawinput"
             label="Tweet!"
             placeholder="タイトルで検索"
-            @setInputText="syncInputText"
             :search="search"
+            @setInputText="syncInputText"
           />
         </v-card-text>
 
         <v-simple-table height="300px">
-          <template v-slot:default>
+          <template #default>
             <thead>
               <tr>
                 <th class="text-left">Name</th>

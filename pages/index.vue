@@ -9,10 +9,10 @@ import { defineComponent } from "@nuxtjs/composition-api"
 import CardList from "~/templates/CardList.vue"
 
 export default defineComponent({
+  components: { CardList },
   setup() {
     return {}
-  },
-  components: { CardList }
+  }
 })
 </script>
 <style scoped>

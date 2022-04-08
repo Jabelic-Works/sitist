@@ -2,7 +2,9 @@
   <v-app-bar app absolute collapse-on-scroll color="primary lighten-1">
     <v-app-bar-title>
       <nuxt-link to="/" style="text-decoration: none; color: inherit">
-        <v-btn text exact class="text-non-trans"> <span style="font-size: 1.5rem"> Sitist</span></v-btn>
+        <v-btn text exact class="text-non-trans">
+          <span style="font-size: 1.5rem"> Sitist</span>
+        </v-btn>
       </nuxt-link>
     </v-app-bar-title>
     <nuxt-link to="/sign-in" style="text-decoration: none; color: inherit">
@@ -12,10 +14,10 @@
     </nuxt-link>
     <v-spacer />
     <AddInfoDialog
-      :refUserName="refUserName"
-      :refUserUid="refUserUid"
-      :addDataFromHeader="addDataFromHeader"
-      :isShowAddInfodialog="isShowAddInfodialog"
+      :ref-user-name="refUserName"
+      :ref-user-uid="refUserUid"
+      :add-data-from-header="addDataFromHeader"
+      :is-show-add-infodialog="isShowAddInfodialog"
       @unshowAddInfodialog="unshowAddInfodialog"
     />
     <SearchCard />
@@ -23,8 +25,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, useStore } from "@nuxtjs/composition-api"
 import { nextTick } from "process"
+import { defineComponent, PropType, ref, useStore } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {

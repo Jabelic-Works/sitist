@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-dialog v-model="isOpen" max-width="600px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="" dark v-bind="attrs" v-on="on" icon>
+      <template #activator="{ on, attrs }">
+        <v-btn color="" dark v-bind="attrs" icon v-on="on">
           <v-icon>mdi-pen</v-icon>
         </v-btn>
       </template>
@@ -13,10 +13,10 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-text-field label="URL" required v-model="url"></v-text-field>
+              <v-text-field v-model="url" label="URL" required />
             </v-row>
             <v-row>
-              <v-text-field label="title" required v-model="title"></v-text-field>
+              <v-text-field v-model="title" label="title" required />
             </v-row>
           </v-container>
         </v-card-text>

@@ -22,12 +22,12 @@
         </div>
       </div>
       <!--  ===== buttons ===== -->
-      <div class="flex-row ml-auto ma-3" v-if="cardInfo.data">
+      <div v-if="cardInfo.data" class="flex-row ml-auto ma-3">
         <div class="flex-column">
           <v-btn color="blue" :href="cardInfo.data.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
         </div>
         <div class="flex-column align-self-center pl-6 py-3 ml-auto">
-          <EditInfoDialog :cardInfo="cardInfo" @closeDialog="closeDialog" />
+          <EditInfoDialog :card-info="cardInfo" @closeDialog="closeDialog" />
         </div>
         <button class="pt-1 pl-7 py-3 ml-auto" @click="$emit('confirmDeleteCardInformation', cardInfo)">
           <img src="https://img.icons8.com/material-outlined/28/000000/trash.png" class="trash-icon" />
@@ -59,13 +59,13 @@
         </div>
       </div>
       <!--  ===== buttons ===== -->
-      <div class="flex-row ml-auto mx-2 my-1" v-if="cardInfo.data">
+      <div v-if="cardInfo.data" class="flex-row ml-auto mx-2 my-1">
         <div class="d-flex flex-column justify-center">
           <v-btn color="blue" :href="cardInfo.data.URL" target="_blank" rel="noopener noreferrer">ACCESS</v-btn>
         </div>
         <div class="d-flex ml-auto flex-row my-3 justify-center">
           <div class="px-2">
-            <EditInfoDialog :cardInfo="cardInfo" @closeDialog="closeDialog" />
+            <EditInfoDialog :card-info="cardInfo" @closeDialog="closeDialog" />
           </div>
           <button class="px-2 ma-1 pt-1" @click="$emit('confirmDeleteCardInformation', cardInfo)">
             <img src="https://img.icons8.com/material-outlined/24/000000/trash.png" class="trash-icon" />

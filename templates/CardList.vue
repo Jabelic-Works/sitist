@@ -3,11 +3,11 @@
     <!-- FIXME: Headerはpages/indexに移動 -->
     <Header
       class="fixed-bar"
-      :refUserName="refUserName"
-      :refUserUid="refUserUid"
-      :addDataFromHeader="addDataFromHeader"
-      :isShowAddInfodialog="isShowAddInfodialog"
-      :unshowAddInfodialog="unshowAddInfodialog"
+      :ref-user-name="refUserName"
+      :ref-user-uid="refUserUid"
+      :add-data-from-header="addDataFromHeader"
+      :is-show-add-infodialog="isShowAddInfodialog"
+      :unshow-add-infodialog="unshowAddInfodialog"
     />
     <v-main class="pa-3">
       <v-container class="mb-10" :class="{ 'mt-2': $vuetify.breakpoint.smAndUp }">
@@ -19,7 +19,7 @@
             :class="{ 'ma-4': $vuetify.breakpoint.smAndUp, 'ma-1': $vuetify.breakpoint.xs }"
           >
             <CardComponent
-              :cardInfo="doc"
+              :card-info="doc"
               @updateData="updateData"
               @confirmDeleteCardInformation="confirmDeleteCardInformation"
             />
@@ -27,16 +27,16 @@
         </div>
         <ConfirmDialog
           :is-opened="isShowingUpdateDataDialog"
+          :confirm-text="confirmMessage"
           @closeDialog="closeDialog"
           @acceptMethod="deleteData"
-          :confirmText="confirmMessage"
         />
         <AddInfoDialog
           :kinds="'floating'"
-          :isShowAddInfodialog="isShowAddInfodialog"
-          :refUserName="refUserName"
-          :refUserUid="refUserUid"
-          :addDataFromHeader="addDataFromHeader"
+          :is-show-add-infodialog="isShowAddInfodialog"
+          :ref-user-name="refUserName"
+          :ref-user-uid="refUserUid"
+          :add-data-from-header="addDataFromHeader"
           @unshowAddInfodialog="unshowAddInfodialog"
         />
       </v-container>

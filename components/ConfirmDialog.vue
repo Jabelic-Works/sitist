@@ -1,6 +1,6 @@
 <template>
   <div id="updateDataDialog">
-    <v-dialog v-model="openStatus" persistent class="" @close="closeDialog" max-width="290">
+    <v-dialog v-model="openStatus" persistent class="" max-width="290" @close="closeDialog">
       <v-card>
         <v-divider />
         <div class="ma-3">{{ confirmText }}</div>

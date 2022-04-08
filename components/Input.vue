@@ -1,14 +1,14 @@
 <template>
   <div>
     <input
-      type="text"
+      ref="textInput"
       v-model="inputValue"
+      type="text"
       class="input_snipetts"
       :readonly="$attrs.readonly"
       :label="$attrs.label"
       :placeholder="$attrs.placeholder"
       @keyup.enter="search"
-      ref="textInput"
     />
   </div>
 </template>

@@ -1,24 +1,24 @@
 <template>
   <div id="addinfo">
-    <v-dialog v-model="dialog" @close="cancelAction" max-width="600px">
-      <template v-slot:activator="{ on, attrs }">
+    <v-dialog v-model="dialog" max-width="600px" @close="cancelAction">
+      <template #activator="{ on, attrs }">
         <v-btn
           v-if="kinds == 'floating'"
           class="mb-12"
           color="#BDBDBD88"
           dark
           v-bind="attrs"
-          v-on="on"
           fixed
           bottom
           right
           fab
+          v-on="on"
         >
           <v-fab-transition class="add-btn">
             <v-icon>mdi-plus</v-icon>
           </v-fab-transition>
         </v-btn>
-        <v-btn v-else color="" dark v-bind="attrs" v-on="on" icon>
+        <v-btn v-else color="" dark v-bind="attrs" icon v-on="on">
           <v-icon>mdi-plus-circle</v-icon>
         </v-btn>
       </template>
@@ -29,10 +29,10 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-text-field label="URL" required v-model="url"></v-text-field>
+              <v-text-field v-model="url" label="URL" required />
             </v-row>
             <v-row>
-              <v-text-field label="title" required v-model="title"></v-text-field>
+              <v-text-field v-model="title" label="title" required />
             </v-row>
           </v-container>
         </v-card-text>
