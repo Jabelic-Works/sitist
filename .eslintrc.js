@@ -12,14 +12,14 @@ module.exports = {
     "vue/max-attributes-per-line": "off",
     "dot-notation": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "vue/html-self-closing": [
-      "error",
-      {
-        html: {
-          void: "always"
-        }
-      }
-    ],
+    // "vue/html-self-closing": [
+    //   "error",
+    //   {
+    //     html: {
+    //       void: "always"
+    //     }
+    //   }
+    // ],
     "vue/singleline-html-element-content-newline": [
       "error",
       {
