@@ -24,6 +24,7 @@
         <div class="d-flex flex-row justify-center ma-10" />
         <div class="d-flex flex-row justify-center ma-5">
           <h3>Policy</h3>
+          <br />
           <div>
             {{ info.policy }}
           </div>
