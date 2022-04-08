@@ -21,6 +21,6 @@ export default defineComponent({
   position: sticky;
   top: 20px;
   /* left: calc(90%); */
-  left: calc();
+  /* left: calc(); */
 }
 </style>

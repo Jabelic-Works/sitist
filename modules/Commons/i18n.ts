@@ -5,5 +5,5 @@ export const info = {
   author: "Jabelic",
   description:
     "このアプリはRSSリーダーライクな、WebサイトをまとめておくWebアプリケーションです。日々の技術のキャッチアップやブックマークツールとしてお使いください。",
-  policy: ""
+  policy: "特になし。"
 }
