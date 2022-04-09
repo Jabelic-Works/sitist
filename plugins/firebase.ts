@@ -1,5 +1,6 @@
 import firebase from "firebase"
 import "firebase/storage"
+import "firebase/analytics"
 // ** Firebaseプロジェクトの設定を記す
 export const firebaseConfig = {
   apiKey: process.env.FB_API_KEY,
@@ -17,4 +18,6 @@ if (!firebase.apps.length) {
 export const db = firebase.firestore()
 export const storage = firebase.storage()
 export const auth = firebase.auth()
+// Initialize Analytics and get a reference to the service
+const analytics = firebase.analytics()
 export default firebase
