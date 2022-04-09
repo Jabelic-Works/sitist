@@ -47,6 +47,9 @@ export default {
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa"
   ],
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || "https://sitist-97169.web.app/"
+  },
   privateRuntimeConfig: {
     env_api_key: process.env.FB_API_KEY,
     env_auth_domain: process.env.FB_AUTHDOMAIN,
