@@ -73,8 +73,17 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: "en"
-    }
+      lang: "ja",
+      icons: [
+        {
+          src: "/favicon.ico",
+          sizes: "32x32",
+          type: "image/png",
+          purpose: "maskable"
+        }
+      ]
+    },
+    icon: false
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
