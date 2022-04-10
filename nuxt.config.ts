@@ -76,7 +76,7 @@ export default {
       lang: "ja",
       icons: [
         {
-          src: "/favicon.ico",
+          src: "/icon.png",
           sizes: "32x32",
           type: "image/png",
           purpose: "maskable"
