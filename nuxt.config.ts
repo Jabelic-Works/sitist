@@ -37,7 +37,8 @@ export default {
     "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/vuetify
     "@nuxtjs/vuetify",
-    "@nuxtjs/dotenv"
+    "@nuxtjs/dotenv",
+    "@nuxtjs/pwa"
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -59,13 +60,6 @@ export default {
     env_app_id: process.env.FB_APP_ID,
     env_measurement_id: process.env.FB_MEASUREMENT_ID
   },
-  // typescript: {
-  //   typeCheck: {
-  //     eslint: {
-  //       files: "./**/*.{ts,vue}"
-  //     }
-  //   }
-  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -73,17 +67,73 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
+      name: "sitist",
+      short_name: "sitist",
       lang: "ja",
+      start_url: "/?standalone=true",
+      display: "standalone",
+      background_color: "#ffffff",
+      description: "",
+      orientation: "any",
+      theme_color: "#fff",
       icons: [
         {
-          src: "/icon.png",
-          sizes: "32x32",
-          type: "image/png",
-          purpose: "maskable"
+          src: "/android-chrome-36x36.png",
+          sizes: "36x36",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-48x48.png",
+          sizes: "48x48",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-72x72.png",
+          sizes: "72x72",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-96x96.png",
+          sizes: "96x96",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-128x128.png",
+          sizes: "128x128",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-144x144.png",
+          sizes: "144x144",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-152x152.png",
+          sizes: "152x152",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-192x192.png",
+          sizes: "192x192",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-256x256.png",
+          sizes: "256x256",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-384x384.png",
+          sizes: "384x384",
+          type: "image/png"
+        },
+        {
+          src: "/android-chrome-512x512.png",
+          sizes: "512x512",
+          type: "image/png"
         }
       ]
-    },
-    icon: false
+    }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
