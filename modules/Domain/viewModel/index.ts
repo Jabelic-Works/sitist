@@ -6,6 +6,7 @@ import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 import { useUpdate } from "./update"
 import { useHeader } from "./header"
+import { dialogMessage } from "~/modules/Commons/i18n"
 
 export const use = () => {
   const refUserName = ref("Guest")
@@ -19,10 +20,10 @@ export const use = () => {
   const { addDataFromHeader } = useHeader({ refUserUid, updateData })
 
   const isShowingUpdateDataDialog = ref(false)
-  const showConfirmDeleteDialog = () => {
-    confirmMessage.value = "カードを消去しますか？"
-    isShowingUpdateDataDialog.value = true
-  }
+  // const showConfirmDeleteDialog = () => {
+  //   confirmMessage.value = dialogMessage.confirmDelete
+  //   isShowingUpdateDataDialog.value = true
+  // }
   const closeDialog = () => {
     isShowingUpdateDataDialog.value = false
   }
@@ -30,13 +31,14 @@ export const use = () => {
   const unshowAddInfodialog = () => {
     isShowAddInfodialog.value = false
   }
-
-  const confirmMessage = ref("カードを消去しますか？")
+  /** カード削除時の confirm message */
+  const confirmMessage = ref(dialogMessage.confirmDelete)
 
   const { deleteData, confirmDeleteCardInformation } = useDelete({
-    showConfirmDeleteDialog,
     updateData,
-    getAllDataFromStoreThenArranged
+    getAllDataFromStoreThenArranged,
+    confirmMessage,
+    isShowingUpdateDataDialog
   })
 
   /** ===== init ====== */

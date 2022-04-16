@@ -1,4 +1,5 @@
-import { ref, useStore } from "@nuxtjs/composition-api"
+import { Ref, ref, useStore } from "@nuxtjs/composition-api"
+import { dialogMessage } from "~/modules/Commons/i18n"
 import { deleteDataFS } from "~/modules/firestoreClient/deleteData"
 import { CardInfo } from "~/types/custom"
 
@@ -15,15 +16,25 @@ export const deleteCardInformation = async (info: CardInfo, store) => {
   store.dispatch("data/setAllData", storeData)
 }
 
-export const useDelete = (input: {
-  showConfirmDeleteDialog: Function
+export const useDelete = ({
+  updateData,
+  getAllDataFromStoreThenArranged,
+  confirmMessage,
+  isShowingUpdateDataDialog
+}: {
   updateData: Function
   getAllDataFromStoreThenArranged: Function
+  confirmMessage: Ref<string>
+  isShowingUpdateDataDialog: Ref<boolean>
 }) => {
+  const showConfirmDeleteDialog = () => {
+    confirmMessage.value = dialogMessage.confirmDelete
+    isShowingUpdateDataDialog.value = true
+  }
   /** カードのゴミ箱アイコンで発火 */
   const confirmDeleteCardInformation = async (cardInfo: CardInfo) => {
     statusOfConfirmDialog.value = "deleteData"
-    input.showConfirmDeleteDialog()
+    showConfirmDeleteDialog()
     deletedCardInfo.value = cardInfo
   }
   const store = useStore()
@@ -34,7 +45,7 @@ export const useDelete = (input: {
   const deletedCardInfo = ref<CardInfo>()
   const deleteCard = async (info: CardInfo) => {
     await deleteCardInformation(info, store)
-    input.updateData()
+    updateData()
   }
   /** confirmDialogでacceptした時に発火するmethod */
   const deleteData = async (cardInfo: CardInfo) => {
@@ -42,7 +53,7 @@ export const useDelete = (input: {
     if (deletedCardInfo.value) {
       deleteCard(deletedCardInfo.value)
     }
-    setTimeout(() => input.getAllDataFromStoreThenArranged(), 500)
+    setTimeout(() => getAllDataFromStoreThenArranged(), 500)
   }
   return { deleteData, confirmDeleteCardInformation }
 }
