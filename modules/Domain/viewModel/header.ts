@@ -1,7 +1,7 @@
 import { Ref, useStore } from "@nuxtjs/composition-api"
-import { use as useFetchData } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFB } from "@/modules/firestoreClient/fetchData"
 export const useHeader = ({ refUserUid, updateData }: { refUserUid: Ref<string>; updateData: Function }) => {
-  const { addData, fetchAllData } = useFetchData()
+  const { addData, fetchAllData } = fetchDataFB()
   const store = useStore()
   /** Headerの+ボタン経由で開かれるダイアログ */
   const addDataFromHeader = async (urlString: string, titleString?: string) => {

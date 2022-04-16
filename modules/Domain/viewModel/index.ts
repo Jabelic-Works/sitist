@@ -1,7 +1,7 @@
-import { nextTick, onActivated, ref, useContext, useFetch, useStore, watch } from "@nuxtjs/composition-api"
-import { use as useFetchData } from "@/modules/firestoreClient/fetchData"
+import { nextTick, onActivated, ref, useFetch, useStore } from "@nuxtjs/composition-api"
+import { fetchDataFB } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepCopy, shuffleArray } from "../../utils"
+import { deepCopy } from "../../utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 import { useUpdate } from "./update"
@@ -13,9 +13,9 @@ export const use = () => {
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
-  const { addData, fetchAllData } = useFetchData()
+  const { fetchAllData } = fetchDataFB()
   const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
-  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo })
+  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, refUserUid, refUserName })
   const { addDataFromHeader } = useHeader({ refUserUid, updateData })
 
   const isShowingUpdateDataDialog = ref(false)
@@ -39,7 +39,8 @@ export const use = () => {
     getAllDataFromStoreThenArranged
   })
 
-  /** init */
+  /** ===== init ====== */
+
   useFetch(async () => {
     refUserUid.value = store.getters["auth/getUserUid"]
     if (refUserUid.value) {
@@ -64,28 +65,7 @@ export const use = () => {
     allCardInformationList.value = await deepCopy(store.getters["data/getAllData"])
     console.debug("nextTick: ", allCardInformationList.value)
   })
-  // ユーザーが変わった場合
-  watch(
-    () => store.getters["auth/getUserUid"],
-    async val => {
-      if (refUserUid.value !== val) {
-        console.debug("===== User changed =====")
-        refUserName.value = store.getters["auth/getUserName"]
-        refUserUid.value = store.getters["auth/getUserUid"]
-        allCardInformationList.value = await fetchAllData(refUserUid.value)
-        store.dispatch("data/setAllData", allCardInformationList.value)
-      }
-    },
-    { immediate: true }
-  )
-  // データが更新された場合
-  watch(
-    () => store.getters["data/getAllData"],
-    () => {
-      allCardInformationList.value = deepCopy(store.getters["data/getAllData"])
-    },
-    { immediate: true }
-  )
+
   return {
     refUserName,
     refUserUid,
