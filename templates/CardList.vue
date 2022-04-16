@@ -3,11 +3,10 @@
     <!-- FIXME: Headerはpages/indexに移動 -->
     <Header
       class="fixed-bar"
-      :ref-user-name="refUserName"
-      :ref-user-uid="refUserUid"
+      :ref-user-uid="userInfo.uid"
       :add-data-from-header="addDataFromHeader"
-      :is-show-add-infodialog="isShowAddInfodialog"
-      :unshow-add-infodialog="unshowAddInfodialog"
+      :is-show-add-info-dialog="isShowAddInfoDialog"
+      :un-show-add-info-dialog="unShowAddInfoDialog"
     />
     <v-main class="pa-3">
       <v-container class="mb-10" :class="{ 'mt-2': $vuetify.breakpoint.smAndUp }">
@@ -33,11 +32,10 @@
         />
         <AddInfoDialog
           :kinds="'floating'"
-          :is-show-add-infodialog="isShowAddInfodialog"
-          :ref-user-name="refUserName"
-          :ref-user-uid="refUserUid"
+          :is-show-add-info-dialog="isShowAddInfoDialog"
+          :user-info="userInfo"
           :add-data-from-header="addDataFromHeader"
-          @unshowAddInfodialog="unshowAddInfodialog"
+          @unShowAddInfoDialog="unShowAddInfoDialog"
         />
       </v-container>
     </v-main>
@@ -50,15 +48,14 @@ import { use as domain } from "~/modules/Domain/viewModel/index"
 export default defineComponent({
   setup() {
     const {
-      refUserName,
-      refUserUid,
+      userInfo,
       allCardInformationList,
       updateData,
       isShowingUpdateDataDialog,
       closeDialog,
       sitesInfo,
-      isShowAddInfodialog,
-      unshowAddInfodialog,
+      isShowAddInfoDialog,
+      unShowAddInfoDialog,
       confirmMessage,
       confirmDeleteCardInformation,
       deleteData,
@@ -66,8 +63,7 @@ export default defineComponent({
     } = domain()
 
     return {
-      refUserName,
-      refUserUid,
+      userInfo,
       allCardInformationList,
       updateData,
       deleteData,
@@ -77,8 +73,8 @@ export default defineComponent({
       addDataFromHeader,
       confirmDeleteCardInformation,
       confirmMessage,
-      isShowAddInfodialog,
-      unshowAddInfodialog
+      isShowAddInfoDialog,
+      unShowAddInfoDialog
     }
   }
 })

@@ -14,11 +14,10 @@
     </nuxt-link>
     <v-spacer />
     <AddInfoDialog
-      :ref-user-name="refUserName"
-      :ref-user-uid="refUserUid"
+      :user-info="userInfo"
       :add-data-from-header="addDataFromHeader"
-      :is-show-add-infodialog="isShowAddInfodialog"
-      @unshowAddInfodialog="unshowAddInfodialog"
+      :is-show-add-info-dialog="isShowAddInfoDialog"
+      @unShowAddInfoDialog="unShowAddInfoDialog"
     />
     <SearchCard />
   </v-app-bar>
@@ -30,16 +29,15 @@ import { defineComponent, PropType, ref, useStore } from "@nuxtjs/composition-ap
 
 export default defineComponent({
   props: {
-    refUserName: String,
-    refUserUid: String,
+    userInfo: { type: Object as PropType<{ name: string; uid: string }> },
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     },
-    isShowAddInfodialog: {
+    isShowAddInfoDialog: {
       type: Boolean,
       required: true
     },
-    unshowAddInfodialog: {
+    unShowAddInfoDialog: {
       type: Function,
       required: true
     }

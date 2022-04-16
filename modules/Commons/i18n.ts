@@ -7,3 +7,6 @@ export const info = {
     "このアプリはRSSリーダーライクな、WebサイトをまとめておくWebアプリケーションです。日々の技術のキャッチアップやブックマークツールとしてお使いください。",
   policy: "特になし。"
 }
+export const dialogMessage = {
+  confirmDelete: "カードを消去しますか？"
+}

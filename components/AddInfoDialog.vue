@@ -50,20 +50,19 @@ import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {
-    refUserName: String,
-    refUserUid: String,
+    userInfo: { type: Object as PropType<{ name: string; uid: string }> },
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     },
-    isShowAddInfodialog: { type: Boolean },
+    isShowAddInfoDialog: { type: Boolean },
     kinds: { type: String }
   },
   setup(props, { emit }) {
     const dialog = ref(false)
     watch(
-      () => props.isShowAddInfodialog,
+      () => props.isShowAddInfoDialog,
       val => {
-        console.debug("isShowAddInfodialog", props.isShowAddInfodialog)
+        console.debug("isShowAddInfoDialog", props.isShowAddInfoDialog)
         dialog.value = val
       }
     )
@@ -76,11 +75,11 @@ export default defineComponent({
         title.value = ""
       }
       dialog.value = false
-      emit("unshowAddInfodialog")
+      emit("unShowAddInfoDialog")
     }
     const cancelAction = () => {
       console.debug("ppppp")
-      emit("unshowAddInfodialog")
+      emit("unShowAddInfoDialog")
     }
 
     return { dialog, url, title, closeDialog, cancelAction }

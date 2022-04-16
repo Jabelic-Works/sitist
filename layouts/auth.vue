@@ -26,13 +26,12 @@
 import { defineComponent, nextTick, ref, useContext, useStore } from "@nuxtjs/composition-api"
 export default defineComponent({
   setup(_, {}) {
-    const { $vuetify } = useContext()
     const photoUrl = ref("")
     const store = useStore()
     nextTick(() => {
       photoUrl.value = store.getters["auth/getUserPhotoUrl"]
     })
-    return { $vuetify, photoUrl }
+    return { photoUrl }
   }
 })
 </script>

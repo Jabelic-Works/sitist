@@ -1,90 +1,61 @@
-import { nextTick, onActivated, ref, useContext, useFetch, useStore, watch } from "@nuxtjs/composition-api"
-import { use as useFetchData } from "@/modules/firestoreClient/fetchData"
+import { nextTick, onActivated, ref, useFetch, useStore } from "@nuxtjs/composition-api"
+import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepCopy, shuffleArray } from "../../utils"
+import { deepCopy } from "../../utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
+import { useUpdate } from "./update"
+import { useHeader } from "./header"
+import { dialogMessage } from "~/modules/Commons/i18n"
 
 export const use = () => {
-  const refUserName = ref("Guest")
-  const refUserUid = ref("")
+  const userInfo = ref({ name: "", uid: "" })
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
-  const { addData, fetchAllData } = useFetchData()
-  const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
-
-  // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
-  /** postした後にstoreの後の値を変更してから画面に反映 */
-  const updateData = () => {
-    setTimeout(() => getAllDataFromStoreThenArranged(), 500)
-  }
-  const updateDataAndShuffle = () => {
-    setTimeout(async () => {
-      await getAllDataFromStoreThenArranged()
-      sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
-      console.debug(sitesInfo.value)
-    }, 0)
-  }
-
   const isShowingUpdateDataDialog = ref(false)
-  const showConfirmDeleteDialog = () => {
-    confirmMessage.value = "カードを消去しますか？"
-    isShowingUpdateDataDialog.value = true
-  }
   const closeDialog = () => {
     isShowingUpdateDataDialog.value = false
   }
-  const isShowAddInfodialog = ref(false)
-  const unshowAddInfodialog = () => {
-    isShowAddInfodialog.value = false
+  const isShowAddInfoDialog = ref(false)
+  const unShowAddInfoDialog = () => {
+    isShowAddInfoDialog.value = false
   }
-
-  const confirmMessage = ref("カードを消去しますか？")
-
+  /** カード削除時の confirm message */
+  const confirmMessage = ref(dialogMessage.confirmDelete)
+  const { fetchAllData } = fetchDataFS()
+  const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
+  /** Updates */
+  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, userInfo })
+  /** Header */
+  const { addDataFromHeader } = useHeader({ userInfo, updateData })
+  /** Delete */
   const { deleteData, confirmDeleteCardInformation } = useDelete({
-    showConfirmDeleteDialog,
     updateData,
-    getAllDataFromStoreThenArranged
+    getAllDataFromStoreThenArranged,
+    confirmMessage,
+    isShowingUpdateDataDialog
   })
 
-  /** Headerの+ボタン経由で開かれるダイアログ */
-  const addDataFromHeader = async (urlString: string, titleString?: string) => {
-    const data = {
-      data: {
-        URL: urlString,
-        title: titleString,
-        OGP: "",
-        description: ""
-      }
-    }
-    let allCardInformationList = {}
-    if (refUserUid.value) {
-      allCardInformationList = await addData(data, refUserUid.value)
-      console.debug("new data", allCardInformationList)
-      store.dispatch("data/setAllData", allCardInformationList).finally(() => {
-        updateData()
-      })
-    }
-  }
+  /** ===== init ====== */
 
-  /** init */
   useFetch(async () => {
-    refUserUid.value = store.getters["auth/getUserUid"]
-    if (refUserUid.value) {
+    userInfo.value.uid = store.getters["auth/getUserUid"]
+    userInfo.value.name = store.getters["auth/getUserName"]
+    if (userInfo.value.uid) {
       allCardInformationList.value = store.getters["data/getAllData"] // データがある場合
       console.debug("useFetch", allCardInformationList.value)
       // データがない場合
       if (Object.keys(allCardInformationList.value).length === 0) {
         console.debug("data is empty")
-        allCardInformationList.value = await fetchAllData(refUserUid.value)
+        allCardInformationList.value = await fetchAllData(userInfo.value.uid)
         store.dispatch("data/setAllData", allCardInformationList.value)
       }
     }
   })
   onActivated(() => {
-    refUserName.value = store.getters["auth/getUserName"]
-    refUserUid.value = store.getters["auth/getUserUid"]
+    userInfo.value.uid = store.getters["auth/getUserUid"]
+    userInfo.value.name = store.getters["auth/getUserName"]
     allCardInformationList.value = store.getters["data/getAllData"]
     console.debug("onActivate: ", allCardInformationList.value)
     updateDataAndShuffle()
@@ -93,39 +64,17 @@ export const use = () => {
     allCardInformationList.value = await deepCopy(store.getters["data/getAllData"])
     console.debug("nextTick: ", allCardInformationList.value)
   })
-  // ユーザーが変わった場合
-  watch(
-    () => store.getters["auth/getUserUid"],
-    async val => {
-      if (refUserUid.value !== val) {
-        console.debug("===== User changed =====")
-        refUserName.value = store.getters["auth/getUserName"]
-        refUserUid.value = store.getters["auth/getUserUid"]
-        allCardInformationList.value = await fetchAllData(refUserUid.value)
-        store.dispatch("data/setAllData", allCardInformationList.value)
-      }
-    },
-    { immediate: true }
-  )
-  // データが更新された場合
-  watch(
-    () => store.getters["data/getAllData"],
-    () => {
-      allCardInformationList.value = deepCopy(store.getters["data/getAllData"])
-    },
-    { immediate: true }
-  )
+
   return {
-    refUserName,
-    refUserUid,
+    userInfo,
     allCardInformationList,
     updateData,
     getAllDataFromStoreThenArranged,
     isShowingUpdateDataDialog,
     closeDialog,
     sitesInfo,
-    isShowAddInfodialog,
-    unshowAddInfodialog,
+    isShowAddInfoDialog,
+    unShowAddInfoDialog,
     confirmMessage,
     confirmDeleteCardInformation,
     deleteData,
