@@ -76,11 +76,11 @@ export default defineComponent({
         title.value = ""
       }
       dialog.value = false
-      emit("unshowAddInfodialog")
+      emit("unShowAddInfoDialog")
     }
     const cancelAction = () => {
       console.debug("ppppp")
-      emit("unshowAddInfodialog")
+      emit("unShowAddInfoDialog")
     }
 
     return { dialog, url, title, closeDialog, cancelAction }

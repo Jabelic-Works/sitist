@@ -18,7 +18,7 @@
       :ref-user-uid="refUserUid"
       :add-data-from-header="addDataFromHeader"
       :is-show-add-info-dialog="isShowAddInfoDialog"
-      @unshowAddInfodialog="unshowAddInfodialog"
+      @unShowAddInfoDialog="unShowAddInfoDialog"
     />
     <SearchCard />
   </v-app-bar>
@@ -39,7 +39,7 @@ export default defineComponent({
       type: Boolean,
       required: true
     },
-    unshowAddInfodialog: {
+    unShowAddInfoDialog: {
       type: Function,
       required: true
     }

@@ -7,7 +7,7 @@
       :ref-user-uid="refUserUid"
       :add-data-from-header="addDataFromHeader"
       :is-show-add-info-dialog="isShowAddInfoDialog"
-      :unshow-add-infodialog="unshowAddInfodialog"
+      :un-show-add-info-dialog="unShowAddInfoDialog"
     />
     <v-main class="pa-3">
       <v-container class="mb-10" :class="{ 'mt-2': $vuetify.breakpoint.smAndUp }">
@@ -37,7 +37,7 @@
           :ref-user-name="refUserName"
           :ref-user-uid="refUserUid"
           :add-data-from-header="addDataFromHeader"
-          @unshowAddInfodialog="unshowAddInfodialog"
+          @unShowAddInfoDialog="unShowAddInfoDialog"
         />
       </v-container>
     </v-main>
@@ -58,7 +58,7 @@ export default defineComponent({
       closeDialog,
       sitesInfo,
       isShowAddInfoDialog,
-      unshowAddInfodialog,
+      unShowAddInfoDialog,
       confirmMessage,
       confirmDeleteCardInformation,
       deleteData,
@@ -78,7 +78,7 @@ export default defineComponent({
       confirmDeleteCardInformation,
       confirmMessage,
       isShowAddInfoDialog,
-      unshowAddInfodialog
+      unShowAddInfoDialog
     }
   }
 })

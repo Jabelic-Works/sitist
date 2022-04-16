@@ -19,7 +19,7 @@ export const use = () => {
     isShowingUpdateDataDialog.value = false
   }
   const isShowAddInfoDialog = ref(false)
-  const unshowAddInfodialog = () => {
+  const unShowAddInfoDialog = () => {
     isShowAddInfoDialog.value = false
   }
   /** カード削除時の confirm message */
@@ -75,7 +75,7 @@ export const use = () => {
     closeDialog,
     sitesInfo,
     isShowAddInfoDialog,
-    unshowAddInfodialog,
+    unShowAddInfoDialog,
     confirmMessage,
     confirmDeleteCardInformation,
     deleteData,
