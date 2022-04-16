@@ -1,5 +1,5 @@
 import colors from "vuetify/es5/util/colors"
-import Context from "@nuxtjs/vuetify" // for $vuetify
+// import Context from "@nuxtjs/vuetify" // for $vuetify
 require("dotenv").config()
 
 export default {
