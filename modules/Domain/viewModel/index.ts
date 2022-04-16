@@ -4,6 +4,8 @@ import { CardInfo } from "~/types/custom"
 import { deepCopy, shuffleArray } from "../../utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
+import { useUpdate } from "./update"
+import { useHeader } from "./header"
 
 export const use = () => {
   const refUserName = ref("Guest")
@@ -13,19 +15,8 @@ export const use = () => {
   const store = useStore()
   const { addData, fetchAllData } = useFetchData()
   const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
-
-  // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
-  /** postした後にstoreの後の値を変更してから画面に反映 */
-  const updateData = () => {
-    setTimeout(() => getAllDataFromStoreThenArranged(), 500)
-  }
-  const updateDataAndShuffle = () => {
-    setTimeout(async () => {
-      await getAllDataFromStoreThenArranged()
-      sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
-      console.debug(sitesInfo.value)
-    }, 0)
-  }
+  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo })
+  const { addDataFromHeader } = useHeader({ refUserUid, updateData })
 
   const isShowingUpdateDataDialog = ref(false)
   const showConfirmDeleteDialog = () => {
@@ -47,26 +38,6 @@ export const use = () => {
     updateData,
     getAllDataFromStoreThenArranged
   })
-
-  /** Headerの+ボタン経由で開かれるダイアログ */
-  const addDataFromHeader = async (urlString: string, titleString?: string) => {
-    const data = {
-      data: {
-        URL: urlString,
-        title: titleString,
-        OGP: "",
-        description: ""
-      }
-    }
-    let allCardInformationList = {}
-    if (refUserUid.value) {
-      allCardInformationList = await addData(data, refUserUid.value)
-      console.debug("new data", allCardInformationList)
-      store.dispatch("data/setAllData", allCardInformationList).finally(() => {
-        updateData()
-      })
-    }
-  }
 
   /** init */
   useFetch(async () => {
