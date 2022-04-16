@@ -50,8 +50,7 @@ import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {
-    refUserName: String,
-    refUserUid: String,
+    userInfo: { type: Object as PropType<{ name: string; uid: string }> },
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     },

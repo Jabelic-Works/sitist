@@ -9,8 +9,7 @@ import { useHeader } from "./header"
 import { dialogMessage } from "~/modules/Commons/i18n"
 
 export const use = () => {
-  const refUserName = ref("Guest")
-  const refUserUid = ref("")
+  const userInfo = ref({ name: "", uid: "" })
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
@@ -27,9 +26,9 @@ export const use = () => {
   const { fetchAllData } = fetchDataFS()
   const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
   /** Updates */
-  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, refUserUid, refUserName })
+  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, userInfo })
   /** Header */
-  const { addDataFromHeader } = useHeader({ refUserUid, updateData })
+  const { addDataFromHeader } = useHeader({ userInfo, updateData })
   /** Delete */
   const { deleteData, confirmDeleteCardInformation } = useDelete({
     updateData,
@@ -41,21 +40,22 @@ export const use = () => {
   /** ===== init ====== */
 
   useFetch(async () => {
-    refUserUid.value = store.getters["auth/getUserUid"]
-    if (refUserUid.value) {
+    userInfo.value.uid = store.getters["auth/getUserUid"]
+    userInfo.value.name = store.getters["auth/getUserName"]
+    if (userInfo.value.uid) {
       allCardInformationList.value = store.getters["data/getAllData"] // データがある場合
       console.debug("useFetch", allCardInformationList.value)
       // データがない場合
       if (Object.keys(allCardInformationList.value).length === 0) {
         console.debug("data is empty")
-        allCardInformationList.value = await fetchAllData(refUserUid.value)
+        allCardInformationList.value = await fetchAllData(userInfo.value.uid)
         store.dispatch("data/setAllData", allCardInformationList.value)
       }
     }
   })
   onActivated(() => {
-    refUserName.value = store.getters["auth/getUserName"]
-    refUserUid.value = store.getters["auth/getUserUid"]
+    userInfo.value.uid = store.getters["auth/getUserUid"]
+    userInfo.value.name = store.getters["auth/getUserName"]
     allCardInformationList.value = store.getters["data/getAllData"]
     console.debug("onActivate: ", allCardInformationList.value)
     updateDataAndShuffle()
@@ -66,8 +66,7 @@ export const use = () => {
   })
 
   return {
-    refUserName,
-    refUserUid,
+    userInfo,
     allCardInformationList,
     updateData,
     getAllDataFromStoreThenArranged,

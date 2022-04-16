@@ -7,13 +7,11 @@ import { useCardList } from "./cardList"
 export const useUpdate = ({
   allCardInformationList,
   sitesInfo,
-  refUserUid,
-  refUserName
+  userInfo
 }: {
   allCardInformationList: Ref<{ data: CardInfo }>
   sitesInfo: Ref<CardInfo[]>
-  refUserUid: Ref<string>
-  refUserName: Ref<string>
+  userInfo: Ref<{ name: string; uid: string }>
 }) => {
   const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
   const { fetchAllData } = fetchDataFS()
@@ -35,11 +33,11 @@ export const useUpdate = ({
   watch(
     () => store.getters["auth/getUserUid"],
     async val => {
-      if (refUserUid.value !== val) {
+      if (userInfo.value.uid !== val) {
         console.debug("===== User changed =====")
-        refUserName.value = store.getters["auth/getUserName"]
-        refUserUid.value = store.getters["auth/getUserUid"]
-        allCardInformationList.value = await fetchAllData(refUserUid.value)
+        userInfo.value.uid = store.getters["auth/getUserUid"]
+        userInfo.value.name = store.getters["auth/getUserName"]
+        allCardInformationList.value = await fetchAllData(userInfo.value.uid)
         store.dispatch("data/setAllData", allCardInformationList.value)
         getAllDataFromStoreThenArranged()
       }

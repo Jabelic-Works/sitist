@@ -3,8 +3,7 @@
     <!-- FIXME: Headerはpages/indexに移動 -->
     <Header
       class="fixed-bar"
-      :ref-user-name="refUserName"
-      :ref-user-uid="refUserUid"
+      :ref-user-uid="userInfo.uid"
       :add-data-from-header="addDataFromHeader"
       :is-show-add-info-dialog="isShowAddInfoDialog"
       :un-show-add-info-dialog="unShowAddInfoDialog"
@@ -33,9 +32,8 @@
         />
         <AddInfoDialog
           :kinds="'floating'"
-          :is-show-add-infodialog="isShowAddInfoDialog"
-          :ref-user-name="refUserName"
-          :ref-user-uid="refUserUid"
+          :is-show-add-info-dialog="isShowAddInfoDialog"
+          :user-info="userInfo"
           :add-data-from-header="addDataFromHeader"
           @unShowAddInfoDialog="unShowAddInfoDialog"
         />
@@ -50,8 +48,7 @@ import { use as domain } from "~/modules/Domain/viewModel/index"
 export default defineComponent({
   setup() {
     const {
-      refUserName,
-      refUserUid,
+      userInfo,
       allCardInformationList,
       updateData,
       isShowingUpdateDataDialog,
@@ -66,8 +63,7 @@ export default defineComponent({
     } = domain()
 
     return {
-      refUserName,
-      refUserUid,
+      userInfo,
       allCardInformationList,
       updateData,
       deleteData,
