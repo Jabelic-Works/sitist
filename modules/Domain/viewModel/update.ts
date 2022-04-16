@@ -31,7 +31,6 @@ export const useUpdate = ({
       console.debug(sitesInfo.value)
     }, 0)
   }
-
   // ユーザーが変わった場合
   watch(
     () => store.getters["auth/getUserUid"],
@@ -42,6 +41,7 @@ export const useUpdate = ({
         refUserUid.value = store.getters["auth/getUserUid"]
         allCardInformationList.value = await fetchAllData(refUserUid.value)
         store.dispatch("data/setAllData", allCardInformationList.value)
+        getAllDataFromStoreThenArranged()
       }
     },
     { immediate: true }
