@@ -14,16 +14,7 @@ export const use = () => {
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
-  const { fetchAllData } = fetchDataFB()
-  const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
-  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, refUserUid, refUserName })
-  const { addDataFromHeader } = useHeader({ refUserUid, updateData })
-
   const isShowingUpdateDataDialog = ref(false)
-  // const showConfirmDeleteDialog = () => {
-  //   confirmMessage.value = dialogMessage.confirmDelete
-  //   isShowingUpdateDataDialog.value = true
-  // }
   const closeDialog = () => {
     isShowingUpdateDataDialog.value = false
   }
@@ -33,7 +24,13 @@ export const use = () => {
   }
   /** カード削除時の confirm message */
   const confirmMessage = ref(dialogMessage.confirmDelete)
-
+  const { fetchAllData } = fetchDataFB()
+  const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
+  /** Updates */
+  const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, refUserUid, refUserName })
+  /** Header */
+  const { addDataFromHeader } = useHeader({ refUserUid, updateData })
+  /** Delete */
   const { deleteData, confirmDeleteCardInformation } = useDelete({
     updateData,
     getAllDataFromStoreThenArranged,
