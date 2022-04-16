@@ -55,15 +55,15 @@ export default defineComponent({
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     },
-    isShowAddInfodialog: { type: Boolean },
+    isShowAddInfoDialog: { type: Boolean },
     kinds: { type: String }
   },
   setup(props, { emit }) {
     const dialog = ref(false)
     watch(
-      () => props.isShowAddInfodialog,
+      () => props.isShowAddInfoDialog,
       val => {
-        console.debug("isShowAddInfodialog", props.isShowAddInfodialog)
+        console.debug("isShowAddInfoDialog", props.isShowAddInfoDialog)
         dialog.value = val
       }
     )

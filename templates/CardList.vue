@@ -6,7 +6,7 @@
       :ref-user-name="refUserName"
       :ref-user-uid="refUserUid"
       :add-data-from-header="addDataFromHeader"
-      :is-show-add-infodialog="isShowAddInfodialog"
+      :is-show-add-info-dialog="isShowAddInfoDialog"
       :unshow-add-infodialog="unshowAddInfodialog"
     />
     <v-main class="pa-3">
@@ -33,7 +33,7 @@
         />
         <AddInfoDialog
           :kinds="'floating'"
-          :is-show-add-infodialog="isShowAddInfodialog"
+          :is-show-add-infodialog="isShowAddInfoDialog"
           :ref-user-name="refUserName"
           :ref-user-uid="refUserUid"
           :add-data-from-header="addDataFromHeader"
@@ -57,7 +57,7 @@ export default defineComponent({
       isShowingUpdateDataDialog,
       closeDialog,
       sitesInfo,
-      isShowAddInfodialog,
+      isShowAddInfoDialog,
       unshowAddInfodialog,
       confirmMessage,
       confirmDeleteCardInformation,
@@ -77,7 +77,7 @@ export default defineComponent({
       addDataFromHeader,
       confirmDeleteCardInformation,
       confirmMessage,
-      isShowAddInfodialog,
+      isShowAddInfoDialog,
       unshowAddInfodialog
     }
   }

@@ -17,7 +17,7 @@
       :ref-user-name="refUserName"
       :ref-user-uid="refUserUid"
       :add-data-from-header="addDataFromHeader"
-      :is-show-add-infodialog="isShowAddInfodialog"
+      :is-show-add-info-dialog="isShowAddInfoDialog"
       @unshowAddInfodialog="unshowAddInfodialog"
     />
     <SearchCard />
@@ -35,7 +35,7 @@ export default defineComponent({
     addDataFromHeader: {
       type: Function as PropType<(urlString: string, titleString?: string) => void>
     },
-    isShowAddInfodialog: {
+    isShowAddInfoDialog: {
       type: Boolean,
       required: true
     },
