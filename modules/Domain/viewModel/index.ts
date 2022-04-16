@@ -1,5 +1,5 @@
 import { nextTick, onActivated, ref, useFetch, useStore } from "@nuxtjs/composition-api"
-import { fetchDataFB } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
 import { deepCopy } from "../../utils"
 import { useCardList } from "./cardList"
@@ -24,7 +24,7 @@ export const use = () => {
   }
   /** カード削除時の confirm message */
   const confirmMessage = ref(dialogMessage.confirmDelete)
-  const { fetchAllData } = fetchDataFB()
+  const { fetchAllData } = fetchDataFS()
   const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
   /** Updates */
   const { updateDataAndShuffle, updateData } = useUpdate({ allCardInformationList, sitesInfo, refUserUid, refUserName })

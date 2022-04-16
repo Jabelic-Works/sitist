@@ -1,7 +1,7 @@
 import { db } from "~/plugins/firebase"
 
 /** APIs */
-export const fetchDataFB = () => {
+export const fetchDataFS = () => {
   // firestoreからデータを取得、それをstoreへdispatch
   const fetchAllData = async (uid: string) => {
     let docs: any = {}

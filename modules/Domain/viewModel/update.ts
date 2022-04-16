@@ -1,6 +1,6 @@
 import { Ref, useStore, watch } from "@nuxtjs/composition-api"
 import { deepCopy, shuffleArray } from "~/modules/utils"
-import { fetchDataFB } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
 import { useCardList } from "./cardList"
 
@@ -16,7 +16,7 @@ export const useUpdate = ({
   refUserName: Ref<string>
 }) => {
   const { getAllDataFromStoreThenArranged } = useCardList({ allCardInformationList, sitesInfo })
-  const { fetchAllData } = fetchDataFB()
+  const { fetchAllData } = fetchDataFS()
   const store = useStore()
   // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
   /** postした後にstoreの後の値を変更してから画面に反映 */
