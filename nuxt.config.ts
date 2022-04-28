@@ -72,10 +72,10 @@ export default {
       lang: "ja",
       start_url: "/?standalone=true",
       display: "standalone",
-      background_color: "#ffffff",
+      background_color: "#808080",
       description: "",
-      orientation: "any",
-      theme_color: "#fff",
+      orientation: "portrait",
+      theme_color: "#808080",
       icons: [
         {
           src: "/android-chrome-36x36.png",
