@@ -9,10 +9,10 @@ import { useHeader } from "./header"
 import { dialogMessage } from "~/modules/Commons/i18n"
 
 export const use = () => {
-  const userInfo = ref({ name: "", uid: "" })
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
   const sitesInfo = ref<CardInfo[]>([])
   const store = useStore()
+  const userInfo = ref({ name: store.getters["auth/getUserName"], uid: store.getters["auth/getUserUid"] })
   const isShowingUpdateDataDialog = ref(false)
   const closeDialog = () => {
     isShowingUpdateDataDialog.value = false
@@ -45,6 +45,12 @@ export const use = () => {
     if (userInfo.value.uid) {
       allCardInformationList.value = store.getters["data/getAllData"] // データがある場合
       console.debug("useFetch", allCardInformationList.value)
+      console.debug(
+        Object.keys(allCardInformationList.value).length === 0,
+        Object.keys(allCardInformationList.value).length,
+        Object.keys(allCardInformationList.value),
+        allCardInformationList.value
+      )
       // データがない場合
       if (Object.keys(allCardInformationList.value).length === 0) {
         console.debug("data is empty")

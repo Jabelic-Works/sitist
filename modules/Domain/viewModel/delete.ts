@@ -53,7 +53,7 @@ export const useDelete = ({
     if (deletedCardInfo.value) {
       deleteCard(deletedCardInfo.value)
     }
-    setTimeout(() => getAllDataFromStoreThenArranged(), 500)
+    setTimeout(() => getAllDataFromStoreThenArranged(true), 500)
   }
   return { deleteData, confirmDeleteCardInformation }
 }

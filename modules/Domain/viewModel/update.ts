@@ -1,4 +1,4 @@
-import { Ref, useStore, watch } from "@nuxtjs/composition-api"
+import { onActivated, Ref, useStore, watch } from "@nuxtjs/composition-api"
 import { deepCopy, shuffleArray } from "~/modules/utils"
 import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
@@ -19,12 +19,12 @@ export const useUpdate = ({
   // NOTE: 多分storeの更新を待たなきゃいけない, watchではうまく動かない。
   /** postした後にstoreの後の値を変更してから画面に反映 */
   const updateData = () => {
-    setTimeout(() => getAllDataFromStoreThenArranged(), 500)
+    setTimeout(() => getAllDataFromStoreThenArranged(true), 500)
   }
 
   const updateDataAndShuffle = () => {
     setTimeout(async () => {
-      await getAllDataFromStoreThenArranged()
+      await getAllDataFromStoreThenArranged(true)
       sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
       console.debug(sitesInfo.value)
     }, 0)
@@ -33,13 +33,14 @@ export const useUpdate = ({
   watch(
     () => store.getters["auth/getUserUid"],
     async val => {
+      console.debug(userInfo.value.uid, ":", val)
       if (userInfo.value.uid !== val) {
         console.debug("===== User changed =====")
         userInfo.value.uid = store.getters["auth/getUserUid"]
         userInfo.value.name = store.getters["auth/getUserName"]
         allCardInformationList.value = await fetchAllData(userInfo.value.uid)
-        store.dispatch("data/setAllData", allCardInformationList.value)
-        getAllDataFromStoreThenArranged()
+        await store.dispatch("data/setAllData", allCardInformationList.value)
+        updateData()
       }
     },
     { immediate: true }

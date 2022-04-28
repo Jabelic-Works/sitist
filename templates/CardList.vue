@@ -44,9 +44,8 @@
 <script lang="ts">
 import { defineComponent } from "@nuxtjs/composition-api"
 import { use as domain } from "~/modules/Domain/viewModel/index"
-
 export default defineComponent({
-  setup() {
+  setup(_, {}) {
     const {
       userInfo,
       allCardInformationList,

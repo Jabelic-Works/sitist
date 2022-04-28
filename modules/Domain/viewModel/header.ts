@@ -20,12 +20,11 @@ export const useHeader = ({
       }
     }
     let allCardInformationList = {}
-    if (userInfo.value.uid) {
+    if (userInfo.value.uid || store.getters["auth/getUserUid"]) {
       allCardInformationList = await addData(data, userInfo.value.uid)
       console.debug("new data", allCardInformationList)
-      store.dispatch("data/setAllData", allCardInformationList).finally(() => {
-        updateData()
-      })
+      await store.dispatch("data/setAllData", allCardInformationList)
+      updateData()
     }
   }
   return { addDataFromHeader }
