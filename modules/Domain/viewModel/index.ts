@@ -7,6 +7,7 @@ import { useDelete } from "./delete"
 import { useUpdate } from "./update"
 import { useHeader } from "./header"
 import { dialogMessage } from "~/modules/Commons/i18n"
+import { useFetchData } from "./fetch"
 
 export const use = () => {
   const allCardInformationList = ref<{ data: CardInfo }>() // FIXME: type
@@ -36,6 +37,8 @@ export const use = () => {
     confirmMessage,
     isShowingUpdateDataDialog
   })
+  /** Sign-in */
+  const { fetchDataAfterSignIn } = useFetchData({ allCardInformationList, userInfo })
 
   /** ===== init ====== */
 
@@ -84,6 +87,7 @@ export const use = () => {
     confirmMessage,
     confirmDeleteCardInformation,
     deleteData,
-    addDataFromHeader
+    addDataFromHeader,
+    fetchDataAfterSignIn
   }
 }

@@ -34,7 +34,7 @@ export const useUpdate = ({
     () => store.getters["auth/getUserUid"],
     async val => {
       console.debug(userInfo.value.uid, ":", val)
-      if (userInfo.value.uid !== val) {
+      if (userInfo.value.uid != val) {
         console.debug("===== User changed =====")
         userInfo.value.uid = store.getters["auth/getUserUid"]
         userInfo.value.name = store.getters["auth/getUserName"]
