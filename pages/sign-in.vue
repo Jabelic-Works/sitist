@@ -33,10 +33,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, useRouter, useStore } from "@nuxtjs/composition-api"
+import { useSignin } from "~/modules/Domain/sign-in/viewModel"
 import firebase from "~/plugins/firebase"
 export default defineComponent({
   layout: "auth",
   setup(_, {}) {
+    const { fetchDataAfterSignIn } = useSignin()
     const store = useStore()
     const router = useRouter()
     const signIn = async () => {
@@ -56,7 +58,8 @@ export default defineComponent({
           const errorCode = error.code
           console.log("error : " + errorCode) // NOTE: 登録されたドメインでないとエラーを吐く
         })
-        .then(() => {
+        .then(async () => {
+          await fetchDataAfterSignIn(user.value.uid)
           router.push("/")
         })
     }
