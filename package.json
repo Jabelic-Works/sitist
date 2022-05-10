@@ -7,7 +7,7 @@
     "dev:host": "nuxt --hostname '0' --port 3100",
     "build": "nuxt build",
     "start": "nuxt start",
-    "hosting": "firebase deploy --only hosting,firestore",
+    "hosting": "nuxt build & firebase deploy --only hosting,firestore",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
