@@ -29,7 +29,7 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-text-field v-model="url" label="URL" required />
+              <v-text-field ref="urlVTextField" v-model="url" label="URL" required />
             </v-row>
             <v-row>
               <v-text-field v-model="title" label="title" required />
@@ -47,6 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
+import { nextTick } from "process"
 
 export default defineComponent({
   props: {
@@ -78,11 +79,26 @@ export default defineComponent({
       emit("unShowAddInfoDialog")
     }
     const cancelAction = () => {
-      console.debug("ppppp")
       emit("unShowAddInfoDialog")
     }
 
-    return { dialog, url, title, closeDialog, cancelAction }
+    const urlVTextField = ref(null)
+    // nextTick(() => {
+    //   if (urlVTextField.value) {
+    //     urlVTextField.value.focus()
+    //     console.debug("urlVTextField.value.focus()")
+    //   }
+    // })
+    watch(
+      () => dialog.value,
+      () => {
+        nextTick(() => {
+          urlVTextField.value.focus()
+        })
+      }
+    )
+
+    return { dialog, url, title, closeDialog, cancelAction, urlVTextField }
   }
 })
 </script>
