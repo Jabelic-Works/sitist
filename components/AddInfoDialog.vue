@@ -60,6 +60,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const dialog = ref(false)
+    //  TODO: isShowAddInfoDialogいらないかも. 要検証
     watch(
       () => props.isShowAddInfoDialog,
       val => {
@@ -82,13 +83,8 @@ export default defineComponent({
       emit("unShowAddInfoDialog")
     }
 
+    /** auto focus機能 */
     const urlVTextField = ref(null)
-    // nextTick(() => {
-    //   if (urlVTextField.value) {
-    //     urlVTextField.value.focus()
-    //     console.debug("urlVTextField.value.focus()")
-    //   }
-    // })
     watch(
       () => dialog.value,
       () => {
