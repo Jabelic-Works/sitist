@@ -29,7 +29,7 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-text-field v-model="url" label="URL" required />
+              <v-text-field ref="urlVTextField" v-model="url" label="URL" required />
             </v-row>
             <v-row>
               <v-text-field v-model="title" label="title" required />
@@ -47,6 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
+import { nextTick } from "process"
 
 export default defineComponent({
   props: {
@@ -59,6 +60,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const dialog = ref(false)
+    //  TODO: isShowAddInfoDialogいらないかも. 要検証
     watch(
       () => props.isShowAddInfoDialog,
       val => {
@@ -78,11 +80,21 @@ export default defineComponent({
       emit("unShowAddInfoDialog")
     }
     const cancelAction = () => {
-      console.debug("ppppp")
       emit("unShowAddInfoDialog")
     }
 
-    return { dialog, url, title, closeDialog, cancelAction }
+    /** auto focus機能 */
+    const urlVTextField = ref(null)
+    watch(
+      () => dialog.value,
+      () => {
+        nextTick(() => {
+          urlVTextField.value.focus()
+        })
+      }
+    )
+
+    return { dialog, url, title, closeDialog, cancelAction, urlVTextField }
   }
 })
 </script>
