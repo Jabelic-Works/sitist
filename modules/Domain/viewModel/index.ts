@@ -46,20 +46,9 @@ export const use = () => {
     userInfo.value.uid = store.getters["auth/getUserUid"]
     userInfo.value.name = store.getters["auth/getUserName"]
     if (userInfo.value.uid) {
-      allCardInformationList.value = store.getters["data/getAllData"] // データがある場合
+      allCardInformationList.value = await fetchAllData(userInfo.value.uid)
+      store.dispatch("data/setAllData", allCardInformationList.value) // storeにデータを入れる
       console.debug("useFetch", allCardInformationList.value)
-      console.debug(
-        Object.keys(allCardInformationList.value).length === 0,
-        Object.keys(allCardInformationList.value).length,
-        Object.keys(allCardInformationList.value),
-        allCardInformationList.value
-      )
-      // データがない場合
-      if (Object.keys(allCardInformationList.value).length === 0) {
-        console.debug("data is empty")
-        allCardInformationList.value = await fetchAllData(userInfo.value.uid)
-        store.dispatch("data/setAllData", allCardInformationList.value)
-      }
     }
   })
   onActivated(() => {
