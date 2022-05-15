@@ -1,4 +1,4 @@
-import { onActivated, Ref, useStore, watch } from "@nuxtjs/composition-api"
+import { Ref, useStore, watch } from "@nuxtjs/composition-api"
 import { deepCopy, shuffleArray } from "~/modules/utils"
 import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"

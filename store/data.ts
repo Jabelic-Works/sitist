@@ -1,6 +1,3 @@
-// import { reactive, ref } from "@nuxtjs/composition-api"
-// const docRef = ref<firebase.default.firestore.DocumentData>()
-
 export const state = (): State => ({
   data: [],
   timestamp: 0
