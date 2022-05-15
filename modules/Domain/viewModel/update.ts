@@ -33,7 +33,6 @@ export const useUpdate = ({
   watch(
     () => store.getters["auth/getUserUid"],
     async val => {
-      console.debug(userInfo.value.uid, ":", val)
       if (userInfo.value.uid != val) {
         console.debug("===== User changed =====")
         userInfo.value.uid = store.getters["auth/getUserUid"]
@@ -51,7 +50,7 @@ export const useUpdate = ({
     () => {
       allCardInformationList.value = deepCopy(store.getters["data/getAllData"])
     },
-    { immediate: true }
+    { immediate: true, deep: true }
   )
 
   return { updateData, updateDataAndShuffle }

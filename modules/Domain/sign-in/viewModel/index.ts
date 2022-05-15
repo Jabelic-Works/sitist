@@ -1,4 +1,4 @@
-import { watch, Ref, useStore, ref } from "@nuxtjs/composition-api"
+import { useStore, ref } from "@nuxtjs/composition-api"
 import { fetchDataFS } from "~/modules/firestoreClient/fetchData"
 import { CardInfo } from "~/types/custom"
 export const useSignin = () => {

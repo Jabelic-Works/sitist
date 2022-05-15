@@ -161,6 +161,12 @@ export default {
       config.node = {
         fs: "empty"
       }
+    },
+    // consoleを表示しない
+    terser: {
+      terserOptions: {
+        compress: { drop_console: true }
+      }
     }
   },
   router: {
