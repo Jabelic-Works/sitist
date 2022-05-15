@@ -133,6 +133,26 @@ export default {
           type: "image/png"
         }
       ]
+    },
+    workbox: {
+      skipWaiting: true,
+      clientsClaim: true,
+      runtimeCaching: [
+        {
+          // APIから取得した結果
+          urlPattern: ".*",
+          handler: "cacheFirst",
+          method: "GET",
+          strategyOptions: {
+            cacheExpiration: {
+              maxAgeSeconds: 60 * 60 // 1時間
+            },
+            cacheableResponse: {
+              statuses: [200]
+            }
+          }
+        }
+      ]
     }
   },
 
