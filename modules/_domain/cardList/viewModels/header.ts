@@ -1,5 +1,5 @@
 import { Ref, useStore } from "@nuxtjs/composition-api"
-import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFS } from "~/repos/fetchData"
 export const useHeader = ({
   userInfo,
   updateData

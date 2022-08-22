@@ -1,12 +1,12 @@
 import { nextTick, onActivated, ref, useFetch, useStore } from "@nuxtjs/composition-api"
-import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFS } from "~/repos/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepCopy } from "../../utils"
+import { deepCopy } from "../../../utils/utils"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 import { useUpdate } from "./update"
 import { useHeader } from "./header"
-import { dialogMessage } from "~/modules/Commons/i18n"
+import { dialogMessage } from "~/modules/utils/i18n"
 import { useFetchData } from "./fetch"
 
 export const use = () => {
@@ -39,8 +39,6 @@ export const use = () => {
   })
   /** Sign-in */
   const { fetchDataAfterSignIn } = useFetchData({ allCardInformationList, userInfo })
-
-  /** ===== init ====== */
 
   useFetch(async () => {
     userInfo.value.uid = store.getters["auth/getUserUid"]

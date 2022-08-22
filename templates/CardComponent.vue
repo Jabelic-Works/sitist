@@ -78,8 +78,8 @@
 <script lang="ts">
 import { defineComponent, getCurrentInstance, PropType, ref, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
-import { editCardInformation } from "~/modules/Domain/viewModel/edit"
-import { noTitle, noUrl } from "~/modules/Commons/i18n"
+import { editCardInformation } from "~/modules/_domain/cardList/viewModels/edit"
+import { noTitle, noUrl } from "~/modules/utils/i18n"
 
 export default defineComponent({
   props: {

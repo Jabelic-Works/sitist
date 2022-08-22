@@ -1,6 +1,6 @@
 import { Ref, ref, useStore } from "@nuxtjs/composition-api"
-import { dialogMessage } from "~/modules/Commons/i18n"
-import { deleteDataFS } from "~/modules/firestoreClient/deleteData"
+import { dialogMessage } from "~/modules/utils/i18n"
+import { deleteDataFS } from "~/repos/deleteData"
 import { CardInfo } from "~/types/custom"
 
 export const deleteCardInformation = async (info: CardInfo, store) => {

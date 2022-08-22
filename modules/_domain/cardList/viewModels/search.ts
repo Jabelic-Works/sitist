@@ -1,11 +1,11 @@
 import { Ref, useStore } from "@nuxtjs/composition-api"
-import { deepCopy } from "~/modules/utils"
+import { deepCopy } from "~/modules/utils/utils"
 
 export const useSearch = (searchKeywords: Ref<string>) => {
   const store = useStore()
-  type storeAllData = Array<{
-    id: { title?: string; URL: string; OGP?: string | undefined; description?: string | undefined } | undefined
-  }>
+  // type storeAllData = Array<{
+  //   id: { title?: string; URL: string; OGP?: string | undefined; description?: string | undefined } | undefined
+  // }>
   type contentsType = {
     data: { title?: string; URL: string; OGP?: string | undefined; description?: string | undefined } | undefined
   }

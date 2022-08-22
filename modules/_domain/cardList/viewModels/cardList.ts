@@ -1,5 +1,5 @@
 import { onActivated, ref, Ref, useStore } from "@nuxtjs/composition-api"
-import { deepCopy } from "~/modules/utils"
+import { deepCopy } from "~/modules/utils/utils"
 import { CardInfo } from "~/types/custom"
 
 export const useCardList = (input: { allCardInformationList: Ref<{ data: CardInfo }>; sitesInfo: Ref<any[]> }) => {

@@ -44,7 +44,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "@nuxtjs/composition-api"
-import { useSearch } from "../modules/Domain/viewModel/search"
+import { useSearch } from "../modules/_domain/cardList/viewModels/search"
 
 export default defineComponent({
   name: "SearchCard",

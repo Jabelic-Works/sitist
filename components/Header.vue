@@ -24,8 +24,7 @@
 </template>
 
 <script lang="ts">
-import { nextTick } from "process"
-import { defineComponent, PropType, ref, useStore } from "@nuxtjs/composition-api"
+import { defineComponent, PropType, ref, useStore, nextTick } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {

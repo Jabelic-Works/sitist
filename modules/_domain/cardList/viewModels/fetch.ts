@@ -1,5 +1,5 @@
-import { watch, Ref, useStore } from "@nuxtjs/composition-api"
-import { fetchDataFS } from "~/modules/firestoreClient/fetchData"
+import { Ref, useStore } from "@nuxtjs/composition-api"
+import { fetchDataFS } from "~/repos/fetchData"
 import { CardInfo } from "~/types/custom"
 export const useFetchData = ({
   allCardInformationList,

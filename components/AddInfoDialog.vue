@@ -46,8 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
-import { nextTick } from "process"
+import { defineComponent, ref, PropType, watch, nextTick } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {
