@@ -37,7 +37,7 @@ import { useSignin } from "~/modules/_domain/sign-in/viewModel"
 import firebase from "~/plugins/firebase"
 export default defineComponent({
   layout: "auth",
-  setup(_, {}) {
+  setup() {
     const { fetchDataAfterSignIn } = useSignin()
     const store = useStore()
     const router = useRouter()

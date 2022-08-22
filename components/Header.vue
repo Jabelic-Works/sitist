@@ -41,7 +41,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props, { emit }) {
+  setup() {
     const photoUrl = ref("")
     const store = useStore()
     nextTick(() => {

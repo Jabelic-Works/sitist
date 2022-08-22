@@ -48,7 +48,7 @@ import { useSearch } from "../modules/_domain/cardList/viewModels/search"
 
 export default defineComponent({
   name: "SearchCard",
-  setup(_, {}) {
+  setup() {
     const open = ref<boolean>()
     const inputValue = ref("")
     const syncInputText = (args: string) => {
@@ -70,9 +70,7 @@ export default defineComponent({
         dataTableItems.value.splice(0)
       }
     }
-    const toPageLink = (url: string) => {
-      window.open(url, "_blank")
-    }
+    const toPageLink = (url: string) => window.open(url, "_blank")
     return {
       inputValue,
       syncInputText,
