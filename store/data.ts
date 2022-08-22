@@ -13,11 +13,7 @@ export const mutations = {
   setData(state: State, val: any) {
     const { data, id } = val
     for (const [key, item] of Object.entries(state.data)) {
-      console.debug(key, id)
-      if (key == id) {
-        console.debug(state.data[id], JSON.parse(JSON.stringify({ data: data })))
-        state.data[id] = JSON.parse(JSON.stringify({ data: data }))
-      }
+      if (key == id) state.data[id] = JSON.parse(JSON.stringify({ data: data }))
     }
   },
   setAllData(state: any, Data: any) {

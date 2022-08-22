@@ -22,7 +22,6 @@ export const useHeader = ({
     let allCardInformationList = {}
     if (userInfo.value.uid || store.getters["auth/getUserUid"]) {
       allCardInformationList = await addData(data, userInfo.value.uid)
-      console.debug("new data", allCardInformationList)
       await store.dispatch("data/setAllData", allCardInformationList)
       updateData()
     }

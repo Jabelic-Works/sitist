@@ -52,7 +52,6 @@ export default defineComponent({
           console.log("success : " + user.value)
           console.log("success : " + user.value.uid + " : " + user.value.displayName)
           store.dispatch("auth/login", user.value)
-          console.debug("welcome!")
         })
         .catch(function (error) {
           const errorCode = error.code

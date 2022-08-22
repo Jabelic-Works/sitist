@@ -62,10 +62,7 @@ export default defineComponent({
     //  TODO: isShowAddInfoDialogいらないかも. 要検証
     watch(
       () => props.isShowAddInfoDialog,
-      val => {
-        console.debug("isShowAddInfoDialog", props.isShowAddInfoDialog)
-        dialog.value = val
-      }
+      val => dialog.value = val
     )
     const url = ref("")
     const title = ref("")

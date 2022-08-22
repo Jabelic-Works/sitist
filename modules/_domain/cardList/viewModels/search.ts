@@ -17,7 +17,6 @@ export const useSearch = (searchKeywords: Ref<string>) => {
     const filteredContents = Object.entries(allData).filter(([key, val]: any) =>
       val.data.title.toLowerCase().includes(searchKeywords.value.toLowerCase())
     ) as filteredArray
-    console.debug("検索：", filteredContents)
     return filteredContents
   }
   return { searchContents }

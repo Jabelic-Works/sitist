@@ -13,6 +13,5 @@ export const getOGP = async url => {
         }
       })
     })
-  console.debug(images)
   return images
 }

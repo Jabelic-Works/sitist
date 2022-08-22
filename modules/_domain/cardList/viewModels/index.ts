@@ -46,19 +46,16 @@ export const use = () => {
     if (userInfo.value.uid) {
       allCardInformationList.value = await fetchAllData(userInfo.value.uid)
       store.dispatch("data/setAllData", allCardInformationList.value) // storeにデータを入れる
-      console.debug("useFetch", allCardInformationList.value)
     }
   })
   onActivated(() => {
     userInfo.value.uid = store.getters["auth/getUserUid"]
     userInfo.value.name = store.getters["auth/getUserName"]
     allCardInformationList.value = store.getters["data/getAllData"]
-    console.debug("onActivate: ", allCardInformationList.value)
     updateDataAndShuffle()
   })
   nextTick(async () => {
     allCardInformationList.value = await deepCopy(store.getters["data/getAllData"])
-    console.debug("nextTick: ", allCardInformationList.value)
   })
 
   return {
