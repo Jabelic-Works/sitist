@@ -46,8 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watch } from "@nuxtjs/composition-api"
-import { nextTick } from "process"
+import { defineComponent, ref, PropType, watch, nextTick } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   props: {
@@ -63,10 +62,7 @@ export default defineComponent({
     //  TODO: isShowAddInfoDialogいらないかも. 要検証
     watch(
       () => props.isShowAddInfoDialog,
-      val => {
-        console.debug("isShowAddInfoDialog", props.isShowAddInfoDialog)
-        dialog.value = val
-      }
+      val => dialog.value = val
     )
     const url = ref("")
     const title = ref("")

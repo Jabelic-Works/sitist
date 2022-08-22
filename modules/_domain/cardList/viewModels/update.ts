@@ -1,6 +1,6 @@
 import { Ref, useStore, watch } from "@nuxtjs/composition-api"
-import { deepCopy, shuffleArray } from "~/modules/utils"
-import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
+import { deepCopy, shuffleArray } from "~/modules/utils/custom"
+import { fetchDataFS } from "~/repos/fetchData"
 import { CardInfo } from "~/types/custom"
 import { useCardList } from "./cardList"
 
@@ -26,7 +26,6 @@ export const useUpdate = ({
     setTimeout(async () => {
       await getAllDataFromStoreThenArranged(true)
       sitesInfo.value = await shuffleArray<CardInfo[]>(sitesInfo.value)
-      console.debug(sitesInfo.value)
     }, 0)
   }
   // ユーザーが変わった場合
@@ -34,7 +33,6 @@ export const useUpdate = ({
     () => store.getters["auth/getUserUid"],
     async val => {
       if (userInfo.value.uid != val) {
-        console.debug("===== User changed =====")
         userInfo.value.uid = store.getters["auth/getUserUid"]
         userInfo.value.name = store.getters["auth/getUserName"]
         allCardInformationList.value = await fetchAllData(userInfo.value.uid)

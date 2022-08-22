@@ -22,7 +22,7 @@
   </div>
 </template>
 <script lang="ts">
-import { useRoute, computed, defineComponent, useStore, ref, nextTick } from "@nuxtjs/composition-api"
+import { useRoute, computed, defineComponent, useStore } from "@nuxtjs/composition-api"
 
 export default defineComponent({
   setup() {

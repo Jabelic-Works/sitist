@@ -71,7 +71,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, nextTick, ref, useStore } from "@nuxtjs/composition-api"
-import { info } from "~/modules/Commons/i18n"
+import { info } from "~/modules/utils/i18n"
 export default defineComponent({
   setup() {
     const photoUrl = ref("")

@@ -1,5 +1,5 @@
 import { Ref, useStore } from "@nuxtjs/composition-api"
-import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFS } from "~/repos/fetchData"
 export const useHeader = ({
   userInfo,
   updateData
@@ -22,7 +22,6 @@ export const useHeader = ({
     let allCardInformationList = {}
     if (userInfo.value.uid || store.getters["auth/getUserUid"]) {
       allCardInformationList = await addData(data, userInfo.value.uid)
-      console.debug("new data", allCardInformationList)
       await store.dispatch("data/setAllData", allCardInformationList)
       updateData()
     }

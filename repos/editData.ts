@@ -5,7 +5,6 @@ import { CardInfo } from "~/types/custom"
 /** APIs */
 export const editDataFS = async (info: CardInfo, store: Context["store"], keyid: string) => {
   const uid = store.getters["auth/getUserUid"]
-  console.debug({ data: info.data }, keyid)
   const userRef = db
     .collection("userdata")
     .doc(uid)

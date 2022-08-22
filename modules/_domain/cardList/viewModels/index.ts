@@ -1,12 +1,12 @@
 import { nextTick, onActivated, ref, useFetch, useStore } from "@nuxtjs/composition-api"
-import { fetchDataFS } from "@/modules/firestoreClient/fetchData"
+import { fetchDataFS } from "~/repos/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepCopy } from "../../utils"
+import { deepCopy } from "../../../utils/custom"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 import { useUpdate } from "./update"
 import { useHeader } from "./header"
-import { dialogMessage } from "~/modules/Commons/i18n"
+import { dialogMessage } from "~/modules/utils/i18n"
 import { useFetchData } from "./fetch"
 
 export const use = () => {
@@ -40,27 +40,22 @@ export const use = () => {
   /** Sign-in */
   const { fetchDataAfterSignIn } = useFetchData({ allCardInformationList, userInfo })
 
-  /** ===== init ====== */
-
   useFetch(async () => {
     userInfo.value.uid = store.getters["auth/getUserUid"]
     userInfo.value.name = store.getters["auth/getUserName"]
     if (userInfo.value.uid) {
       allCardInformationList.value = await fetchAllData(userInfo.value.uid)
       store.dispatch("data/setAllData", allCardInformationList.value) // storeにデータを入れる
-      console.debug("useFetch", allCardInformationList.value)
     }
   })
   onActivated(() => {
     userInfo.value.uid = store.getters["auth/getUserUid"]
     userInfo.value.name = store.getters["auth/getUserName"]
     allCardInformationList.value = store.getters["data/getAllData"]
-    console.debug("onActivate: ", allCardInformationList.value)
     updateDataAndShuffle()
   })
   nextTick(async () => {
     allCardInformationList.value = await deepCopy(store.getters["data/getAllData"])
-    console.debug("nextTick: ", allCardInformationList.value)
   })
 
   return {

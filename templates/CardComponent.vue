@@ -76,10 +76,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, getCurrentInstance, PropType, ref, useContext } from "@nuxtjs/composition-api"
+import { defineComponent, getCurrentInstance, PropType, useContext } from "@nuxtjs/composition-api"
 import { CardInfo } from "@/types/custom"
-import { editCardInformation } from "~/modules/Domain/viewModel/edit"
-import { noTitle, noUrl } from "~/modules/Commons/i18n"
+import { editCardInformation } from "~/modules/_domain/cardList/viewModels/edit"
+import { noTitle, noUrl } from "~/modules/utils/i18n"
 
 export default defineComponent({
   props: {
@@ -96,7 +96,7 @@ export default defineComponent({
         key: props.cardInfo.key,
         data: { title: data.title, URL: data.url, OGP: "", description: "" }
       }
-      editCardInformation(info, store)
+      await editCardInformation(info, store)
       emit("updateData")
     }
     return { closeDialog, noTitle, noUrl }
