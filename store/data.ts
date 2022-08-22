@@ -2,6 +2,7 @@ export const state = (): State => ({
   data: [],
   timestamp: 0
 })
+interface data {}
 export type State = {
   data: Array<{
     id: { title?: string; url: string; OGP?: string | undefined; description?: string | undefined } | undefined

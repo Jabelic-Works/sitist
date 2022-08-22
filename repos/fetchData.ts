@@ -22,11 +22,8 @@ export const fetchDataFS = () => {
     return docs
   }
   const addData = async (data: any, uid: string) => {
-    let addDb = {}
     db.collection("userdata").doc(uid).collection("data").add(data)
-
-    addDb = fetchAllData(uid)
-    return addDb
+    return fetchAllData(uid)
   }
   return { fetchAllData, addData }
 }

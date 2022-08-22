@@ -11,7 +11,7 @@
             class="my-4"
             inputmode="rawinput"
             label="Tweet!"
-            placeholder="タイトルで検索"
+            :placeholder="PLACEHOLDER_IN_SEARCH_DIALOG"
             :search="search"
             @setInputText="syncInputText"
           />
@@ -28,15 +28,15 @@
             <tbody>
               <tr v-for="item in dataTableItems" :key="item.URL">
                 <td>{{ item.title }}</td>
-                <td><v-btn @click.stop="toPageLink(item.URL)">Go Page</v-btn></td>
+                <td><v-btn @click.stop="toPageLink(item.URL)">{{ GO_PAGE_IN_SEARCH_DIALOG }}</v-btn></td>
               </tr>
             </tbody>
           </template>
         </v-simple-table>
 
         <v-card-actions class="justify-end">
-          <v-btn text @click.stop="open = false">Close</v-btn>
-          <v-btn text @click.stop="search">検索</v-btn>
+          <v-btn text @click.stop="open = false">{{ CLOSE_IN_SEARCH_DIALOG }}</v-btn>
+          <v-btn text @click.stop="search">{{ SEARCH_BUTTON_IN_SEARCH_DIALOG }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -45,7 +45,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "@nuxtjs/composition-api"
 import { useSearch } from "../modules/_domain/cardList/viewModels/search"
-
+import { PLACEHOLDER_IN_SEARCH_DIALOG, SEARCH_BUTTON_IN_SEARCH_DIALOG,CLOSE_IN_SEARCH_DIALOG, GO_PAGE_IN_SEARCH_DIALOG } from '@/modules/constant'
 export default defineComponent({
   name: "SearchCard",
   setup() {
@@ -63,6 +63,7 @@ export default defineComponent({
     ])
     const search = async () => {
       const filtered = await searchContents()
+      console.debug(filtered)
       if (Array.isArray(filtered) && filtered.length) {
         dataTableItems.value.length = 0
         filtered.map(item => dataTableItems.value.push({ title: item[1].data.title, URL: item[1].data.URL }))
@@ -79,7 +80,11 @@ export default defineComponent({
       search,
       dataTableItems,
       headers,
-      toPageLink
+      toPageLink,
+      PLACEHOLDER_IN_SEARCH_DIALOG,
+      SEARCH_BUTTON_IN_SEARCH_DIALOG,
+      CLOSE_IN_SEARCH_DIALOG,
+      GO_PAGE_IN_SEARCH_DIALOG
     }
   }
 })

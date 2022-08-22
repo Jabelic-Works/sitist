@@ -1,7 +1,7 @@
 import { nextTick, onActivated, ref, useFetch, useStore } from "@nuxtjs/composition-api"
 import { fetchDataFS } from "~/repos/fetchData"
 import { CardInfo } from "~/types/custom"
-import { deepCopy } from "../../../utils/utils"
+import { deepCopy } from "../../../utils/custom"
 import { useCardList } from "./cardList"
 import { useDelete } from "./delete"
 import { useUpdate } from "./update"

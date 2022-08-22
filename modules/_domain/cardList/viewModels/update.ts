@@ -1,5 +1,5 @@
 import { Ref, useStore, watch } from "@nuxtjs/composition-api"
-import { deepCopy, shuffleArray } from "~/modules/utils/utils"
+import { deepCopy, shuffleArray } from "~/modules/utils/custom"
 import { fetchDataFS } from "~/repos/fetchData"
 import { CardInfo } from "~/types/custom"
 import { useCardList } from "./cardList"
