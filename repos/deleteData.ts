@@ -2,7 +2,7 @@ import { db } from "~/plugins/firebase"
 
 /** APIs */
 export const deleteDataFS = () => {
-  const deleteCard = (uid: string, keyId: string) => {
+  const deleteCard = async (uid: string, keyId: string) => {
     db.collection("userdata")
       .doc(uid)
       .collection("data")
